@@ -1,2 +1,3 @@
 # SNCF_viz
-Interactive Data Visualization's Project
+
+Notre projet consiste à créer un outil permettant aux voyageurs de consulter les propriétés des grandes gares TGV de France et des les comparer entre eux, notamment la propreté de la gare, la satisfaction des voyageurs, les divertissements, l'accompagnement des personnes à mobilité réduite, les moyens d'accès, etc...
