@@ -13,21 +13,30 @@ Ces fichiers seront traités pour construire une base de données contenant les 
 
 1- Fréquantation en gare : https://data.sncf.com/explore/dataset/frequentation-gares/?sort=nom_gare
 
+
 2- Services d'attente en gare : https://data.sncf.com/explore/dataset/gares-pianos/?sort=gare
+
 
 3- Répartition des motifs de déplacements des voyageurs et non voyageurs : https://data.sncf.com/explore/dataset/repartition-des-motifs-de-deplacements-des-voyageurs-et-non-voyageurs-enquetes-e/
 
+
 4- Répartition des clients par âge : https://data.sncf.com/explore/dataset/enquetes-gares-connexions-repartition-repartition-par-classe-dage/table/?sort=gare_enquetee
+
 
 5- Répartition des modes d'accès à la gare : https://data.sncf.com/explore/dataset/repartition-de-lutilisation-des-moyens-dacces-ou-de-diffusion-a-la-gare-enquetes/?sort=annee
 
+
 6- Gares équipées du wifi : https://data.sncf.com/explore/dataset/gares-equipees-du-wifi/?sort=nom_de_la_gare
+
 
 7- Contrôles de propreté en gare : https://data.sncf.com/explore/dataset/proprete-en-gare/?sort=mois 
 
+
 8- Répartition des distances d’accès à la gare : https://data.sncf.com/explore/dataset/repartition-des-distances-dacces-a-la-gare-enquetes-en-gare/
 
+
 9- Accompagnement de personnes à mobilité réduite dans les gares : https://data.sncf.com/explore/dataset/accompagnement-pmr-gares/?sort=datemensuel
+
 
 10- Baromètre satisfaction client en gare : https://data.sncf.com/explore/dataset/barometre-client/
 
