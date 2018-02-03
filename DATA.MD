@@ -44,32 +44,50 @@ Ces fichiers seront traités pour construire une base de données contenant les 
 ## Analyse des données :
 
 1- Fréquentation en gare : 
+
 	- Nombre de voyageurs en 2016
+	
 	- évolution de fréquentation 2015/2016
+	
 	- sélection de 50 gares TGV les plus fréquentées
+	
 2- Services d'attente en gare :
+
 	- nombre de : {Piano;Power&Station;Baby-Foot;Distr Histoires Courtes} disponibles en gare.
+	
 	- transformation du nombre en 0/1 ou bien garder le nombre ? 
+	
 3- Répartition des motifs de déplacements des voyageurs et non voyageurs :
+	
 	- Il faudra regrouper les pourcentages par gare (motif, %)
+
 4- Répartition des clients par âge : 
+
 	- regrouper par gares (tranche d'âge, %)
+
 	- Il y a un pourcentage pour les classes d'âge non communiquée (inconnues)
 
 5- Répartition des modes d'accès à la gare :
+	
 	- regrouper par gare (moyen, 1/0)
+	
 	- moyens : Bus/Car/Navette - Métro / RER - Marche - Taxi - Tramway - vélo - voiture conducteur - voiture passager - autres voitures (ne garder que les 3 moyens les plus utilisés ?)
 
 6- Gares équipées du wifi :
+	
 	- Rien à modifier (sauf peut être changer les oui/non en 0/1)
 
+
 7- Contrôles de propreté en gare : 
+
 	- garder UIC + taux de conformité (score : quel format/valeur ?)
 
 8- Répartition des distances d’accès à la gare :
+
 	- il faudra donner un score à chaque gare (score de la distance avec le % maximal)
 
 9- Accompagnement de personnes à mobilité réduite dans les gares :
+
 	- Scoring
 
 10- Satisfaction des clients
