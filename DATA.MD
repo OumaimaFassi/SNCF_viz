@@ -40,6 +40,7 @@ Ces fichiers seront traités pour construire une base de données contenant les 
 
 10- Baromètre satisfaction client en gare : https://data.sncf.com/explore/dataset/barometre-client/
 
+11- Référentiel des gares de voyageurs : https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs/table/?sort=intitule_gare&q=frequent
 
 ## Analyse des données :
 
@@ -92,4 +93,7 @@ Ces fichiers seront traités pour construire une base de données contenant les 
 
 10- Satisfaction des clients
 
+11- Référentiel des gares de voyageurs :
+
+	- Extraire la longitude, la latitude, le nom de la gare et de sa région / ville
 
