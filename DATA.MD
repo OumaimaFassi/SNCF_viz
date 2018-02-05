@@ -97,3 +97,8 @@ Ces fichiers seront traités pour construire une base de données contenant les 
 
 	- Extraire la longitude, la latitude, le nom de la gare et de sa région / ville
 
+## Traitement des données : 
+
+### TRIFACTA Wrangler :
+
+Nous utilisons dans un premier temps le logiciel TRIFACTA Wrangler pour nettoyer nos données séparément pour ensuite les croiser grâce au CODE UIC des gares présent dans toutes les bases de données utilisées.
