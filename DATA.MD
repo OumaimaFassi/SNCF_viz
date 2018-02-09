@@ -30,7 +30,7 @@ Ces fichiers seront traités pour construire une base de données contenant les 
 
 11- Référentiel des gares de voyageurs : https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs/table/?sort=intitule_gare&q=frequent
 
-## Analyse des données :
+## Détails :
 
 1- Fréquentation en gare : 
 
@@ -46,35 +46,33 @@ Ces fichiers seront traités pour construire une base de données contenant les 
 	
 3- Répartition des motifs de déplacements des voyageurs et non voyageurs :
 	
-	- Il faudra regrouper les pourcentages par gare (motif, %)
+	- Regroupement des pourcentages par gare (motif, %)
 
 4- Répartition des clients par âge : 
 
-	- Regrouper par gare (tranche d'âge, %)
-
-	- Il y a un pourcentage pour les classes d'âge non communiquées (inconnues)
+	- Regroupement par gare (tranche d'âge, %)
 
 5- Répartition des modes d'accès à la gare :
 	
-	- Regrouper par gare (moyen, 1/0)
+	- Regroupement par gare (moyen, 1/0)
 	
-	- Moyens : Bus/Car/Navette - Métro / RER - Marche - Taxi - Tramway - vélo - voiture conducteur - voiture passager - autres voitures (ne garder que les 3 moyens les plus utilisés ?)
+	- Moyens : Bus/Car/Navette - Métro / RER - Marche - Taxi - Tramway - vélo - voiture conducteur - voiture passager - autres voitures
 
 6- Gares équipées du wifi :
 	
-	- Rien à modifier (sauf peut être changer les oui/non en 0/1)
+	- Possibilités pour chaque gare : oui/non
 
 7- Contrôles de propreté en gare : 
 
-	- Garder UIC + taux de conformité (score : quel format/valeur ?)
+	- Info gardée : taux de "conformité" de chaque gare
 
 8- Répartition des distances d’accès à la gare :
 
-	- Il faudra donner un score à chaque gare (score de la distance avec le % maximal)
+	- Moyenne des distances calculée pour chaque gare
 
 9- Accompagnement de personnes à mobilité réduite dans les gares :
 
-	- Scoring
+	- Scoring en fonction des différents moyens à disposition des handicapés
 
 10- Satisfaction des clients
 
@@ -83,6 +81,6 @@ Ces fichiers seront traités pour construire une base de données contenant les 
 
 11- Référentiel des gares de voyageurs :
 
-	- Extraire la longitude, la latitude, le nom de la gare et de sa région / ville
+	- Extraction de la latitude, la longitude, le nom de la gare, de sa région et de sa ville
 
 
