@@ -15,5 +15,4 @@ Le traitement des données effectué consiste à :
 
 - Croisement de toutes ces bases de données grâce au CODE UIC
 
-
-TRIFACTA Wrangler nous a permis de manipuler les bases de données aisément en facilitant les différentes opérations (supression de colonnes, tri des lignes, aggrégation, croisement des données... )
+TRIFACTA Wrangler nous a permis de manipuler les bases de données aisément en facilitant les différentes opérations (supression de colonnes, tri des lignes, aggrégation, croisement des données "left outer joins", ...)
