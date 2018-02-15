@@ -1,26 +1,161 @@
-//hello world for our project
-
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
-  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
   <style>
-    body { margin:0;position:fixed;top:0;right:0;bottom:0;left:0; }
+    body {margin: 0; position: fixed; top: 0; right: 0; bottom: 0; left: 0; font-family: Arial}
+	p, select {display: inline-block}
+	.choiceZone {margin-bottom: 3px;}
   </style>
 </head>
 
 <body>
   <script>
-    var svg = d3.select("body").append("svg")
-      .attr("width", 960)
-      .attr("height", 500)
+	
+    var width = 700,
+		height = 520;
+		
+	var svg = d3.select("body")
+		.append("svg")
+		.attr("width", width)
+		.attr("height", height);
+    
+    var projection = d3.geoConicConformal().center([2.454071, 46.279229]).scale(2800)
+		.translate([width/2, height/2]);
 
-    svg.append("text")
-      .text("Hello world!")
-      .attr("y", 200)
-      .attr("x", 120)
-      .attr("font-size", 36)
-      .attr("font-family", "monospace")
+    var path = d3.geoPath()
+    	.projection(projection);
 
+	var colorScale = d3.scaleLinear()
+		.range([0,1]);
+		
+	var radiusScale = d3.scaleQuantile()
+		.range([3,4,9]);
+	
+	function color(variation) {
+		if(variation != 0) {
+			return d3.interpolateRdYlGn(colorScale(variation));
+		}
+		else {
+			return "grey";
+		}
+	}
+	
+	var firstStationSelected = null;
+	var secondStationSelected = null;
+	
+	function colorInteraction() {
+		if (firstStationSelected) {return "yellow"; }
+		else {return "blue"; };
+	}
+	
+	d3.json("Dataset/regions.geojson", function(json) {
+		d3.csv("Cleaned datasets/all-joined-datasets-update.csv", function(data) {
+			
+			radiusScale.domain(data.map(function(d) {return +d.voyageurs_2016; }));
+			
+			var minVariation = d3.min(data, function(d) {return (+d.voyageurs_2016 - +d.voyageurs_2015)/+d.voyageurs_2015; });
+			var maxVariation = d3.max(data, function(d) {return (+d.voyageurs_2016 - +d.voyageurs_2015)/+d.voyageurs_2015; });
+			
+			colorScale.domain([minVariation,maxVariation]);
+		
+			var regions = svg.append("g").attr("class","regions");
+		
+			var fond = regions.selectAll("g").data(json.features).enter().append("g").attr("class","region").attr("id",function(d) {return d.properties.nom; })
+				.append("path")
+				.attr("d", path)
+				.attr("fill","#f5f5f5")
+				.attr("stroke","black");
+			
+			var gares = svg.append("g").attr("class","gares");
+			var nodes = [];
+			
+			data.forEach(function (d) {
+				var proj = projection([d.Longitude_WGS84,d.Latitude_WGS84]);
+				nodes.push({
+					radius: radiusScale(+d.voyageurs_2016),
+					color: color((+d.voyageurs_2016 - +d.voyageurs_2015)/+d.voyageurs_2015),
+					cx: proj[0],
+					cy: proj[1],
+					name: d.Nom_de_la_gare,
+					city: d.Commune,
+					region: d.Region
+				});
+			});
+			
+			nodes.sort(function(a,b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); }); 
+			
+			var firstChoiceZone = d3.select("body").append("div").attr("class","choiceZone").attr("style","border: 2px solid blue");
+			
+			firstChoiceZone.append("p").text("Première gare sélectionnée : ");
+			
+			var firstDropdown = firstChoiceZone.append("select")
+				.attr("class","select")
+				.on("change",function() {
+					firstStationSelected = d3.select(this).property("value");
+				});
+
+			var firstOptions = firstDropdown
+				.selectAll("option")
+				.data(nodes).enter()
+				.append("option")
+				.text(function(d) {return d.name; });
+				
+			var secondChoiceZone = d3.select("body").append("div").attr("class","choiceZone").attr("style","border: 2px solid yellow");
+			
+			secondChoiceZone.append("p").text("Deuxième gare sélectionnée : ");
+			
+			var secondDropdown = secondChoiceZone.append("select")
+				.attr("class","select")
+				.on("change",function() {
+					secondStationSelected = d3.select(this).property("value");
+				});
+
+			var secondOptions = secondDropdown
+				.selectAll("option")
+				.data(nodes).enter()
+				.append("option")
+				.text(function(d) {return d.name; });
+			
+			var simulation = d3.forceSimulation(nodes)
+				.force("x", d3.forceX(function(d) {return d.cx; }).strength(0.55))
+				.force("y", d3.forceY(function(d) {return d.cy; }).strength(0.55))
+				.force("collide", d3.forceCollide().radius(function(d) { return d.radius + 0.3; }))
+				.on("tick", ticked);
+
+			function ticked() {
+				var gare = gares.selectAll("circle").data(nodes);
+
+				gare.enter()
+					.append("circle")
+					.attr("r", function(d) {return d.radius; })
+					.style("stroke","grey")
+					.style("fill", function(d) {return d.color; })
+					.on("mouseenter", function(){
+						d3.select(this).transition().style("fill", colorInteraction());
+					})
+					.on("mouseleave", function(){
+						d3.select(this).transition().style("fill", function(d){return d.color; }).style("stroke-width", 1);
+					})
+					.on("click", function(d){
+						d3.select(this)
+							.transition().duration(100).style("stroke-width", 10)
+							.transition().style("stroke-width", 1);
+						if (firstStationSelected) {
+							secondStationSelected = d.name;
+							secondDropdown.property("value", secondStationSelected)
+						}
+						else {
+							firstStationSelected = d.name;
+							firstDropdown.property("value", firstStationSelected);
+						}
+					})
+					.merge(gare)
+					.attr("cx", function(d) {return d.x; })
+					.attr("cy", function(d) {return d.y; });
+			}
+		});
+	});
   </script>
 </body>
