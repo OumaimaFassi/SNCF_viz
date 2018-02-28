@@ -86,8 +86,8 @@
 			var fond = regions.selectAll("g").data(json.features).enter().append("g").attr("class","region").attr("id",function(d) {return d.properties.nom; })
 				.append("path")
 				.attr("d", path)
-				.attr("fill","#FFFBBF")
-				.attr("stroke","#FFBC3F");
+				.attr("fill","#FFFCD1")
+				.attr("stroke","#FEB162");
 			
 			var gares = svg.append("g").attr("class","gares");
 			var nodes = [{
