@@ -125,7 +125,10 @@
 				.attr("id","firstChoiceZone")
 				.attr("style","border: 2px solid blue;");
 			
-			firstChoiceZone.append("p").attr("class","choiceZone").text("1e gare sélectionnée : ");
+			firstText = firstChoiceZone.append("p").attr("class","choiceZone")
+			firstText.append("span").text("1")
+			firstText.append("sup").text("e")
+			firstText.append("span").text(" gare sélectionnée : ");
 			
 			var firstDropdown = firstChoiceZone.append("select")
 				.attr("class","choiceZone")
@@ -151,7 +154,10 @@
 				.attr("id","secondChoiceZone")
 				.attr("style","border: 2px solid darkorange");
 			
-			secondChoiceZone.append("p").attr("class","choiceZone").text("2e gare sélectionnée : ");
+			secondText = secondChoiceZone.append("p").attr("class","choiceZone")
+			secondText.append("span").text("2")
+			secondText.append("sup").text("e")
+			secondText.append("span").text(" gare sélectionnée : ");
 			
 			var secondDropdown = secondChoiceZone.append("select")
 				.attr("class","choiceZone")
