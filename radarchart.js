@@ -1,4 +1,3 @@
-
 const max = Math.max;
 const sin = Math.sin;
 const cos = Math.cos;
@@ -35,7 +34,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
     const cfg = {
      w: 600,                //Width of the circle
      h: 600,                //Height of the circle
-     margin: {top: 20, right: 20, bottom: 20, left: 20}, //The margins of the SVG
+     margin: {top: 25, right: 25, bottom: 25, left: 25}, //The margins of the SVG
      levels: 3,             //How many levels or inner circles should there be drawn
      maxValue: 0,           //What is the value that the biggest circle will represent
      labelFactor: 1.25,     //How much farther than the radius of the outer circle should the labels be placed
@@ -72,12 +71,12 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
     maxValue = max(cfg.maxValue, maxValue);
 
     //const allAxis = data[0].axes.map((i, j) => i.axis),   //Names of each axis
-  const allAxis = ["Propreté","Sécurité","Communication sur les perturbations","Confort d'attente","Commerce & restauration","Distance", "assistance PMR"] ;
+  const allAxis = ["Propreté","Sécurité","Communication sur les perturbations","Confort d'attente","Commerces","Distance d'accès", "Assistance handicapés"] ;
         total = allAxis.length,                 //The number of different axes
         radius = Math.min(cfg.w/2, cfg.h/2),    //Radius of the outermost circle
         Format = d3.format(cfg.format),             //Formatting
         angleSlice = Math.PI * 2 / total;       //The width in radians of each "slice"
-console.log(allAxis)
+
     //Scale for the radius
     const rScale = d3.scaleLinear()
         .range([0, radius])
@@ -256,8 +255,8 @@ console.log(allAxis)
         .style("pointer-events", "all")
         .on("mouseover", function(d,i) {
             tooltip
-                .attr('x', this.cx.baseVal.value - 10)
-                .attr('y', this.cy.baseVal.value - 10)
+                .attr('x', this.cx.baseVal.value - 13)
+                .attr('y', this.cy.baseVal.value - 13)
                 .transition()
                 .style('display', 'block')
                 .text(Format(d.value) + cfg.unit);
@@ -271,8 +270,9 @@ console.log(allAxis)
         .attr("class", "tooltip")
         .attr('x', 0)
         .attr('y', 0)
-        .style("font-size", "12px")
+        .style("font-size", "1em")
         .style('display', 'none')
+		.style("font-weight","bold")
         .attr("text-anchor", "middle")
         .attr("dy", "0.35em");
 
