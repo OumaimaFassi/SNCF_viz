@@ -234,11 +234,12 @@ d3.csv("all-joined-datasets.csv",function(data){
   
   //refresh(data,divertissements1,divertissements2)
 	refreshText(data,gare1,gare2)
-  refreshWifi(divertissements1,divertissements2)
+  refreshDiv(divertissements1,divertissements2)
+  /*refreshWifi(divertissements1,divertissements2)
   refreshBaby(divertissements1,divertissements2)
   refreshPower(divertissements1,divertissements2)
   refreshPiano(divertissements1,divertissements2)
-  refreshBook(divertissements1,divertissements2)
+  refreshBook(divertissements1,divertissements2)*/
   d3.selectAll("rect")
     	.attr("width",18)
     	.attr("height",36)
@@ -286,18 +287,14 @@ function refreshText(data,gare1,gare2){
   ;}) // fin forEach
 ;} // fin refresh
 
-function refreshWifi(div1,div2){
-if(div1[1].wifi == "false" && div2[1].wifi == "false"){}
-else{    
-  //creation du logo & positionnement 
-  
-  
+function refreshWifi(div1,div2,i){   
+  //creation du logo & positionnement   
   // emplacement de la valeur wifi pour la gare 1
     g_wifi.append("rect")
     	.attr("id","valeur_wifi")
       .attr("y", 140 + margin.left)
       .attr("x", 270 + margin.top)
-	 	 	.style("fill",function(){if(div1[1].wifi=="true"){return "#4d4dff"}
+	 	 	.style("fill",function(){if(div1[i][1]=="true"){return "#4d4dff"}
                              else{return "lightgrey"}})
 
     // emplacement de la valeur wifi pour la gare 2
@@ -305,7 +302,7 @@ else{
     	.attr("id","valeur_wifi2")
       .attr("y", 140 + margin.left)
       .attr("x", 288 + margin.top)
-	  	.style("fill",function(){if(div2[1].wifi=="true"){return "DarkOrange"}
+	  	.style("fill",function(){if(div2[i][1]=="true"){return "DarkOrange"}
                              else{return "lightgrey"}})
     
 g_wifi.append("path")
@@ -323,30 +320,24 @@ g_wifi.append("path")
   
   
 	d3.selectAll("#path_wifi").attr("transform","scale(0.05) translate("+ d3.select("#valeur_wifi").attr("x")/0.0493 +",3270)")
-} 
+ 
 }    
 
-function refreshBaby(div1,div2){
-
-if(div1[1].baby_foot == "0" && div2[1].baby_foot == "0"){}
-else if(div1[1].baby_foot == "" && div2[1].baby_foot == ""){}
-else if(div1[1].baby_foot == "0" && div2[1].baby_foot == ""){}
-else if(div1[1].baby_foot == "" && div2[1].baby_foot == "0"){}
-else{    
+function refreshBaby(div1,div2,i){   
     // emplacement de la valeur babyfoot pour la gare 1
     g_babyfoot.append("rect")
 	  .attr("id","valeur_babyfoot")
       .attr("y", 140 + margin.left)
-      .attr("x", 324 + margin.top)
-	 	 	.style("fill",function(){if(+div1[1].baby_foot>0){return "#4d4dff"}
+      .attr("x", 270 +(i*36)+(i*18) + margin.top)
+	 	 	.style("fill",function(){if(div1[i][1]>0){return "#4d4dff"}
                              else{return "lightgrey"}})
 
     // emplacement de la valeur babyfoot pour la gare 2
     g_babyfoot.append("rect")
     	.attr("id","valeur_babyfoot2")
       .attr("y", 140 + margin.left)
-      .attr("x", 342 + margin.top)
-	  	.style("fill",function(){if(+div2[1].baby_foot>0){return "DarkOrange"}
+      .attr("x", 288+(i*36)+(i*18) + margin.top)
+	  	.style("fill",function(){if(div2[i][1]>0){return "DarkOrange"}
                              else{return "lightgrey"}})
     
     g_babyfoot.append("path")
@@ -363,19 +354,16 @@ else{
     															.attr("stroke-width","2")
     
     d3.selectAll("#path_babyfoot").attr("transform","scale(0.35) translate("+ d3.select("#valeur_babyfoot").attr("x")/0.35 +","+d3.select("#valeur_babyfoot").attr("y")/0.35+")")
-}
+
 } 
 
-function refreshPower(div1,div2){
-if(+div1[1].powerstation == 0 && +div2[1].powerstation == 0){}
-else{    
-  	
+function refreshPower(div1,div2,i){
     // emplacement de la valeur prise de courant pour la gare 1
     g_power.append("rect")
     	.attr("id","valeur_powerstation")
       .attr("y", 140 + margin.left)
-      .attr("x", 378 + margin.top)
-	  	.style("fill",function(){if(+div1[1].powerstation>0){return "#4d4dff"}
+      .attr("x", 270+(i*36)+(i*18) + margin.top)
+	  	.style("fill",function(){if(div1[i][1]>0){return "#4d4dff"}
                              else{return "lightgrey"}})
 
     
@@ -383,8 +371,8 @@ else{
     g_power.append("rect")
     	.attr("id","valeur_powerstation2")
       .attr("y", 140 + margin.left)
-      .attr("x", 396 + margin.top)
-	  	.style("fill",function(){if(+div2[1].powerstation>0){return "DarkOrange"}
+      .attr("x", 288+(i*36)+(i*18) + margin.top)
+	  	.style("fill",function(){if(div2[i][1]>0){return "DarkOrange"}
                              else{return "lightgrey"}})
     
     g_power.append("path")
@@ -392,26 +380,24 @@ else{
     .attr("d","M80.6,54.5c0,1.7-1.4,3.2-3.2,3.2h-9.2c-4.4,0-7.9,3.5-7.9,7.9v0.1c0,8-6.7,14.5-14.7,14.2C38,79.6,32,73,32,65.3v-6.7  c-7.2-1.5-12.6-7.8-12.6-15.5v-8c0-1.1,0.9-2.1,2.1-2.1h3.9v-10c0-1.7,1.5-3.1,3.2-2.9c1.5,0.1,2.7,1.5,2.7,3.1v9.9h7.8v-10  c0-1.7,1.5-3.1,3.3-2.9c1.5,0.1,2.7,1.5,2.7,3.1v9.9h3.9c1.1,0,2,0.9,2,2v8c0,7.6-5.4,14-12.6,15.5v7c0,4.7,4.1,8.4,8.9,7.8  c4-0.5,6.9-4.1,6.9-8.1c0-7.7,6.3-14,14.1-14h9.3C79.2,51.3,80.6,52.8,80.6,54.5z")
     
     d3.selectAll("#path_power").attr("transform","scale(0.4) translate("+ d3.select("#valeur_powerstation").attr("x")/0.398 +","+d3.select("#valeur_powerstation").attr("y")/0.4+")")
-}
+
 }
 
-function refreshPiano(div1,div2){
-if(+div1[1].piano == 0 && +div2[1].piano == 0){}
-else{
+function refreshPiano(div1,div2,i){
     // emplacement de la valeur piano pour la gare 1
     g_piano.append("rect")
     	.attr("id","valeur_piano")
       .attr("y", 140 + margin.left)
-      .attr("x", 432 + margin.top)
-    	.style("fill",function(){if(+div1[1].piano>0){return "#4d4dff"}
+      .attr("x", 270+(i*36)+(i*18) + margin.top)
+    	.style("fill",function(){if(div1[i][1]>0){return "#4d4dff"}
                                else{return "lightgrey"}})
 
     // emplacement de la valeur piano pour la gare 2
     g_piano.append("rect")
     	.attr("id","valeur_piano2")
       .attr("y", 140 + margin.left)
-      .attr("x", 450 + margin.top)
-    	.style("fill",function(){if(+div2[1].piano>0){return "DarkOrange"}
+      .attr("x", 288+(i*36)+(i*18) + margin.top)
+    	.style("fill",function(){if(div2[i][1]>0){return "DarkOrange"}
                                else{return "lightgrey"}})
     
     g_piano.append("path")
@@ -420,27 +406,24 @@ else{
     
     d3.selectAll("#path_piano").attr("transform","scale(0.4) translate("+ d3.select("#valeur_piano2").attr("x")/0.4175 +","+d3.select("#valeur_piano").attr("y")/0.4+")")
     
-}
+
 }
 
-function refreshBook(div1,div2){
-if(+div1[1].histoires == 0 && +div2[1].histoires == 0){}
-else{
-  
+function refreshBook(div1,div2,i){
   // emplacement de la valeur histoires pour la gare 1
     g_book.append("rect")
     	.attr("id","valeur_histoire")
     	.attr("y", 140 + margin.left)
-      .attr("x", 486 + margin.top)
-    	.style("fill",function(){if(+div1[1].histoires>0){return "#4d4dff"}
+      .attr("x", 270+(i*36)+(i*18) + margin.top)
+    	.style("fill",function(){if(div1[i][1]>0){return "#4d4dff"}
                                else{return "lightgrey"}})                      
 
     // emplacement de la valeur histoires pour la gare 2
     g_book.append("rect")
     	.attr("id","valeur_histoire2")  	
       .attr("y", 140 + margin.left)
-      .attr("x", 504 + margin.top)
-    	.style("fill",function(){if(+div2[1].histoires>0){return "DarkOrange"}
+      .attr("x", 288+(i*36)+(i*18) + margin.top)
+    	.style("fill",function(){if(div2[i][1]>0){return "DarkOrange"}
                                else{return "lightgrey"}})
     
     g_book.append("path")
@@ -461,8 +444,6 @@ else{
     
     d3.selectAll("#path_book").attr("transform","scale(0.35) translate("+ d3.select("#valeur_histoire").attr("x")/0.35 +","+d3.select("#valeur_histoire").attr("y")/0.35+")")
     
-    
-}
 }
     
 function refreshAcces(acc1,acc2){
@@ -591,6 +572,43 @@ function refreshMotif(mot1,mot2){
   					 .attr("width",function(){return x_motif(mot2[1].loisirs)})
   					 .style("fill","DarkOrange")
 }
+function refreshDiv(div1,div2){
+  
+  var new_div = []
+   new_div.push(["wifi",div1[1].wifi,div2[1].wifi])
+   new_div.push(["baby_foot",div1[1].baby_foot,div2[1].baby_foot])
+   new_div.push(["powerstation",div1[1].powerstation,div2[1].powerstation])
+   new_div.push(["piano",div1[1].piano,div2[1].piano])
+   new_div.push(["histoires",div1[1].histoires,div2[1].histoires])
+   
+  var new_div1 = []
+  var new_div2 = []
+  
+  for(var n=0;n<new_div.length;n++){
+    
+    if(new_div[n][1]=="true" || new_div[n][2]=="true"){
+      new_div1.push([new_div[n][0],new_div[n][1]])
+      new_div2.push([new_div[n][0],new_div[n][2]])
+    }
+    
+    if(new_div[n][1]>0 || new_div[n][2]>0){
+      new_div1.push([new_div[n][0],new_div[n][1]])
+      new_div2.push([new_div[n][0],new_div[n][2]])
+    }
+  ;}
+  
+ 	var i = new_div1.length
+  console.log(new_div2)
+  for(var indice=0;indice<i;indice++){ // debut for
+    
+      if(new_div1[indice][0]=='wifi'){refreshWifi(new_div1,new_div2,indice)}
+      if(new_div1[indice][0]=='baby_foot'){refreshBaby(new_div1,new_div2,indice)}
+      if(new_div1[indice][0]=='powerstation'){refreshPower(new_div1,new_div2,indice)}
+      if(new_div1[indice][0]=='piano'){refreshPiano(new_div1,new_div2,indice)}
+      if(new_div1[indice][0]=='histoires'){refreshBook(new_div1,new_div2,indice)}
+ 
+  }// fin for
+;}  // fin refreshDiv
   </script>
 </div>
 </body>
