@@ -3,6 +3,8 @@
   <meta charset="utf-8">
   <title>Variation du nombre de voyageurs dans les gares SNCF</title>
   <script src="node_modules/d3/build/d3.min.js"></script>
+  <script src="radarchart1.js" charset="utf-8"></script>
+  <script src="CreateGlyph.js" charset="utf-8"></script>
   <style>
     body {margin: 0; position: fixed; top: 0; right: 0; bottom: 0; left: 0; font-family: Arial}
 	p {margin: 0; padding: 0}
@@ -13,7 +15,10 @@
 </head>
 
 <body>
-	<div class="mapZone"></div>
+	<div id="thibaultPart" style="display: inline-block;">
+		<div class="mapZone"></div>
+	</div>
+	<div class="radarChart" style="display: inline-block; float: right;"></div>
 	<script>
 	
     var width = 650,
@@ -24,7 +29,7 @@
 		.attr("width", width)
 		.attr("height", height);
 		
-	var tooltip = d3.select('body').append('div')
+	var tooltip = d3.select('#thibaultPart').append('div')
         .attr('class', 'hidden tooltip');
     
     var projection = d3.geoConicConformal().center([2.454071, 46.279229]).scale(2800)
@@ -119,7 +124,7 @@
 			negColorScale.domain(nodes.map(function(d) {if (d.variation<0) {return d.variation; }}));
 			posColorScale.domain(nodes.map(function(d) {if (d.variation>0) {return d.variation; }}));
 			
-			var firstChoiceZone = d3.select("body")
+			var firstChoiceZone = d3.select("#thibaultPart")
 				.append("div")
 				.attr("class","choiceZone")
 				.attr("id","firstChoiceZone")
@@ -138,6 +143,7 @@
 					firstStationSelected = getCode(nodes, nameSelected);
 					transitionStrokeWidth(d3.select("#_"+firstStationSelected));
 					transitionBorderWidth(d3.select("#firstChoiceZone"));
+					CreateGlyph(data, firstStationSelected, secondStationSelected);
 				});
 
 			var firstOptions = firstDropdown
@@ -145,10 +151,10 @@
 				.data(nodes).enter()
 				.append("option")
 				.text(function(d) {return d.name; });
+				
+			d3.select("#thibaultPart").append("div").attr("style", "width:50%");
 			
-			d3.select("body").append("div");
-			
-			var secondChoiceZone = d3.select("body")
+			var secondChoiceZone = d3.select("#thibaultPart")
 				.append("div")
 				.attr("class","choiceZone")
 				.attr("id","secondChoiceZone")
@@ -167,6 +173,7 @@
 					secondStationSelected = getCode(nodes, nameSelected);
 					transitionStrokeWidth(d3.select("#_"+secondStationSelected));
 					transitionBorderWidth(d3.select("#secondChoiceZone"));
+					CreateGlyph(data, firstStationSelected, secondStationSelected);
 				});
 
 			var secondOptions = secondDropdown
@@ -211,12 +218,14 @@
 						var secondStationName = getName(nodes, secondStationSelected);
 						secondDropdown.property("value", secondStationName);
 						transitionBorderWidth(d3.select("#secondChoiceZone"));
+						CreateGlyph(data, firstStationSelected, secondStationSelected);
 					}
 					else {
 						firstStationSelected = d.code;
 						var firstStationName = getName(nodes, firstStationSelected);
 						firstDropdown.property("value", firstStationName);
 						transitionBorderWidth(d3.select("#firstChoiceZone"));
+						CreateGlyph(data, firstStationSelected, secondStationSelected);
 					}
 				})
 				.merge(gare)
