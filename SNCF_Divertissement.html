@@ -12,7 +12,7 @@
 <div>
   <script>
     // Feel free to change or delete any of the code you see in this editor!
-    var margin = {top : 20,left: 20, right: 20, bottom: 20}
+    var margin = {top : 20,left: 0, right: 20, bottom: 20}
     
     var svg = d3.select("body").append("svg")
       .attr("width", 960)
@@ -21,10 +21,12 @@
     // gare 1 selectionnée virtuellement 
     var gare1 = 713040//384008 //713040//  
     // gare 2 selectionnée virtuellement
-    var gare2 = 384008
+    var gare2 = null
     
-    var y_divertissements = 75
-    var y_acces = 120
+    var x_divertissements1= 220
+    var x_divertissements2= 238
+    var y_divertissements = 95
+    var y_acces = 140
  
 		var histo_acces = svg.append("g")
  	
@@ -117,7 +119,7 @@ d3.csv("all-joined-datasets.csv",function(data){
   }
 	})// fin forEach
 
-	
+	console.log(divertissements1,divertissements2)
 	refreshText(data,gare1,gare2)
   refreshDiv(divertissements1,divertissements2)
   refreshAcces(acces1,acces2)
@@ -132,7 +134,8 @@ d3.csv("all-joined-datasets.csv",function(data){
 // Définition des fonctions
 
 function refreshText(data,gare1,gare2){
-  // emplacement du text 'nom des gares'
+		
+    // emplacement du text 'nom des gares'
     svg.append("text")
     	.attr("id","nom")
       .text("Nom des gares")
@@ -145,7 +148,7 @@ function refreshText(data,gare1,gare2){
     	.attr("id","nom1")
       .text("")
       .attr("y", 0 + margin.top)
-      .attr("x", 395 + margin.left)
+      .attr("x", function(){return d3.select("#nom").attr("x")+275})
     	.attr("text-anchor","end")
     
     // emplacement du nom de la gare 2
@@ -153,13 +156,12 @@ function refreshText(data,gare1,gare2){
     	.attr("id","nom2")
       .text("")
       .attr("y", 0 + margin.top)
-      .attr("x", 405 + margin.left)
+      .attr("x", function(){return d3.select("#nom").attr("x")+300})
     	.attr("text-anchor","start")
-    
     
 		// emplacement du text 'nombre de voyageurs'
     svg.append("text")
-    	.attr("id","Nombre de voyageurs")
+    	.attr("id","Nombredevoyageurs")
       .text("Nombre de voyageurs")
       .attr("y", 30 + margin.top)
       .attr("x", 0 + margin.left)
@@ -170,7 +172,7 @@ function refreshText(data,gare1,gare2){
     	.attr("id","valeur_voyageurs")
     	.text("")
       .attr("y", 30 + margin.top)
-      .attr("x", 395 + margin.left)
+      .attr("x",function(){return d3.select("#Nombredevoyageurs").attr("x")+275})
     	.attr("text-anchor","end")
     
     // emplacement de la valeur correspondante pour la gare 2
@@ -178,7 +180,7 @@ function refreshText(data,gare1,gare2){
     	.attr("id","valeur_voyageurs2")
     	.text("")
       .attr("y", 30 + margin.top)
-      .attr("x", 405 + margin.left)
+      .attr("x", function(){return d3.select("#Nombredevoyageurs").attr("x")+300})
     	.attr("text-anchor","start")
     
     // emplacement du text 'variation par rapport à 2015'
@@ -193,16 +195,16 @@ function refreshText(data,gare1,gare2){
     svg.append("text")
     	.attr("id","valeur_variation")
     	.text("")
-      .attr("y", 60 + margin.left)
-      .attr("x", 395 + margin.top)
+      .attr("y", 78 + margin.left)
+      .attr("x", function(){return d3.select("#Variation").attr("x")+275})
     	.style("text-anchor","end")
     
     // emplacement de la valeur correspondante pour la gare 2
     svg.append("text")
     	.attr("id","valeur_variation2")
     	.text("")
-      .attr("y", 60 + margin.left)
-      .attr("x", 405 + margin.top)
+      .attr("y", 78 + margin.left)
+      .attr("x", function(){return d3.select("#Variation").attr("x")+300})
     	.style("text-anchor","start")
     
     // emplacement du text 'Divertissement'
@@ -215,7 +217,7 @@ function refreshText(data,gare1,gare2){
     
     // emplacement du text "Moyens d'acces"
     svg.append("text")
-    	.attr("id","Wifi")
+    	.attr("id","Moyenacces")
       .text("Moyens d'accès")
       .attr("y", 145 + margin.top)
       .attr("x", 0 + margin.left)
@@ -223,42 +225,51 @@ function refreshText(data,gare1,gare2){
     
     // emplacement du text "Motif du déplacement"
     svg.append("text")
-    	.attr("id","Wifi")
+    	.attr("id","Motifsdeplacements")
       .text("Motif du déplacement")
-      .attr("y", 300 + margin.top)
-      .attr("x", 0 + margin.left)
+      .attr("y", 190 + margin.top)
+      .attr("x", 150 )
     	.attr("text-anchor","start")
     
   data.forEach(function(d){
     if(d.uic == gare1){
+      
 			d3.select("#valeur_voyageurs")
   		.text(d3.format(".3s")(d.nbvoy))
-      .attr("fill","blue")
+      //.attr("fill","blue")
+      .attr("class","text_colorie")
   
   		d3.select("#valeur_variation")
   		.text(d3.format(".0%")(d.variation))
-      .attr("fill","blue")
+      //.attr("fill","blue")
+      .attr("class","text_colorie")
       
       d3.select("#nom1")
   		.text(d.nom)
-      .attr("fill","blue")
+      //.attr("fill","blue")
+      .attr("class","text_colorie")
 
       ;} // fin if
     
     else if(d.uic == gare2){
       d3.select("#valeur_voyageurs2")
   		.text(d3.format(".3s")(d.nbvoy))
-      .attr("fill","Orange")
+      //.attr("fill","Orange")
+      .attr("class","text_colorie")
   
   		d3.select("#valeur_variation2")
   		.text(d3.format(".0%")(d.variation))
-      .attr("fill","Orange")
+      //.attr("fill","Orange")
+      .attr("class","text_colorie")
       
       d3.select("#nom2")
   		.text(d.nom)
-      .attr("fill","Orange")
+      //.attr("fill","Orange")
+      .attr("class","text_colorie")
   
-      ;}// fin else if
+      ;}// fin if
+    //d3.selectAll(".text_colorie")
+    	//.style("fill",function(){if})
   ;}) // fin forEach
 ;} // fin refresh
 
@@ -271,15 +282,15 @@ function refreshWifi(div1,div2,i){
     g_wifi.append("rect")
     	.attr("id","valeur_wifi")
       .attr("y", y_divertissements + margin.left)
-      .attr("x", 270 + margin.top)
+      .attr("x", x_divertissements1)
 	 	 	.style("fill",function(){if(div1[i][1]=="true"){return "#4d4dff"}
                              else{return "lightgrey"}})
 
     // emplacement de la valeur wifi pour la gare 2
     g_wifi.append("rect")
     	.attr("id","valeur_wifi2")
-      .attr("y", y_divertissements + margin.left)
-      .attr("x", 288 + margin.top)
+      .attr("y", y_divertissements)
+      .attr("x", x_divertissements2)
 	  	.style("fill",function(){if(div2[i][1]=="true"){return "DarkOrange"}
                              else{return "lightgrey"}})
     
@@ -307,16 +318,16 @@ function refreshBaby(div1,div2,i){
     // emplacement de la valeur babyfoot pour la gare 1
     g_babyfoot.append("rect")
 	  .attr("id","valeur_babyfoot")
-      .attr("y", y_divertissements + margin.left)
-      .attr("x", 270 +(i*36)+(i*18) + margin.top)
+      .attr("y", y_divertissements)
+      .attr("x", x_divertissements1 +(i*36)+(i*18))
 	 	 	.style("fill",function(){if(div1[i][1]>0){return "#4d4dff"}
                              else{return "lightgrey"}})
 
     // emplacement de la valeur babyfoot pour la gare 2
     g_babyfoot.append("rect")
     	.attr("id","valeur_babyfoot2")
-      .attr("y", y_divertissements + margin.left)
-      .attr("x", 288+(i*36)+(i*18) + margin.top)
+      .attr("y", y_divertissements)
+      .attr("x", x_divertissements2+(i*36)+(i*18))
 	  	.style("fill",function(){if(div2[i][1]>0){return "DarkOrange"}
                              else{return "lightgrey"}})
     
@@ -344,8 +355,8 @@ function refreshPower(div1,div2,i){
     // emplacement de la valeur prise de courant pour la gare 1
     g_power.append("rect")
     	.attr("id","valeur_powerstation")
-      .attr("y", y_divertissements + margin.left)
-      .attr("x", 270+(i*36)+(i*18) + margin.top)
+      .attr("y", y_divertissements)
+      .attr("x", x_divertissements1+(i*36)+(i*18))
 	  	.style("fill",function(){if(div1[i][1]>0){return "#4d4dff"}
                              else{return "lightgrey"}})
 
@@ -353,8 +364,8 @@ function refreshPower(div1,div2,i){
     // emplacement de la valeur prise de courant pour la gare 2
     g_power.append("rect")
     	.attr("id","valeur_powerstation2")
-      .attr("y", y_divertissements + margin.left)
-      .attr("x", 288+(i*36)+(i*18) + margin.top)
+      .attr("y", y_divertissements)
+      .attr("x", x_divertissements2+(i*36)+(i*18))
 	  	.style("fill",function(){if(div2[i][1]>0){return "DarkOrange"}
                              else{return "lightgrey"}})
     
@@ -373,16 +384,16 @@ function refreshPiano(div1,div2,i){
     // emplacement de la valeur piano pour la gare 1
     g_piano.append("rect")
     	.attr("id","valeur_piano")
-      .attr("y", y_divertissements + margin.left)
-      .attr("x", 270+(i*36)+(i*18) + margin.top)
+      .attr("y", y_divertissements)
+      .attr("x", x_divertissements1+(i*36)+(i*18))
     	.style("fill",function(){if(div1[i][1]>0){return "#4d4dff"}
                                else{return "lightgrey"}})
 
     // emplacement de la valeur piano pour la gare 2
     g_piano.append("rect")
     	.attr("id","valeur_piano2")
-      .attr("y", y_divertissements + margin.left)
-      .attr("x", 288+(i*36)+(i*18) + margin.top)
+      .attr("y", y_divertissements )
+      .attr("x", x_divertissements2+(i*36)+(i*18) )
     	.style("fill",function(){if(div2[i][1]>0){return "DarkOrange"}
                                else{return "lightgrey"}})
     
@@ -402,16 +413,16 @@ function refreshBook(div1,div2,i){
   // emplacement de la valeur histoires pour la gare 1
     g_book.append("rect")
     	.attr("id","valeur_histoire")
-    	.attr("y", y_divertissements + margin.left)
-      .attr("x", 270+(i*36)+(i*18) + margin.top)
+    	.attr("y", y_divertissements)
+      .attr("x", x_divertissements1+(i*36)+(i*18))
     	.style("fill",function(){if(div1[i][1]>0){return "#4d4dff"}
                                else{return "lightgrey"}})                      
 
     // emplacement de la valeur histoires pour la gare 2
     g_book.append("rect")
     	.attr("id","valeur_histoire2")  	
-      .attr("y", y_divertissements + margin.left)
-      .attr("x", 288+(i*36)+(i*18) + margin.top)
+      .attr("y", y_divertissements )
+      .attr("x", x_divertissements2+(i*36)+(i*18))
     	.style("fill",function(){if(div2[i][1]>0){return "DarkOrange"}
                                else{return "lightgrey"}})
     
@@ -426,14 +437,14 @@ function refreshBook(div1,div2,i){
 function refreshVoiture(acc1,acc2,i){
 					histo_acces.append("rect")
           					 .attr("id","valeur_voiture")
-    								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 270+(i*36)+(i*18) + margin.top)
+    								 .attr("y", y_acces)
+      							 .attr("x", x_divertissements1+(i*36)+(i*18))
     								 .style("fill",function(){if(acc1[i][1]>0){return "#4d4dff"}
                                else{return "lightgrey"}})
           histo_acces.append("rect")
           					 .attr("id","valeur_voiture2")
-    								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 288+(i*36)+(i*18) + margin.top)
+    								 .attr("y", y_acces)
+      							 .attr("x", x_divertissements2+(i*36)+(i*18))
     								 .style("fill",function(){if(acc2[i][1]>0){return "DarkOrange"}
                                else{return "lightgrey"}})
           
@@ -447,14 +458,14 @@ function refreshVoiture(acc1,acc2,i){
 function refreshTaxis(acc1,acc2,i){
 					histo_acces.append("rect")
           					 .attr("id","valeur_taxis")
-    								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 270+(i*36)+(i*18) + margin.top)
+    								 .attr("y", y_acces )
+      							 .attr("x", x_divertissements1+(i*36)+(i*18))
     								 .style("fill",function(){if(acc1[i][1]>0){return "#4d4dff"}
                                else{return "lightgrey"}})
           histo_acces.append("rect")
           					 .attr("id","valeur_taxis2")
-    								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 288+(i*36)+(i*18) + margin.top)
+    								 .attr("y", y_acces)
+      							 .attr("x", x_divertissements2+(i*36)+(i*18))
     								 .style("fill",function(){if(acc2[i][1]>0){return "DarkOrange"}
                                else{return "lightgrey"}})
           
@@ -468,14 +479,14 @@ function refreshTaxis(acc1,acc2,i){
 function refreshBus(acc1,acc2,i){
 					histo_acces.append("rect")
           					 .attr("id","valeur_bus")
-    								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 270+(i*36)+(i*18) + margin.top)
+    								 .attr("y", y_acces)
+      							 .attr("x", x_divertissements1+(i*36)+(i*18))
     								 .style("fill",function(){if(acc1[i][1]>0){return "#4d4dff"}
                                else{return "lightgrey"}})
           histo_acces.append("rect")
           					 .attr("id","valeur_bus2")
-    								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 288+(i*36)+(i*18) + margin.top)
+    								 .attr("y", y_acces)
+      							 .attr("x", x_divertissements2+(i*36)+(i*18))
     								 .style("fill",function(){if(acc2[i][1]>0){return "DarkOrange"}
                                else{return "lightgrey"}})
           
@@ -489,14 +500,14 @@ function refreshBus(acc1,acc2,i){
 function refreshMetro(acc1,acc2,i){
 					histo_acces.append("rect")
           					 .attr("id","valeur_metro")
-    								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 270+(i*36)+(i*18) + margin.top)
+    								 .attr("y", y_acces)
+      							 .attr("x", x_divertissements1+(i*36)+(i*18))
     								 .style("fill",function(){if(acc1[i][1]>0){return "#4d4dff"}
                                else{return "lightgrey"}})
           histo_acces.append("rect")
           					 .attr("id","valeur_metro2")
-    								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 288 +(i*36)+(i*18) + margin.top)
+    								 .attr("y", y_acces)
+      							 .attr("x", x_divertissements2 +(i*36)+(i*18))
     								 .style("fill",function(){if(acc2[i][1]>0){return "DarkOrange"}
                                else{return "lightgrey"}})
           
@@ -510,14 +521,14 @@ function refreshMetro(acc1,acc2,i){
 function refreshTram(acc1,acc2,i){
 					histo_acces.append("rect")
           					 .attr("id","valeur_tram")
-    								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 270+(i*36)+(i*18) + margin.top)
+    								 .attr("y", y_acces)
+      							 .attr("x", x_divertissements1+(i*36)+(i*18))
     								 .style("fill",function(){if(acc1[i][1]>0){return "#4d4dff"}
                                else{return "lightgrey"}})
           histo_acces.append("rect")
           					 .attr("id","valeur_tram2")
-    								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 288+(i*36)+(i*18) + margin.top)
+    								 .attr("y", y_acces)
+      							 .attr("x", x_divertissements2+(i*36)+(i*18))
     								 .style("fill",function(){if(acc2[i][1]>0){return "DarkOrange"}
                                else{return "lightgrey"}})
           
@@ -532,13 +543,13 @@ function refreshMarche(acc1,acc2,i){
 					histo_acces.append("rect")
           					 .attr("id","valeur_marche")
     								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 270+(i*36)+(i*18) + margin.top)
+      							 .attr("x", x_divertissements1+(i*36)+(i*18))
     								 .style("fill",function(){if(acc1[i][1]>0){return "#4d4dff"}
                                else{return "lightgrey"}})
           histo_acces.append("rect")
           					 .attr("id","valeur_marche2")
-    								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 288+(i*36)+(i*18) + margin.top)
+    								 .attr("y", y_acces)
+      							 .attr("x", x_divertissements2+(i*36)+(i*18))
     								 .style("fill",function(){if(acc2[i][1]>0){return "DarkOrange"}
                                else{return "lightgrey"}})
           
@@ -553,14 +564,14 @@ function refreshMarche(acc1,acc2,i){
 function refreshVelo(acc1,acc2,i){
 					histo_acces.append("rect")
           					 .attr("id","valeur_velo")
-    								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 270+(i*36)+(i*18) + margin.top)
+    								 .attr("y", y_acces)
+      							 .attr("x", x_divertissements1+(i*36)+(i*18))
     								 .style("fill",function(){if(acc1[i][1]>0){return "#4d4dff"}
                                else{return "lightgrey"}})
           histo_acces.append("rect")
           					 .attr("id","valeur_velo2")
-    								 .attr("y", y_acces + margin.left)
-      							 .attr("x", 288 +(i*36)+(i*18) + margin.top)
+    								 .attr("y", y_acces)
+      							 .attr("x", x_divertissements2 +(i*36)+(i*18))
     								 .style("fill",function(){if(acc2[i][1]>0){return "DarkOrange"}
                                else{return "lightgrey"}})
           
@@ -586,10 +597,10 @@ function refreshMotif(mot1,mot2){
 		.scale(x_motif)
   
   var histo_motif = svg.append("g")
-  .attr("transform","translate("+275+","+220+")")
+  .attr("transform","translate("+25+","+220+")")
   
   var axe_histo_motif = svg.append("g")
-  	.attr("transform","translate("+275+","+452+")")
+  	.attr("transform","translate("+25+","+452+")")
   	.attr('class','x axis')
   	.call(xAxis_motif)
   
@@ -604,7 +615,7 @@ function refreshMotif(mot1,mot2){
 		.scale(y_motif);
   
   var axey_histo_motif = svg.append("g")
-  	.attr("transform","translate("+275+","+220+")")
+  	.attr("transform","translate("+25+","+220+")")
   	.attr('class','y axis')
   	.call(yAxis_motif)
   
