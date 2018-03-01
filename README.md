@@ -7,4 +7,6 @@ Possibles points d'amélioration :
 - Ajouter un tooltip  sur les icônes
 - Retravailler l'agencement des différentes parties
 - Trouver une solution au scale et au placement
-- Ajouter des transitions dynamiques (pour le glyphe que ça fasse fssssiuiuoouiiiuiuuii) 
+- Ajouter des transitions dynamiques (pour le glyphe que ça fasse fssssiuiuoouiiiuiuuii)
+- Simplifier et améliorer le code
+- Globaliser la taille des carrés
