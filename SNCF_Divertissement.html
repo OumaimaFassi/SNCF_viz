@@ -19,9 +19,9 @@
       .attr("height", 500)
 
     // gare 1 selectionnée virtuellement 
-    var gare1 = 713040//384008 //713040//  
+    var gare1 = 713040 //384008 //713040//  
     // gare 2 selectionnée virtuellement
-    var gare2 = null
+    var gare2 = 384008
     
     var x_divertissements1= 220
     var x_divertissements2= 238
@@ -46,88 +46,76 @@ d3.csv("all-joined-datasets.csv",function(data){
   //parcour des données
   data.forEach(function(d){
     // text
-    d.nbvoy = d.voyageurs_2016
     d.variation = (+d.voyageurs_2016-+d.voyageurs_2015)/(d.voyageurs_2015)
-    d.uic = d.Code_UIC
-    d.nom = d.Nom_de_la_gare
-    // icones
-    d.wifi = d.Wifi
-    d.baby_foot = d.Baby_Foot
-    d.powerstation = d.Power_Station
-    d.piano = d.Piano
-    d.histoires = d.Distr_Histoires_Courtes
-    // moyens d'acces
-    d.voiture = +d.deux_roues_motorisees + +d.Autres_voitures_location_autopartage + +d.Voiture_Conducteur + +d.Voiture_passager
-    d.taxis = +d.Taxis
-    d.bus = +d.Bus_Car_Navette
-    d.metro = +d.Metro_RER
-    d.tram = + +d.Tramway
-    d.marche = +d.Marche
-    d.velo = +d.Velo
+
+	if(d.Code_UIC == gare1){
+		divertissements1.push({wifi: d.Wifi,
+													 baby_foot: d.Baby_Foot,
+													 powerstation: d.Power_Station,
+													 piano: d.Piano,
+													 histoires: d.Distr_Histoires_Courtes})
     
-    d.divers = +d.Demarches_administratives_medicales_ou_achat 	 	 	 	
-    d.commute = +d.Deplacement_domicile_travail_habituel
-    d.etudes = +d.Deplacement_domicile_etude_y_compris_stage
-    d.occasionnel = +d.Deplacement_professionnel_occasionnel
-    d.loisirs = +d.Loisirs_vacances_visite_d_un_proche_ou_ami
+    acces1.push({voiture: +d.deux_roues_motorisees + +d.Autres_voitures_location_autopartage + +d.Voiture_Conducteur + +d.Voiture_passager,
+                 taxis: +d.Taxis,
+    						 bus: +d.Bus_Car_Navette,
+                 metro: +d.Metro_RER,
+                 tram: +d.Tramway,
+    						 marche: +d.Marche,
+    						 velo: +d.Velo})
     
-    
-    
-   
-	
-	if(d.uic == gare1){
-		divertissements1.push({wifi: d.wifi,
-													 baby_foot: d.baby_foot,
-													 powerstation: d.powerstation,
-													 piano: d.piano,
-													 histoires: d.histoires})
-    
-    acces1.push({voiture: d.voiture,
-                 taxis: d.taxis,
-    						 bus: d.bus,
-                 metro: d.metro,
-                 tram: d.tram,
-    						 marche: d.marche,
-    						 velo: d.velo})
-    
-    motif1.push({divers: d.divers,
-                 commute: d.commute,
-                 etudes: d.etudes,
-    						 occasionnel: d.occasionnel,
-   							 loisirs: d.loisirs})
+    motif1.push({divers: +d.Demarches_administratives_medicales_ou_achat,
+                 commute: +d.Deplacement_domicile_travail_habituel,
+                 etudes: +d.Deplacement_domicile_etude_y_compris_stage,
+    						 occasionnel: +d.Deplacement_professionnel_occasionnel,
+   							 loisirs: +d.Loisirs_vacances_visite_d_un_proche_ou_ami})
   }  
-	if(d.uic == gare2){
-		divertissements2.push({wifi: d.wifi,
-													 baby_foot: d.baby_foot,
-													 powerstation: d.powerstation,
-													 piano: d.piano,
-													 histoires: d.histoires})
+	if(d.Code_UIC == gare2){
+		divertissements2.push({wifi: d.Wifi,
+													 baby_foot: d.Baby_Foot,
+													 powerstation: d.Power_Station,
+													 piano: d.Piano,
+													 histoires: d.Distr_Histoires_Courtes})
     
-    acces2.push({voiture: d.voiture,
-                 taxis: d.taxis,
-    						 bus: d.bus,
-                 metro: d.metro,
-                 tram: d.tram,
-    						 marche: d.marche,
-    						 velo: d.velo})
+    acces2.push({voiture: +d.deux_roues_motorisees + +d.Autres_voitures_location_autopartage + +d.Voiture_Conducteur + +d.Voiture_passager,
+                 taxis: +d.Taxis,
+    						 bus: +d.Bus_Car_Navette,
+                 metro: +d.Metro_RER,
+                 tram: +d.Tramway,
+    						 marche: +d.Marche,
+    						 velo: +d.Velo})
     
-    motif2.push({divers: d.divers,
-                 commute: d.commute,
-                 etudes: d.etudes,
-    						 occasionnel: d.occasionnel,
-   							 loisirs: d.loisirs})
+    motif2.push({divers: +d.Demarches_administratives_medicales_ou_achat,
+                 commute: +d.Deplacement_domicile_travail_habituel,
+                 etudes: +d.Deplacement_domicile_etude_y_compris_stage,
+    						 occasionnel: +d.Deplacement_professionnel_occasionnel,
+   							 loisirs: +d.Loisirs_vacances_visite_d_un_proche_ou_ami})
   }
 	})// fin forEach
 
-	console.log(divertissements1,divertissements2)
+  if (gare1 == null && gare2 != null){
+    divertissements1 = divertissements2
+    acces1 = acces2
+    motif1 = motif2;
+  }
+  else if(gare1 != null && gare2 == null){
+    divertissements2 = divertissements1
+    acces2 = acces1
+    motif2 = motif1;
+  }
+	
 	refreshText(data,gare1,gare2)
   refreshDiv(divertissements1,divertissements2)
   refreshAcces(acces1,acces2)
   d3.selectAll("rect")
     	.attr("width",18)
     	.attr("height",36)
+  refreshMotif(motif1,motif2)
+  if(gare1==null){d3.selectAll("rect").style("fill","DarkOrange");}
+  else if(gare2==null){d3.selectAll("rect").style("fill","#4d4dff");}                                           
   
-  refreshMotif(motif1,motif2);
+  
+;
+  
 })// fin csv
 
 
@@ -232,10 +220,10 @@ function refreshText(data,gare1,gare2){
     	.attr("text-anchor","start")
     
   data.forEach(function(d){
-    if(d.uic == gare1){
+    if(d.Code_UIC == gare1){
       
 			d3.select("#valeur_voyageurs")
-  		.text(d3.format(".3s")(d.nbvoy))
+  		.text(d3.format(".3s")(d.voyageurs_2016))
       //.attr("fill","blue")
       .attr("class","text_colorie")
   
@@ -245,15 +233,15 @@ function refreshText(data,gare1,gare2){
       .attr("class","text_colorie")
       
       d3.select("#nom1")
-  		.text(d.nom)
+  		.text(d.Nom_de_la_gare)
       //.attr("fill","blue")
       .attr("class","text_colorie")
 
       ;} // fin if
     
-    else if(d.uic == gare2){
+    else if(d.Code_UIC == gare2){
       d3.select("#valeur_voyageurs2")
-  		.text(d3.format(".3s")(d.nbvoy))
+  		.text(d3.format(".3s")(d.voyageurs_2016))
       //.attr("fill","Orange")
       .attr("class","text_colorie")
   
@@ -263,7 +251,7 @@ function refreshText(data,gare1,gare2){
       .attr("class","text_colorie")
       
       d3.select("#nom2")
-  		.text(d.nom)
+  		.text(d.Nom_de_la_gare)
       //.attr("fill","Orange")
       .attr("class","text_colorie")
   
@@ -285,7 +273,6 @@ function refreshWifi(div1,div2,i){
       .attr("x", x_divertissements1)
 	 	 	.style("fill",function(){if(div1[i][1]=="true"){return "#4d4dff"}
                              else{return "lightgrey"}})
-
     // emplacement de la valeur wifi pour la gare 2
     g_wifi.append("rect")
     	.attr("id","valeur_wifi2")
@@ -311,7 +298,6 @@ g_wifi.append("path")
 	d3.selectAll("#path_wifi").attr("transform","scale(0.05) translate("+ d3.select("#valeur_wifi").attr("x")/0.0492 +","+d3.select("#valeur_wifi").attr("y")/0.0485+")")
  
 }    
-
 function refreshBaby(div1,div2,i){ 
   
   	var g_babyfoot = svg.append("g")
@@ -322,7 +308,6 @@ function refreshBaby(div1,div2,i){
       .attr("x", x_divertissements1 +(i*36)+(i*18))
 	 	 	.style("fill",function(){if(div1[i][1]>0){return "#4d4dff"}
                              else{return "lightgrey"}})
-
     // emplacement de la valeur babyfoot pour la gare 2
     g_babyfoot.append("rect")
     	.attr("id","valeur_babyfoot2")
@@ -345,9 +330,7 @@ function refreshBaby(div1,div2,i){
     															.attr("stroke-width","2")
     
     d3.selectAll("#path_babyfoot").attr("transform","scale(0.35) translate("+ d3.select("#valeur_babyfoot").attr("x")/0.35 +","+d3.select("#valeur_babyfoot").attr("y")/0.35+")")
-
 } 
-
 function refreshPower(div1,div2,i){
   
   	var g_power = svg.append("g")
@@ -359,7 +342,6 @@ function refreshPower(div1,div2,i){
       .attr("x", x_divertissements1+(i*36)+(i*18))
 	  	.style("fill",function(){if(div1[i][1]>0){return "#4d4dff"}
                              else{return "lightgrey"}})
-
     
     // emplacement de la valeur prise de courant pour la gare 2
     g_power.append("rect")
@@ -374,9 +356,7 @@ function refreshPower(div1,div2,i){
     .attr("d","M80.6,54.5c0,1.7-1.4,3.2-3.2,3.2h-9.2c-4.4,0-7.9,3.5-7.9,7.9v0.1c0,8-6.7,14.5-14.7,14.2C38,79.6,32,73,32,65.3v-6.7  c-7.2-1.5-12.6-7.8-12.6-15.5v-8c0-1.1,0.9-2.1,2.1-2.1h3.9v-10c0-1.7,1.5-3.1,3.2-2.9c1.5,0.1,2.7,1.5,2.7,3.1v9.9h7.8v-10  c0-1.7,1.5-3.1,3.3-2.9c1.5,0.1,2.7,1.5,2.7,3.1v9.9h3.9c1.1,0,2,0.9,2,2v8c0,7.6-5.4,14-12.6,15.5v7c0,4.7,4.1,8.4,8.9,7.8  c4-0.5,6.9-4.1,6.9-8.1c0-7.7,6.3-14,14.1-14h9.3C79.2,51.3,80.6,52.8,80.6,54.5z")
     
     d3.selectAll("#path_power").attr("transform","scale(0.4) translate("+ d3.select("#valeur_powerstation").attr("x")/0.398 +","+d3.select("#valeur_powerstation").attr("y")/0.4+")")
-
 }
-
 function refreshPiano(div1,div2,i){
   
   	var g_piano = svg.append("g")
@@ -388,7 +368,6 @@ function refreshPiano(div1,div2,i){
       .attr("x", x_divertissements1+(i*36)+(i*18))
     	.style("fill",function(){if(div1[i][1]>0){return "#4d4dff"}
                                else{return "lightgrey"}})
-
     // emplacement de la valeur piano pour la gare 2
     g_piano.append("rect")
     	.attr("id","valeur_piano2")
@@ -401,11 +380,9 @@ function refreshPiano(div1,div2,i){
     .attr("id","path_piano")
     .attr("d","M86.839,28.146H11.431c-0.568,0-1.028,0.46-1.028,1.028v41.145c0,0.568,0.46,1.028,1.028,1.028h75.408  c0.568,0,1.028-0.46,1.028-1.028V29.174C87.867,28.606,87.406,28.146,86.839,28.146z M20.637,67.78c0,0.839-0.68,1.519-1.519,1.519  h-5.596c-0.839,0-1.519-0.68-1.519-1.519V39.481c0-0.839,0.68-1.519,1.519-1.519h4.728c-0.108,0.209-0.175,0.443-0.175,0.694v18.228  c0,0.839,0.68,1.519,1.519,1.519h1.043V67.78z M30.013,67.78c0,0.839-0.68,1.519-1.519,1.519h-5.596  c-0.839,0-1.519-0.68-1.519-1.519v-9.376h1.036c0.839,0,1.519-0.68,1.519-1.519V38.656c0-0.252-0.067-0.485-0.175-0.694h3.805  c-0.108,0.209-0.175,0.443-0.175,0.694v18.228c0,0.839,0.68,1.519,1.519,1.519h1.106V67.78z M39.388,67.78  c0,0.839-0.68,1.519-1.519,1.519h-5.596c-0.839,0-1.519-0.68-1.519-1.519v-9.376h0.973c0.839,0,1.519-0.68,1.519-1.519V38.656  c0-0.252-0.067-0.485-0.175-0.694h4.798c0.839,0,1.519,0.68,1.519,1.519V67.78z M48.764,67.78c0,0.839-0.68,1.519-1.519,1.519  h-5.596c-0.839,0-1.519-0.68-1.519-1.519V39.481c0-0.839,0.68-1.519,1.519-1.519h4.742c-0.108,0.209-0.175,0.443-0.175,0.694v18.228  c0,0.839,0.68,1.519,1.519,1.519h1.029V67.78z M58.139,67.78c0,0.839-0.68,1.519-1.519,1.519h-5.596  c-0.839,0-1.519-0.68-1.519-1.519v-9.376h1.05c0.839,0,1.519-0.68,1.519-1.519V38.656c0-0.252-0.067-0.485-0.175-0.694h3.856  c-0.108,0.209-0.175,0.443-0.175,0.694v18.228c0,0.839,0.68,1.519,1.519,1.519h1.041V67.78z M67.515,67.78  c0,0.839-0.68,1.519-1.519,1.519H60.4c-0.839,0-1.519-0.68-1.519-1.519v-9.376h1.039c0.839,0,1.519-0.68,1.519-1.519V38.656  c0-0.252-0.067-0.485-0.175-0.694h3.889c-0.108,0.209-0.175,0.443-0.175,0.694v18.228c0,0.839,0.68,1.519,1.519,1.519h1.019V67.78z   M76.89,67.78c0,0.839-0.68,1.519-1.519,1.519h-5.596c-0.839,0-1.519-0.68-1.519-1.519v-9.376h1.06c0.839,0,1.519-0.68,1.519-1.519  V38.656c0-0.252-0.067-0.485-0.175-0.694h4.711c0.839,0,1.519,0.68,1.519,1.519V67.78z M86.266,67.78  c0,0.839-0.68,1.519-1.519,1.519h-5.596c-0.839,0-1.519-0.68-1.519-1.519V39.481c0-0.839,0.68-1.519,1.519-1.519h5.596  c0.839,0,1.519,0.68,1.519,1.519V67.78z")
     
-    d3.selectAll("#path_piano").attr("transform","scale(0.4) translate("+ d3.select("#valeur_piano2").attr("x")/0.4175 +","+d3.select("#valeur_piano").attr("y")/0.4+")")
+    d3.selectAll("#path_piano").attr("transform","scale(0.4) translate("+ d3.select("#valeur_piano2").attr("x")/0.42 +","+d3.select("#valeur_piano").attr("y")/0.4+")")
     
-
 }
-
 function refreshBook(div1,div2,i){
   
   	var g_book = svg.append("g")
@@ -417,7 +394,6 @@ function refreshBook(div1,div2,i){
       .attr("x", x_divertissements1+(i*36)+(i*18))
     	.style("fill",function(){if(div1[i][1]>0){return "#4d4dff"}
                                else{return "lightgrey"}})                      
-
     // emplacement de la valeur histoires pour la gare 2
     g_book.append("rect")
     	.attr("id","valeur_histoire2")  	
@@ -454,7 +430,6 @@ function refreshVoiture(acc1,acc2,i){
   					 .style("fill","black")
   					 d3.selectAll("#path_voiture").attr("transform","scale(0.2) translate("+ d3.select("#valeur_voiture").attr("x")/0.199 +","+d3.select("#valeur_voiture").attr("y")/0.198+")")
 }
-
 function refreshTaxis(acc1,acc2,i){
 					histo_acces.append("rect")
           					 .attr("id","valeur_taxis")
@@ -475,7 +450,6 @@ function refreshTaxis(acc1,acc2,i){
   					 .style("fill","black")
   					 d3.selectAll("#path_taxis").attr("transform","scale(0.08) translate("+ d3.select("#valeur_taxis").attr("x")/0.0797 +","+d3.select("#valeur_taxis").attr("y")/0.08+")")
 }
-
 function refreshBus(acc1,acc2,i){
 					histo_acces.append("rect")
           					 .attr("id","valeur_bus")
@@ -517,7 +491,6 @@ function refreshMetro(acc1,acc2,i){
   					 .style("fill","black")
   					 d3.selectAll("#path_metro").attr("transform","scale(0.2) translate("+ d3.select("#valeur_metro").attr("x")/0.199 +","+d3.select("#valeur_metro").attr("y")/0.198+")")
 }     
-
 function refreshTram(acc1,acc2,i){
 					histo_acces.append("rect")
           					 .attr("id","valeur_tram")
@@ -585,9 +558,11 @@ function refreshVelo(acc1,acc2,i){
     
 function refreshMotif(mot1,mot2){
   
+  var max_y = 150
+  
   var y_motif = d3.scaleLinear()
     	//.range([+d3.select("svg").attr("height")/2,0])
-  		.range([232,0])
+  		.range([max_y,0])
   
   var x_motif = d3.scaleBand()
   	.domain(['Divers','Travail quoti.','Etudes','Travail Occasionnel','Loisirs'])
@@ -607,8 +582,7 @@ function refreshMotif(mot1,mot2){
   var max1 = d3.max([mot1[1].divers,mot1[1].commute,mot1[1].etudes,mot1[1].loisirs,mot1[1].occasionnel])
   var max2 = d3.max([mot2[1].divers,mot2[1].commute,mot2[1].etudes,mot2[1].loisirs,mot2[1].occasionnel])
   
-  var max_motif = d3.max([max1,max2])
-  
+	var max_motif = d3.max([max1,max2])
   y_motif.domain([0,max_motif])
   
   var yAxis_motif = d3.axisLeft()
@@ -691,7 +665,8 @@ function refreshMotif(mot1,mot2){
   					 .attr("width",20)
   					 .style("fill","DarkOrange")
 }
-function refreshDiv(div1,div2){
+function refreshDiv(div1,div2,gare1,gare2){
+ 
   
   var new_div = []
    new_div.push(["wifi",div1[1].wifi,div2[1].wifi])
@@ -729,7 +704,8 @@ function refreshDiv(div1,div2){
   }// fin for
 ;}  // fin refreshDiv
     
-function refreshAcces(acc1,acc2){
+function refreshAcces(acc1,acc2,gare1,gare2){
+
   var new_acc = []
    new_acc.push(["voiture",acc1[1].voiture,acc2[1].voiture])
    new_acc.push(["taxis",acc1[1].taxis,acc2[1].taxis])
