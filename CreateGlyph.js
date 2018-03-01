@@ -40,20 +40,7 @@ function CreateGlyph(data, firstStationSelected ,secondStationSelected) {
 		data2 = [{}];
 	
 
-    if (gare2 == null && gare1 == null){
 
-        var svg = d3.select("start").append("svg")
-      .attr("width", 960)
-      .attr("height", 500)
-
-    	svg.append("text")
-      .text("Veuillez sélectionner une gare")
-      .attr("y", 50)
-      .attr("x", 50)
-      .attr("font-size", 20)
-      .attr("font-family", "monospace")
-        
-      }
 
     if (gare2 !== null && gare1 !== null) { // if both stations are selected
 		data.forEach(function(d){

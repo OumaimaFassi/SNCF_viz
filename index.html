@@ -20,8 +20,21 @@
 	</div>
 	<div class="radarChart" style="display: inline-block; float: right;"></div>
 	<div class = "start" style="display: inline-block; float: right;"></div>
-	<script>
+		
+
 	
+	<script>
+	var svg1 = d3.select("start").append("svg")
+      .attr("width", 960)
+      .attr("height", 500)
+
+    	svg1.append("text")
+      .text("Veuillez sélectionner une gare")
+      .attr("y", 50)
+      .attr("x", 50)
+      .attr("font-size", 20)
+      .attr("font-family", "monospace")
+
     var width = 650,
 		height = 520;
 		
@@ -140,6 +153,7 @@
 				.attr("class","choiceZone")
 				.attr("style","font-weight: bold;")
 				.on("change",function(d) {
+					d3.select('#start').select("svg1").remove();
 					var nameSelected = d3.select(this).property("value");
 					firstStationSelected = getCode(nodes, nameSelected);
 					transitionStrokeWidth(d3.select("#_"+firstStationSelected));
@@ -170,6 +184,7 @@
 				.attr("class","choiceZone")
 				.attr("style","font-weight: bold;")
 				.on("change",function() {
+					d3.select('#start').select("svg1").remove();
 					var nameSelected = d3.select(this).property("value");
 					secondStationSelected = getCode(nodes, nameSelected);
 					transitionStrokeWidth(d3.select("#_"+secondStationSelected));
@@ -213,6 +228,7 @@
 					tooltip.classed("hidden", true);
 				})
 				.on("click", function(d){
+					d3.select('#start').select("svg1").remove();
 					transitionStrokeWidth(d3.select(this));
 					if (firstStationSelected) {
 						secondStationSelected = d.code;
