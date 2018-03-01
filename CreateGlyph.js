@@ -41,7 +41,8 @@ function CreateGlyph(data, firstStationSelected ,secondStationSelected) {
 	
 
     if (gare2 == null && gare1 == null){
-        var svg = d3.select("body").append("svg")
+
+        var svg = d3.select("start").append("svg")
       .attr("width", 960)
       .attr("height", 500)
 
