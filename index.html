@@ -3,42 +3,55 @@
   <meta charset="utf-8">
   <title>Variation du nombre de voyageurs dans les gares SNCF</title>
   <script src="node_modules/d3/build/d3.min.js"></script>
-  <script src="radarchart.js" charset="utf-8"></script>
+  <script src="CreateStat.js" charset="utf-8"></script>
   <script src="CreateGlyph.js" charset="utf-8"></script>
+  <script src="radarchart.js" charset="utf-8"></script>
+
   <style>
     body {margin: 0; position: fixed; top: 0; right: 0; bottom: 0; left: 0; font-family: Arial}
 	p {margin: 0; padding: 0}
 	.choiceZone {display: inline-block; margin: 2px;}
 	.hidden {display: none;}
 	div.tooltip {color: #222; background-color: #fff; padding: .5em; text-shadow: #f5f5f5 0 1px 0; border-radius: 2px; opacity: 0.9; position: absolute;}
+	rect {opacity: 1;}
   </style>
 </head>
 
 <body>
 	<div id="thibaultPart" style="display: inline-block;">
-		<div class="mapZone"></div>
+		<div id="mapZone"></div>
 	</div>
-	<div class="radarChart" style="display: inline-block; float: right;"></div>
-	<div class = "start" style="display: inline-block; float: right;"></div>
-		
-
-	
+	<div id = "start" style="display: inline-block; float: right;"></div>
+	<div id ="stat" style="display: inline-block; float: right; position: absolute; bottom: 0; top: 0;"></div>
+	<div id ="radarChart" style="display: inline-block; position: relative;"></div>
 	<script>
-	var svg1 = d3.select("start").append("svg")
-      .attr("width", 960)
-      .attr("height", 500)
+	var svg1 = d3.select("#start").append("svg")
+      .attr("width", 500)
+      .attr("height", 1000);
 
-    	svg1.append("text")
-      .text("Veuillez sélectionner une gare")
+    svg1.append("text")
+      .text("Veuillez sélectionner 1 ou 2 gare(s)")
       .attr("y", 50)
       .attr("x", 50)
-      .attr("font-size", 20)
-      .attr("font-family", "monospace")
-
+      .attr("font-size", 20);
+	
+	var statSvg = d3.select("#stat").append("svg")
+		.attr("width", 700)
+		.attr("height", 400);
+	
+	var statG = statSvg.append("g")
+		.attr("transform","translate(0,30)");
+	
+	var x_divertissements1= 170,
+		x_divertissements2= x_divertissements1 + 18,
+		y_divertissements = 95,
+		y_acces = 140,
+		histo_acces = statSvg.append("g").attr("transform","translate(0,30)");;
+	
     var width = 650,
 		height = 520;
 		
-	var svg = d3.select(".mapZone")
+	var svg = d3.select("#mapZone")
 		.append("svg")
 		.attr("width", width)
 		.attr("height", height);
@@ -153,11 +166,14 @@
 				.attr("class","choiceZone")
 				.attr("style","font-weight: bold;")
 				.on("change",function(d) {
-					d3.select('#start').select("svg1").remove();
 					var nameSelected = d3.select(this).property("value");
 					firstStationSelected = getCode(nodes, nameSelected);
 					transitionStrokeWidth(d3.select("#_"+firstStationSelected));
 					transitionBorderWidth(d3.select("#firstChoiceZone"));
+					d3.select('#start').attr("style","display: none;");
+					d3.select("#stat").attr("style","display: inline-block; float: right; position: absolute; bottom: 0; top: 0;");
+					d3.select("#radarChart").attr("style","display: inline-block; position: relative;");
+					CreateStat(data, firstStationSelected, secondStationSelected);
 					CreateGlyph(data, firstStationSelected, secondStationSelected);
 				});
 
@@ -184,11 +200,14 @@
 				.attr("class","choiceZone")
 				.attr("style","font-weight: bold;")
 				.on("change",function() {
-					d3.select('#start').select("svg1").remove();
 					var nameSelected = d3.select(this).property("value");
 					secondStationSelected = getCode(nodes, nameSelected);
 					transitionStrokeWidth(d3.select("#_"+secondStationSelected));
 					transitionBorderWidth(d3.select("#secondChoiceZone"));
+					d3.select('#start').attr("style","display: none;");
+					d3.select("#stat").attr("style","display: inline-block; float: right; position: absolute; bottom: 0; top: 0;");
+					d3.select("#radarChart").attr("style","display: inline-block; position: relative;");
+					CreateStat(data, firstStationSelected, secondStationSelected);
 					CreateGlyph(data, firstStationSelected, secondStationSelected);
 				});
 
@@ -228,13 +247,16 @@
 					tooltip.classed("hidden", true);
 				})
 				.on("click", function(d){
-					d3.select('#start').select("svg1").remove();
 					transitionStrokeWidth(d3.select(this));
+					d3.select('#start').attr("style","display: none;");
+					d3.select("#stat").attr("style","display: inline-block; float: right; position: absolute; bottom: 0; top: 0;");
+					d3.select("#radarChart").attr("style","display: inline-block; position: relative;");
 					if (firstStationSelected) {
 						secondStationSelected = d.code;
 						var secondStationName = getName(nodes, secondStationSelected);
 						secondDropdown.property("value", secondStationName);
 						transitionBorderWidth(d3.select("#secondChoiceZone"));
+						CreateStat(data, firstStationSelected, secondStationSelected);
 						CreateGlyph(data, firstStationSelected, secondStationSelected);
 					}
 					else {
@@ -242,6 +264,7 @@
 						var firstStationName = getName(nodes, firstStationSelected);
 						firstDropdown.property("value", firstStationName);
 						transitionBorderWidth(d3.select("#firstChoiceZone"));
+						CreateStat(data, firstStationSelected, secondStationSelected);
 						CreateGlyph(data, firstStationSelected, secondStationSelected);
 					}
 				})
