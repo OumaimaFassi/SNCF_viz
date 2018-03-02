@@ -1,0 +1,12 @@
+Possibles points d'amélioration : 
+- Ajouter un bar chart pour les motifs de déplacement
+- Ajouter un tooltip sur chaque icône
+- Retravailler l'agencement des différentes parties
+- Ajouter des titres, voire des explications (notamment: aucun mode d'accès n'est affiché <==> donnée indisponible)
+- Trouver une solution aux échelles des icônes et à leur placement
+- Ajouter des transitions dynamiques (notamment pour le glyphe)
+- Simplifier et améliorer le code CreateStat.js
+- Globaliser la taille des carrés
+- Correction du bug où la gare 1 a un nom trop long
+- Sur le glyphe : hover sur un score ==> le score prend la couleur de la gare
+- Echelle légendée sur le glyphe : arrondir les valeurs ?
