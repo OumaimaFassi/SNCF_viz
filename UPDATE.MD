@@ -5,7 +5,15 @@ Possibles points d'amélioration :
 - Ajouter des explications (notamment: aucun mode d'accès n'est affiché <==> donnée indisponible)
 - Trouver une solution aux échelles des icônes et à leur placement
 - Ajouter des transitions dynamiques (notamment pour le glyphe)
-- Simplifier et améliorer le code CreateStat.js
-- Globaliser la taille des carrés
 - Sur le glyphe : hover sur un score ==> le score prend la couleur de la gare
 - Echelle légendée sur le glyphe : arrondir les valeurs ?
+- l'echelle ne permet pas de faire apparaitre les valeurs extremes, dommage!
+- afficher le réseau ferré de France
+- Button reset au lieu de réinitialiser les deux dropdowns
+- Effectif d'une gare par rapport aux autres (ou classement?)
+- Trouver une alternative aux icônes à fond coloré dans le cas où on compare plus de 2 gares
+- Possibilité de filtrer la carte avec uniquement les gares qui ont un babyfoot par exemple
+- Opacité du bleu sur les icônes
+- Avec les chiffres du radar chart : score global pour la gare ? => classement des gares ?
+- Simplifier et améliorer le code CreateStat.js
+- Globaliser la taille des carrés
