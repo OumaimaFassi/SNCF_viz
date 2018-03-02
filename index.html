@@ -14,27 +14,19 @@
 	.hidden {display: none;}
 	div.tooltip {color: #222; background-color: #fff; padding: .5em; text-shadow: #f5f5f5 0 1px 0; border-radius: 2px; opacity: 0.9; position: absolute;}
 	rect {opacity: 1;}
+	.titre {font-weight: bold; font-size: 1.3em;}
   </style>
 </head>
 
 <body>
-	<div id="thibaultPart" style="display: inline-block;">
+	<div id="firstColumn" style="display: inline-block; height: 100%; border-right: 3px solid grey; margin-left: 10px; margin-right: 50px;">
 		<div id="mapZone"></div>
 	</div>
-	<div id = "start" style="display: inline-block; float: right;"></div>
-	<div id ="stat" style="display: inline-block; float: right; position: absolute; bottom: 0; top: 0;"></div>
+	<div id = "start" style="display: inline-block; height: 100%; width: 45%; float: right;"><p class="titre" style="margin-top: 50%; text-align: center;">Veuillez sélectionner 1 ou 2 gare(s)</p></div>
+	<div id ="stat" style="display: inline-block; float: right; position: absolute;"></div>
 	<div id ="radarChart" style="display: inline-block; position: relative;"></div>
+	</div>
 	<script>
-	var svg1 = d3.select("#start").append("svg")
-      .attr("width", 500)
-      .attr("height", 1000);
-
-    svg1.append("text")
-      .text("Veuillez sélectionner 1 ou 2 gare(s)")
-      .attr("y", 50)
-      .attr("x", 50)
-      .attr("font-size", 20);
-	
 	var statSvg = d3.select("#stat").append("svg")
 		.attr("width", 700)
 		.attr("height", 400);
@@ -44,8 +36,8 @@
 	
 	var x_divertissements1= 170,
 		x_divertissements2= x_divertissements1 + 18,
-		y_divertissements = 95,
-		y_acces = 140,
+		y_divertissements = 125,
+		y_acces = 170,
 		histo_acces = statSvg.append("g").attr("transform","translate(0,30)");;
 	
     var width = 650,
@@ -55,8 +47,13 @@
 		.append("svg")
 		.attr("width", width)
 		.attr("height", height);
-		
-	var tooltip = d3.select('#thibaultPart').append('div')
+
+	svg.append("text")
+		.attr("class","titre")
+		.attr("y",30)
+		.text("Sélection de gare(s)");
+	
+	var tooltip = d3.select('#firstColumn').append('div')
         .attr('class', 'hidden tooltip');
     
     var projection = d3.geoConicConformal().center([2.454071, 46.279229]).scale(2800)
@@ -151,7 +148,7 @@
 			negColorScale.domain(nodes.map(function(d) {if (d.variation<0) {return d.variation; }}));
 			posColorScale.domain(nodes.map(function(d) {if (d.variation>0) {return d.variation; }}));
 			
-			var firstChoiceZone = d3.select("#thibaultPart")
+			var firstChoiceZone = d3.select("#firstColumn")
 				.append("div")
 				.attr("class","choiceZone")
 				.attr("id","firstChoiceZone")
@@ -171,7 +168,7 @@
 					transitionStrokeWidth(d3.select("#_"+firstStationSelected));
 					transitionBorderWidth(d3.select("#firstChoiceZone"));
 					d3.select('#start').attr("style","display: none;");
-					d3.select("#stat").attr("style","display: inline-block; float: right; position: absolute; bottom: 0; top: 0;");
+					d3.select("#stat").attr("style","display: inline-block; float: right; position: absolute;");
 					d3.select("#radarChart").attr("style","display: inline-block; position: relative;");
 					CreateStat(data, firstStationSelected, secondStationSelected);
 					CreateGlyph(data, firstStationSelected, secondStationSelected);
@@ -183,9 +180,9 @@
 				.append("option")
 				.text(function(d) {return d.name; });
 				
-			d3.select("#thibaultPart").append("div").attr("style", "width:50%");
+			d3.select("#firstColumn").append("div").attr("style", "width:50%");
 			
-			var secondChoiceZone = d3.select("#thibaultPart")
+			var secondChoiceZone = d3.select("#firstColumn")
 				.append("div")
 				.attr("class","choiceZone")
 				.attr("id","secondChoiceZone")
@@ -205,7 +202,7 @@
 					transitionStrokeWidth(d3.select("#_"+secondStationSelected));
 					transitionBorderWidth(d3.select("#secondChoiceZone"));
 					d3.select('#start').attr("style","display: none;");
-					d3.select("#stat").attr("style","display: inline-block; float: right; position: absolute; bottom: 0; top: 0;");
+					d3.select("#stat").attr("style","display: inline-block; float: right; position: absolute;");
 					d3.select("#radarChart").attr("style","display: inline-block; position: relative;");
 					CreateStat(data, firstStationSelected, secondStationSelected);
 					CreateGlyph(data, firstStationSelected, secondStationSelected);
@@ -249,7 +246,7 @@
 				.on("click", function(d){
 					transitionStrokeWidth(d3.select(this));
 					d3.select('#start').attr("style","display: none;");
-					d3.select("#stat").attr("style","display: inline-block; float: right; position: absolute; bottom: 0; top: 0;");
+					d3.select("#stat").attr("style","display: inline-block; float: right; position: absolute;");
 					d3.select("#radarChart").attr("style","display: inline-block; position: relative;");
 					if (firstStationSelected) {
 						secondStationSelected = d.code;
@@ -274,7 +271,7 @@
 					
 			var legend = svg.append("g")
 				.attr("class","legend")
-				.attr("transform", function(d) {return "translate(" + (width -150) + "," + 30 + ")"; });
+				.attr("transform", function(d) {return "translate(" + (width -150) + "," + 60 + ")"; });
 			
 			var legendRadius = legend.append("g").attr("id","radius");
 			

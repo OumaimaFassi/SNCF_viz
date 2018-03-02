@@ -2,7 +2,7 @@ function CreateStat(data, firstStationSelected, secondStationSelected) {
 	statG.selectAll("*").remove();
 	
 	if (firstStationSelected == null && secondStationSelected == null) {
-		d3.select("#start").attr("style","display: inline-block; float: right;");
+		d3.select("#start").attr("style","display: inline-block; height: 100%; width: 45%; float: right;");
 		d3.select("#stat").attr("style","display: none");
 		d3.select("#radarChart").attr("style","display: none");
 	}
@@ -80,19 +80,27 @@ function pushInfo(d,divertissements,acces,motif){
 };
 
 function refreshText(data,gare1,gare2){
-  // emplacement du texte 'nom des gares'
+	//titre
+	statG.append("text")
+		.attr("class","titre")
+		.attr("id","caracteristiques")
+		.attr("y", 0)
+		.attr("x", 0)
+		.text("Caractéristiques");
+	
+	// emplacement du texte 'nom des gares'
 	statG.append("text")
 		.attr("id","nom")
 		.text("Nom")
-		.attr("y", 0)
+		.attr("y", +d3.select("#caracteristiques").attr("y")+30)
 		.attr("x", 0)
-		.attr("text-anchor","start")
+		.attr("text-anchor","start");
 	
 	// emplacement du text 'nombre de voyageurs'
 	statG.append("text")
 		.attr("id","Nombredevoyageurs")
 		.text("Voyageurs en 2016")
-		.attr("y", 30)
+		.attr("y", +d3.select("#nom").attr("y")+30)
 		.attr("x", 0)
 		.attr("text-anchor","start")
 	
@@ -100,21 +108,22 @@ function refreshText(data,gare1,gare2){
 	statG.append("text")
 		.attr("id","Variation")
 		.text("Variation par rapport à 2015")
-		.attr("y", 60)
+		.attr("y", +d3.select("#Nombredevoyageurs").attr("y")+30)
 		.attr("x", 0)
 		.attr("text-anchor","start")
 		
 	// emplacement du text 'Divertissement'
 	statG.append("text")
+		.attr("id","Divertissements")
 		.text("Divertissements")
-		.attr("y", 100)
+		.attr("y", +d3.select("#Variation").attr("y")+40)
 		.attr("x", 0)
 		.attr("text-anchor","start")
 		
 	// emplacement du text "Moyens d'acces"
 	statG.append("text")
 		.text("Moyens d'accès")
-		.attr("y", 145)
+		.attr("y", +d3.select("#Divertissements").attr("y")+45)
 		.attr("x", 0)
 		.attr("text-anchor","start")
 	
@@ -131,20 +140,20 @@ function refreshText(data,gare1,gare2){
 		// emplacement du nom de la gare 1
 		statG.append("text")
 			.attr("id","nom1")
-			.attr("y", 0)
-			.attr("x", function(){return d3.select("#nom").attr("x")+275})
+			.attr("y", +d3.select("#nom").attr("y"))
+			.attr("x", +d3.select("#nom").attr("x")+275)
 			.attr("text-anchor","end")
 			
 		statG.append("text")
 			.attr("id","valeur_voyageurs")
-			.attr("y", 30)
-			.attr("x", function(){return d3.select("#Nombredevoyageurs").attr("x")+275})
+			.attr("y", +d3.select("#Nombredevoyageurs").attr("y"))
+			.attr("x", +d3.select("#Nombredevoyageurs").attr("x")+275)
 			.attr("text-anchor","end")
 		
 		statG.append("text")
 			.attr("id","valeur_variation")
-			.attr("y", 60)
-			.attr("x", function(){return d3.select("#Variation").attr("x")+275})
+			.attr("y", +d3.select("#Variation").attr("y"))
+			.attr("x", +d3.select("#Variation").attr("x")+275)
 			.style("text-anchor","end")
 	};
 	
@@ -152,20 +161,20 @@ function refreshText(data,gare1,gare2){
 		// emplacement du nom de la gare 2
 		statG.append("text")
 			.attr("id","nom2")
-			.attr("y", 0)
-			.attr("x", function(){return d3.select("#nom").attr("x")+300})
+			.attr("y", +d3.select("#nom").attr("y"))
+			.attr("x", +d3.select("#nom").attr("x")+300)
 			.attr("text-anchor","start")
 			
 		statG.append("text")
 			.attr("id","valeur_voyageurs2")
-			.attr("y", 30)
-			.attr("x", function(){return d3.select("#Nombredevoyageurs").attr("x")+300})
+			.attr("y", +d3.select("#Nombredevoyageurs").attr("y"))
+			.attr("x", +d3.select("#Nombredevoyageurs").attr("x")+300)
 			.attr("text-anchor","start")
 		
 		statG.append("text")
 			.attr("id","valeur_variation2")
-			.attr("y", 60)
-			.attr("x", function(){return d3.select("#Variation").attr("x")+300})
+			.attr("y", +d3.select("#Variation").attr("y"))
+			.attr("x", +d3.select("#Variation").attr("x")+300)
 			.style("text-anchor","start")
 	};
 	
