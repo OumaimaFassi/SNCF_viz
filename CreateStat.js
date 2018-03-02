@@ -2,7 +2,7 @@ function CreateStat(data, firstStationSelected, secondStationSelected) {
 	statG.selectAll("*").remove();
 	
 	if (firstStationSelected == null && secondStationSelected == null) {
-		d3.select("#start").attr("style","display: inline-block; height: 100%; width: 45%; float: right;");
+		d3.select("#start").attr("style","display: block; height: 100%; width: 100%;");
 		d3.select("#stat").attr("style","display: none");
 		d3.select("#radarChart").attr("style","display: none");
 	}

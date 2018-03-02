@@ -19,12 +19,14 @@
 </head>
 
 <body>
-	<div id="firstColumn" style="display: inline-block; height: 100%; border-right: 3px solid grey; margin-left: 10px; margin-right: 50px;">
+	<div id="firstColumn" style="display: inline-block; float: left; height: 100%; width: 48.7%; padding-left: 1%;">
 		<div id="mapZone"></div>
 	</div>
-	<div id = "start" style="display: inline-block; height: 100%; width: 45%; float: right;"><p class="titre" style="margin-top: 50%; text-align: center;">Veuillez sélectionner 1 ou 2 gare(s)</p></div>
-	<div id ="stat" style="display: inline-block; float: right; position: absolute;"></div>
-	<div id ="radarChart" style="display: inline-block; position: relative;"></div>
+	<div id="separation" style="display: inline-block; float: left; height: 100%; width: 0.3%; background-color: grey;"></div>
+	<div id="secondColumn" style="display: inline-block; float: left; height: 100%; width: 49%; padding-left: 1%;">
+		<div id = "start" style="height: 100%; width: 100%"><p class="titre" style="margin-top: 40%; text-align: center;">Veuillez sélectionner 1 ou 2 gare(s)</p></div>
+		<div id ="stat" style="display: none;"></div>
+		<div id ="radarChart" style="display: none;"></div>
 	</div>
 	<script>
 	var statSvg = d3.select("#stat").append("svg")
@@ -97,13 +99,19 @@
 		element
 			.transition().duration(400).style("stroke-width", 10)
 			.transition().style("stroke-width", 1);
-	}
+	};
 	
 	function transitionBorderWidth(element) {
 		element
 			.transition().duration(400).style("border-width", "6px")
 			.transition().style("border-width", "1px");
-	}
+	};
+	
+	function showStats() {
+		d3.select('#start').attr("style","display: none;");
+		d3.select("#stat").attr("style","display: block; height: 50%; width: 100%;");
+		d3.select("#radarChart").attr("style","display: block; height: 50%; width: 100%;");
+	};
 	
 	d3.json("cleaned_datasets/regions.geojson", function(json) {
 		d3.csv("cleaned_datasets/all-joined-datasets.csv", function(data) {
@@ -167,9 +175,7 @@
 					firstStationSelected = getCode(nodes, nameSelected);
 					transitionStrokeWidth(d3.select("#_"+firstStationSelected));
 					transitionBorderWidth(d3.select("#firstChoiceZone"));
-					d3.select('#start').attr("style","display: none;");
-					d3.select("#stat").attr("style","display: inline-block; float: right; position: absolute;");
-					d3.select("#radarChart").attr("style","display: inline-block; position: relative;");
+					showStats();
 					CreateStat(data, firstStationSelected, secondStationSelected);
 					CreateGlyph(data, firstStationSelected, secondStationSelected);
 				});
@@ -201,9 +207,7 @@
 					secondStationSelected = getCode(nodes, nameSelected);
 					transitionStrokeWidth(d3.select("#_"+secondStationSelected));
 					transitionBorderWidth(d3.select("#secondChoiceZone"));
-					d3.select('#start').attr("style","display: none;");
-					d3.select("#stat").attr("style","display: inline-block; float: right; position: absolute;");
-					d3.select("#radarChart").attr("style","display: inline-block; position: relative;");
+					showStats();
 					CreateStat(data, firstStationSelected, secondStationSelected);
 					CreateGlyph(data, firstStationSelected, secondStationSelected);
 				});
@@ -245,9 +249,7 @@
 				})
 				.on("click", function(d){
 					transitionStrokeWidth(d3.select(this));
-					d3.select('#start').attr("style","display: none;");
-					d3.select("#stat").attr("style","display: inline-block; float: right; position: absolute;");
-					d3.select("#radarChart").attr("style","display: inline-block; position: relative;");
+					showStats();
 					if (firstStationSelected) {
 						secondStationSelected = d.code;
 						var secondStationName = getName(nodes, secondStationSelected);
