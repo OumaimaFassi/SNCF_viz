@@ -83,7 +83,7 @@ function refreshText(data,gare1,gare2){
   // emplacement du texte 'nom des gares'
 	statG.append("text")
 		.attr("id","nom")
-		.text("Nom des gares")
+		.text("Nom")
 		.attr("y", 0)
 		.attr("x", 0)
 		.attr("text-anchor","start")
@@ -91,7 +91,7 @@ function refreshText(data,gare1,gare2){
 	// emplacement du text 'nombre de voyageurs'
 	statG.append("text")
 		.attr("id","Nombredevoyageurs")
-		.text("Nombre de voyageurs")
+		.text("Voyageurs en 2016")
 		.attr("y", 30)
 		.attr("x", 0)
 		.attr("text-anchor","start")

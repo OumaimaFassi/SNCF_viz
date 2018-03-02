@@ -7,6 +7,5 @@ Possibles points d'amélioration :
 - Ajouter des transitions dynamiques (notamment pour le glyphe)
 - Simplifier et améliorer le code CreateStat.js
 - Globaliser la taille des carrés
-- Correction du bug où la gare 1 a un nom trop long
 - Sur le glyphe : hover sur un score ==> le score prend la couleur de la gare
 - Echelle légendée sur le glyphe : arrondir les valeurs ?
