@@ -73,7 +73,7 @@
 	var posColorScale = d3.scaleQuantile()
 		.range(["rgb(177, 236, 177)","rgb(124, 192, 124)","rgb(68, 162, 68)","rgb(0, 128, 0)"]);
 	
-	function color(variation) {
+	function colorQuantile(variation) {
 		if (variation<0){return negColorScale(variation); }
 		else if (variation>0) {return posColorScale(variation); }
 		else {return "white"; };
@@ -104,13 +104,41 @@
 	function transitionBorderWidth(element) {
 		element
 			.transition().duration(400).style("border-width", "6px")
-			.transition().style("border-width", "1px");
+			.transition().style("border-width", "2px");
 	};
 	
 	function showStats() {
 		d3.select('#start').attr("style","display: none;");
 		d3.select("#stat").attr("style","display: block; height: 50%; width: 100%;");
 		d3.select("#radarChart").attr("style","display: block; height: 50%; width: 100%;");
+	};
+	
+	function firstStationChange(data, firstStationSelected, secondStationSelected) {
+		transitionStrokeWidth(d3.select("#_"+firstStationSelected));
+		transitionBorderWidth(d3.select("#firstChoiceZone"));
+		showStats();
+		CreateStat(data, firstStationSelected, secondStationSelected);
+		CreateGlyph(data, firstStationSelected, secondStationSelected);
+		if (firstStationSelected){
+			d3.select("#firstCross").attr("style","display: inline-block");
+		}
+		else {
+			d3.select("#firstCross").attr("style","display: none");
+		}		
+	};
+	
+	function secondStationChange(data, firstStationSelected, secondStationSelected) {
+		transitionStrokeWidth(d3.select("#_"+secondStationSelected));
+		transitionBorderWidth(d3.select("#secondChoiceZone"));
+		showStats();
+		CreateStat(data, firstStationSelected, secondStationSelected);
+		CreateGlyph(data, firstStationSelected, secondStationSelected);	
+		if (secondStationSelected){
+			d3.select("#secondCross").attr("style","display: inline-block");
+		}
+		else {
+			d3.select("#secondCross").attr("style","display: none");
+		}
 	};
 	
 	d3.json("cleaned_datasets/regions.geojson", function(json) {
@@ -173,9 +201,20 @@
 				.on("change",function(d) {
 					var nameSelected = d3.select(this).property("value");
 					firstStationSelected = getCode(nodes, nameSelected);
-					transitionStrokeWidth(d3.select("#_"+firstStationSelected));
+					firstStationChange(data, firstStationSelected, secondStationSelected);
+				});
+			
+			firstChoiceZone.append("button")
+				.attr("id","firstCross")
+				.attr("type","button")
+				.attr("style","display: none;")
+				.html("&#10060;")
+				.on("click", function(){
+					firstStationSelected=null;
+					var firstStationName = getName(nodes, firstStationSelected);
+					firstDropdown.property("value", firstStationName);
 					transitionBorderWidth(d3.select("#firstChoiceZone"));
-					showStats();
+					d3.select(this).attr("style", "display: none;")
 					CreateStat(data, firstStationSelected, secondStationSelected);
 					CreateGlyph(data, firstStationSelected, secondStationSelected);
 				});
@@ -205,9 +244,20 @@
 				.on("change",function() {
 					var nameSelected = d3.select(this).property("value");
 					secondStationSelected = getCode(nodes, nameSelected);
-					transitionStrokeWidth(d3.select("#_"+secondStationSelected));
+					secondStationChange(data, firstStationSelected, secondStationSelected);
+				});
+				
+			secondChoiceZone.append("button")
+				.attr("id","secondCross")
+				.attr("type","button")
+				.attr("style","display: none;")
+				.html("&#10060;")
+				.on("click", function(){
+					secondStationSelected=null;
+					var secondStationName = getName(nodes, secondStationSelected);
+					secondDropdown.property("value", secondStationName);
 					transitionBorderWidth(d3.select("#secondChoiceZone"));
-					showStats();
+					d3.select(this).attr("style", "display: none;");
 					CreateStat(data, firstStationSelected, secondStationSelected);
 					CreateGlyph(data, firstStationSelected, secondStationSelected);
 				});
@@ -233,7 +283,7 @@
 				.attr("id", function(d) {return "_"+d.code; })
 				.attr("r", function(d) {return d.radius; })
 				.style("stroke","black")
-				.attr("fill", function(d) {return color(d.variation); })
+				.attr("fill", function(d) {return colorQuantile(d.variation); })
 				.on("mousemove", function(d) {
 					var mouse = d3.mouse(svg.node()).map(function(d) {return parseInt(d); });
 					tooltip.classed("hidden", false)
@@ -244,27 +294,22 @@
 					d3.select(this).transition().attr("fill", colorInteraction());
 				})
 				.on("mouseleave", function(){
-					d3.select(this).transition().attr("fill", function(d){return color(d.variation); }).style("stroke-width", 1);
+					d3.select(this).transition().attr("fill", function(d){return colorQuantile(d.variation); }).style("stroke-width", 1);
 					tooltip.classed("hidden", true);
 				})
 				.on("click", function(d){
-					transitionStrokeWidth(d3.select(this));
 					showStats();
 					if (firstStationSelected) {
 						secondStationSelected = d.code;
 						var secondStationName = getName(nodes, secondStationSelected);
 						secondDropdown.property("value", secondStationName);
-						transitionBorderWidth(d3.select("#secondChoiceZone"));
-						CreateStat(data, firstStationSelected, secondStationSelected);
-						CreateGlyph(data, firstStationSelected, secondStationSelected);
+						secondStationChange(data, firstStationSelected, secondStationSelected);
 					}
 					else {
 						firstStationSelected = d.code;
 						var firstStationName = getName(nodes, firstStationSelected);
 						firstDropdown.property("value", firstStationName);
-						transitionBorderWidth(d3.select("#firstChoiceZone"));
-						CreateStat(data, firstStationSelected, secondStationSelected);
-						CreateGlyph(data, firstStationSelected, secondStationSelected);
+						firstStationChange(data, firstStationSelected, secondStationSelected);
 					}
 				})
 				.merge(gare)
