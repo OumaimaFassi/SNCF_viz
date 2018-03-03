@@ -79,11 +79,11 @@
 		else {return "white"; };
 	};
 	
-	var firstStationSelected = null;
-	var secondStationSelected = null;
+	var gare1 = null;
+	var gare2 = null;
 	
 	function colorInteraction() {
-		if (firstStationSelected) {return "darkorange"; }
+		if (gare1) {return "darkorange"; }
 		else {return "blue"; };
 	}
 	
@@ -113,13 +113,13 @@
 		d3.select("#radarChart").attr("style","display: block; height: 50%; width: 100%;");
 	};
 	
-	function firstStationChange(data, firstStationSelected, secondStationSelected) {
-		transitionStrokeWidth(d3.select("#_"+firstStationSelected));
+	function firstStationChange(data, gare1, gare2) {
+		transitionStrokeWidth(d3.select("#_"+gare1));
 		transitionBorderWidth(d3.select("#firstChoiceZone"));
 		showStats();
-		CreateStat(data, firstStationSelected, secondStationSelected);
-		CreateGlyph(data, firstStationSelected, secondStationSelected);
-		if (firstStationSelected){
+		CreateStat(data, gare1, gare2);
+		CreateGlyph(data, gare1, gare2);
+		if (gare1){
 			d3.select("#firstCross").attr("style","display: inline-block");
 		}
 		else {
@@ -127,13 +127,13 @@
 		}		
 	};
 	
-	function secondStationChange(data, firstStationSelected, secondStationSelected) {
-		transitionStrokeWidth(d3.select("#_"+secondStationSelected));
+	function secondStationChange(data, gare1, gare2) {
+		transitionStrokeWidth(d3.select("#_"+gare2));
 		transitionBorderWidth(d3.select("#secondChoiceZone"));
 		showStats();
-		CreateStat(data, firstStationSelected, secondStationSelected);
-		CreateGlyph(data, firstStationSelected, secondStationSelected);	
-		if (secondStationSelected){
+		CreateStat(data, gare1, gare2);
+		CreateGlyph(data, gare1, gare2);	
+		if (gare2){
 			d3.select("#secondCross").attr("style","display: inline-block");
 		}
 		else {
@@ -200,8 +200,8 @@
 				.attr("style","font-weight: bold;")
 				.on("change",function(d) {
 					var nameSelected = d3.select(this).property("value");
-					firstStationSelected = getCode(nodes, nameSelected);
-					firstStationChange(data, firstStationSelected, secondStationSelected);
+					gare1 = getCode(nodes, nameSelected);
+					firstStationChange(data, gare1, gare2);
 				});
 			
 			firstChoiceZone.append("button")
@@ -210,13 +210,13 @@
 				.attr("style","display: none;")
 				.html("&#10060;")
 				.on("click", function(){
-					firstStationSelected=null;
-					var firstStationName = getName(nodes, firstStationSelected);
+					gare1=null;
+					var firstStationName = getName(nodes, gare1);
 					firstDropdown.property("value", firstStationName);
 					transitionBorderWidth(d3.select("#firstChoiceZone"));
 					d3.select(this).attr("style", "display: none;")
-					CreateStat(data, firstStationSelected, secondStationSelected);
-					CreateGlyph(data, firstStationSelected, secondStationSelected);
+					CreateStat(data, gare1, gare2);
+					CreateGlyph(data, gare1, gare2);
 				});
 
 			var firstOptions = firstDropdown
@@ -243,8 +243,8 @@
 				.attr("style","font-weight: bold;")
 				.on("change",function() {
 					var nameSelected = d3.select(this).property("value");
-					secondStationSelected = getCode(nodes, nameSelected);
-					secondStationChange(data, firstStationSelected, secondStationSelected);
+					gare2 = getCode(nodes, nameSelected);
+					secondStationChange(data, gare1, gare2);
 				});
 				
 			secondChoiceZone.append("button")
@@ -253,13 +253,13 @@
 				.attr("style","display: none;")
 				.html("&#10060;")
 				.on("click", function(){
-					secondStationSelected=null;
-					var secondStationName = getName(nodes, secondStationSelected);
+					gare2=null;
+					var secondStationName = getName(nodes, gare2);
 					secondDropdown.property("value", secondStationName);
 					transitionBorderWidth(d3.select("#secondChoiceZone"));
 					d3.select(this).attr("style", "display: none;");
-					CreateStat(data, firstStationSelected, secondStationSelected);
-					CreateGlyph(data, firstStationSelected, secondStationSelected);
+					CreateStat(data, gare1, gare2);
+					CreateGlyph(data, gare1, gare2);
 				});
 
 			var secondOptions = secondDropdown
@@ -299,17 +299,17 @@
 				})
 				.on("click", function(d){
 					showStats();
-					if (firstStationSelected) {
-						secondStationSelected = d.code;
-						var secondStationName = getName(nodes, secondStationSelected);
+					if (gare1) {
+						gare2 = d.code;
+						var secondStationName = getName(nodes, gare2);
 						secondDropdown.property("value", secondStationName);
-						secondStationChange(data, firstStationSelected, secondStationSelected);
+						secondStationChange(data, gare1, gare2);
 					}
 					else {
-						firstStationSelected = d.code;
-						var firstStationName = getName(nodes, firstStationSelected);
+						gare1 = d.code;
+						var firstStationName = getName(nodes, gare1);
 						firstDropdown.property("value", firstStationName);
-						firstStationChange(data, firstStationSelected, secondStationSelected);
+						firstStationChange(data, gare1, gare2);
 					}
 				})
 				.merge(gare)

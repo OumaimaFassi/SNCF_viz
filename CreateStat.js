@@ -1,14 +1,12 @@
-function CreateStat(data, firstStationSelected, secondStationSelected) {
+function CreateStat(data, gare1, gare2) {
 	statG.selectAll("*").remove();
 	
-	if (firstStationSelected == null && secondStationSelected == null) {
+	if (gare1 == null && gare2 == null) {
 		d3.select("#start").attr("style","display: block; height: 100%; width: 100%;");
 		d3.select("#stat").attr("style","display: none");
 		d3.select("#radarChart").attr("style","display: none");
 	}
 	else {
-		var gare1 = firstStationSelected,
-			gare2 = secondStationSelected,
 			divertissements1 = [{uic: gare1}], //json avec les divertissements en gare1
 			divertissements2 = [{uic: gare2}], //json avec les divertissements en gare2
 			acces1 = [{uic: gare1}], //json avec les moyens d'acces en gare1
