@@ -165,7 +165,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
     //Append the labels at each axis (Proprete..)
     axis.append("text")
         .attr("class", "legend")
-        .style("font-size", "11px")
+        .style("font-size", "9px")
         .attr("text-anchor", "middle")
         .attr("dy", "0.35em")
         .attr("x", (d,i) => rScale(maxValue * cfg.labelFactor) * cos(angleSlice * i - HALF_PI))
