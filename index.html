@@ -21,6 +21,17 @@
 <body>
 	<div id="firstColumn" style="display: inline-block; float: left; height: 100%; width: 48.7%; padding-left: 1%;">
 		<div id="mapZone"></div>
+		<div class="choiceZone" style="font-size: 0.8em">
+			<p><strong>Afficher les gares équipées de :</strong></p>
+			<p>
+				<label>Wifi<input type="checkbox" name="wifi" value="true"></label>
+				<label style="margin-left: 20px">Babyfoot(s)<input type="checkbox" name="foosball" value="true"></label>
+				<label style="margin-left: 20px">Prises électriques<input type="checkbox" name="powerstation" value="true"></label>
+				<label style="margin-left: 20px">Piano(s)<input type="checkbox" name="piano" value="true"></label>
+				<label style="margin-left: 20px">Distributeur(s) d'histoires courtes<input type="checkbox" name="stories" value="true"></label>
+			</p>
+			<br/>
+		</div>
 	</div>
 	<div id="separation" style="display: inline-block; float: left; height: 100%; width: 0.3%; background-color: grey;"></div>
 	<div id="secondColumn" style="display: inline-block; float: left; height: 100%; width: 49%; padding-left: 1%;">
@@ -43,7 +54,7 @@
 		histo_acces = statSvg.append("g").attr("transform","translate(0,30)");;
 	
     var width = 650,
-		height = 520;
+		height = 490;
 		
 	var svg = d3.select("#mapZone")
 		.append("svg")
@@ -55,11 +66,11 @@
 		.attr("y",30)
 		.text("Sélection de gare(s)");
 	
-	var tooltip = d3.select('#firstColumn').append('div')
-        .attr('class', 'hidden tooltip');
+	var tooltip = d3.select("#firstColumn").append("div")
+        .attr("class", "hidden tooltip");
     
     var projection = d3.geoConicConformal().center([2.454071, 46.279229]).scale(2800)
-		.translate([width/2.3, height/1.8]);
+		.translate([width/2.5, height/1.7]);
 
     var path = d3.geoPath()
     	.projection(projection);
@@ -108,13 +119,13 @@
 	};
 	
 	function showStats() {
-		d3.select('#start').attr("style","display: none;");
+		d3.select("#start").attr("style","display: none;");
 		d3.select("#stat").attr("style","display: block; height: 50%; width: 100%;");
 		d3.select("#radarChart").attr("style","display: block; height: 50%; width: 100%;");
 	};
 	
 	function firstStationChange(data, gare1, gare2) {
-		transitionStrokeWidth(d3.select("#_"+gare1));
+		transitionStrokeWidth(d3.select("#gares").selectAll("circle").filter(function(d){return (d.code == gare1); }));
 		transitionBorderWidth(d3.select("#firstChoiceZone"));
 		showStats();
 		CreateStat(data, gare1, gare2);
@@ -128,7 +139,7 @@
 	};
 	
 	function secondStationChange(data, gare1, gare2) {
-		transitionStrokeWidth(d3.select("#_"+gare2));
+		transitionStrokeWidth(d3.select("#gares").selectAll("circle").filter(function(d){return (d.code == gare2); }));
 		transitionBorderWidth(d3.select("#secondChoiceZone"));
 		showStats();
 		CreateStat(data, gare1, gare2);
@@ -141,20 +152,29 @@
 		}
 	};
 	
+	function hasOneOrMore(d){
+		if(d>0){
+			return true;
+		}
+		else{
+			return false;
+		}
+	};
+	
 	d3.json("cleaned_datasets/regions.geojson", function(json) {
 		d3.csv("cleaned_datasets/all-joined-datasets.csv", function(data) {
 			
 			radiusScale.domain(data.map(function(d) {return +d.voyageurs_2016; }));
 		
-			var regions = svg.append("g").attr("class","regions");
+			var regions = svg.append("g").attr("id","regions");
 		
-			var fond = regions.selectAll("g").data(json.features).enter().append("g").attr("class","region").attr("id",function(d) {return d.properties.nom; })
+			var fond = regions.selectAll("g").data(json.features).enter().append("g")
 				.append("path")
 				.attr("d", path)
 				.attr("fill","#FFFCD1")
 				.attr("stroke","#FEB162");
 			
-			var gares = svg.append("g").attr("class","gares");
+			var gares = svg.append("g").attr("id","gares");
 			var nodes = [{
 				code: null,
 				radius: null,
@@ -163,7 +183,12 @@
 				cy: null,
 				name: "- Aucune gare sélectionnée -",
 				county: null,
-				region: null
+				region: null,
+				wifi: null,
+				foosball: null,
+				powerstation: null,
+				piano: null,
+				stories: null
 			}];
 			
 			data.forEach(function (d) {
@@ -176,14 +201,19 @@
 					y: proj[1],
 					name: d.Nom_de_la_gare,
 					county: d.Departement,
-					region: d.Region
+					region: d.Region,
+					wifi: (d.Wifi === "true"),
+					foosball: hasOneOrMore(+d.Baby_Foot),
+					powerstation: hasOneOrMore(+d.Power_Station),
+					piano: hasOneOrMore(+d.Piano),
+					stories: hasOneOrMore(+d.Distr_Histoires_Courtes)
 				});
 			});
 			
 			nodes.sort(function(a,b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); }); 
 			negColorScale.domain(nodes.map(function(d) {if (d.variation<0) {return d.variation; }}));
 			posColorScale.domain(nodes.map(function(d) {if (d.variation>0) {return d.variation; }}));
-			
+				
 			var firstChoiceZone = d3.select("#firstColumn")
 				.append("div")
 				.attr("class","choiceZone")
@@ -280,14 +310,13 @@
 
 			gare.enter()
 				.append("circle")
-				.attr("id", function(d) {return "_"+d.code; })
 				.attr("r", function(d) {return d.radius; })
 				.style("stroke","black")
 				.attr("fill", function(d) {return colorQuantile(d.variation); })
 				.on("mousemove", function(d) {
 					var mouse = d3.mouse(svg.node()).map(function(d) {return parseInt(d); });
 					tooltip.classed("hidden", false)
-						.attr("style", "left:" + (mouse[0] + 15) + "px; top:" + (mouse[1] - 35) + "px; border: 2px solid "+colorInteraction())
+						.attr("style", "left:" + (mouse[0] + 30) + "px; top:" + (mouse[1] - 35) + "px; border: 2px solid "+colorInteraction())
 						.html("<p><strong>"+d.name+"</strong></p><p> Département : "+d.county+"</p><p> Région : "+d.region+"</p>");
 				})
 				.on("mouseenter", function(){
@@ -328,7 +357,6 @@
 				.data(radiusScale.range().reverse())
 				.enter()
 				.append("g")
-				.attr("id",function(d) {return "_"+d})
 				.attr("transform", function(d,i) {return "translate(" + 15 + "," + (20+i*20) +")"; });
 			
 			eachRadius.append("circle")
@@ -351,16 +379,18 @@
 				.text(function(d,i) {return "De "+d3.format(".2s")(quantilesRadius[i+1])+" à "+d3.format(".2s")(quantilesRadius[i]); } );
 			
 			eachRadius
-				.on("mouseenter", function(){
-					d3.selectAll("circle[r='"+d3.select(this).attr("id")[1]+"']")
+				.on("mouseenter", function(d){
+					d3.select(this).transition().style("stroke-width" ,5);
+					d3.selectAll("circle").filter(function(e){return (e.radius == d); })
 						.transition().style("stroke-width", 5);
 					})
-				.on("mouseleave", function(){
-					d3.selectAll("circle[r='"+d3.select(this).attr("id")[1]+"']")
+				.on("mouseleave", function(d){
+					d3.select(this).transition().style("stroke-width" ,1);
+					d3.selectAll("circle").filter(function(e){return (e.radius == d); })
 						.transition().style("stroke-width", 1);
 				});
 				
-			var legendColor = legend.append("g").attr("id","color").attr("transform","translate(0,"+20*(numberOfIntervalsRadius+2)+")");
+			var legendColor = legend.append("g").attr("id","colorQuantile").attr("transform","translate(0,"+20*(numberOfIntervalsRadius+2)+")");
 			
 			var colorText = legendColor.append("text").attr("style","font-size: 0.8em; font-weight: bold;");
 			colorText.append("tspan").attr("x",0).attr("dy","1em").text("Voyageurs en 2016");
@@ -371,14 +401,13 @@
 				.enter()
 				.append("g")
 				.attr("class","positive")
-				.attr("id",function(d) {return d})
-				.attr("transform", function(d,i) {return "translate(" + 15 + "," + (50+i*20) +")"; });
+				.attr("transform", function(d,i) {return "translate(" + 15 + "," + (50+i*19) +")"; });
 			
 			eachPosColor.append("circle")
 				.style("stroke", "black")
 				.attr("cx", 0)
 				.attr("cy", 0)
-				.attr("r",9.5)
+				.attr("r",9)
 				.attr("fill", function(d) {return d});
 			
 			var quantilesPosColor = [];
@@ -394,12 +423,14 @@
 				.text(function(d,i) {return "De +"+d3.format(".0%")(quantilesPosColor[i+1])+" à +"+d3.format(".0%")(quantilesPosColor[i]); } );
 				
 			eachPosColor
-				.on("mouseenter", function(){
-					d3.selectAll("circle[fill='"+d3.select(this).attr("id")+"']")
+				.on("mouseenter", function(d){
+					d3.select(this).transition().style("stroke-width" ,5);
+					d3.select("#gares").selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
 						.transition().style("stroke-width", 5);
 					})
-				.on("mouseleave", function(){
-					d3.selectAll("circle[fill='"+d3.select(this).attr("id")+"']")
+				.on("mouseleave", function(d){
+					d3.select(this).transition().style("stroke-width" ,1);
+					d3.select("#gares").selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
 						.transition().style("stroke-width", 1);
 				});
 		
@@ -408,14 +439,13 @@
 				.enter()
 				.append("g")
 				.attr("class","negative")
-				.attr("id",function(d) {return d})
-				.attr("transform", function(d,i) {return "translate(" + 15 + "," + (50+20*numberOfIntervalsPosColor+i*20) +")"; });
+				.attr("transform", function(d,i) {return "translate(" + 15 + "," + (50+19*numberOfIntervalsPosColor+i*19) +")"; });
 			
 			eachNegColor.append("circle")
 				.style("stroke", "black")
 				.attr("cx", 0)
 				.attr("cy", 0)
-				.attr("r",9.5)
+				.attr("r",9)
 				.attr("fill", function(d) {return d});
 			
 			var quantilesNegColor = [];
@@ -431,14 +461,18 @@
 				.text(function(d,i) {return "De "+d3.format(".0%")(quantilesNegColor[i+1])+" à "+d3.format(".0%")(quantilesNegColor[i]); } );
 				
 			eachNegColor
-				.on("mouseenter", function(){
-					d3.selectAll("circle[fill='"+d3.select(this).attr("id")+"']")
+				.on("mouseenter", function(d){
+					d3.select(this).transition().style("stroke-width" ,5);
+					d3.select("#gares").selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
 						.transition().style("stroke-width", 5);
 					})
-				.on("mouseleave", function(){
-					d3.selectAll("circle[fill='"+d3.select(this).attr("id")+"']")
+				.on("mouseleave", function(d){
+					d3.select(this).transition().style("stroke-width" ,1);
+					d3.select("#gares").selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
 						.transition().style("stroke-width", 1);
 				});
+				
+			var filter=null;
 		});
 	});
 	</script>
