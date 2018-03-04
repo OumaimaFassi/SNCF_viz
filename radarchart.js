@@ -46,6 +46,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
      roundStrokes: false,   //If true the area and stroke will follow a round path (cardinal-closed)
      color: d3.scaleOrdinal(d3.schemeCategory10),   //Color function,
      format: '.2%',
+     format1 : '.0f',
      unit: '',
      legend: false
     };
@@ -75,6 +76,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
         total = allAxis.length,                 //The number of different axes
         radius = Math.min(cfg.w/2, cfg.h/2),    //Radius of the outermost circle
         Format = d3.format(cfg.format),             //Formatting
+        Format1 = d3.format(cfg.format1),
         angleSlice = Math.PI * 2 / total;       //The width in radians of each "slice"
 
     //Scale for the radius
@@ -138,7 +140,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
        .attr("dy", "0.4em")
        .style("font-size", "10px")
        .attr("fill", "#111111")
-       .text(d => Format(maxValue * d / cfg.levels) + cfg.unit);
+       .text(d => Format1(maxValue * d / cfg.levels) + cfg.unit);
 
   
     //////////////////// Draw the axes //////////////////////
