@@ -19,22 +19,22 @@
 </head>
 
 <body>
-	<div id="firstColumn" style="display: inline-block; float: left; height: 100%; width: 48.7%; padding-left: 1%;">
+	<div id="firstColumn" style="display: inline-block; float: left; height: 100%; width: 665px; padding-left: 15px;">
 		<div id="mapZone"></div>
 		<div class="choiceZone" style="font-size: 0.8em">
 			<p><strong>Afficher les gares équipées de :</strong></p>
 			<p>
 				<label>Wifi<input type="checkbox" name="wifi" value="true"></label>
-				<label style="margin-left: 20px">Babyfoot(s)<input type="checkbox" name="foosball" value="true"></label>
-				<label style="margin-left: 20px">Prises électriques<input type="checkbox" name="powerstation" value="true"></label>
-				<label style="margin-left: 20px">Piano(s)<input type="checkbox" name="piano" value="true"></label>
-				<label style="margin-left: 20px">Distributeur(s) d'histoires courtes<input type="checkbox" name="stories" value="true"></label>
+				<label style="margin-left: 20px">Babyfoot(s)<input type="checkbox" name="foosball"></label>
+				<label style="margin-left: 20px">Prises électriques<input type="checkbox" name="powerstation"></label>
+				<label style="margin-left: 20px">Piano(s)<input type="checkbox" name="piano"></label>
+				<label style="margin-left: 20px">Distributeur(s) d'histoires courtes<input type="checkbox" name="stories"></label>
 			</p>
 			<br/>
 		</div>
 	</div>
-	<div id="separation" style="display: inline-block; float: left; height: 100%; width: 0.3%; background-color: grey;"></div>
-	<div id="secondColumn" style="display: inline-block; float: left; height: 100%; width: 49%; padding-left: 1%;">
+	<div id="separation" style="display: inline-block; float: left; height: 100%; width: 4px; background-color: grey;"></div>
+	<div id="secondColumn" style="display: inline-block; float: left; height: 100%; width: 660px; padding-left: 15px;">
 		<div id = "start" style="height: 100%; width: 100%"><p class="titre" style="margin-top: 40%; text-align: center;">Veuillez sélectionner 1 ou 2 gare(s)</p></div>
 		<div id ="stat" style="display: none;"></div>
 		<div id ="radarChart" style="display: none;"></div>
@@ -120,8 +120,8 @@
 	
 	function showStats() {
 		d3.select("#start").attr("style","display: none;");
-		d3.select("#stat").attr("style","display: block; height: 50%; width: 100%;");
-		d3.select("#radarChart").attr("style","display: block; height: 50%; width: 100%;");
+		d3.select("#stat").attr("style","display: block; height: 318px; width: 100%;");
+		d3.select("#radarChart").attr("style","display: block; height: 318px; width: 100%;");
 	};
 	
 	function firstStationChange(data, gare1, gare2) {
@@ -160,6 +160,25 @@
 			return false;
 		}
 	};
+	
+	function showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox){
+		if (wifiBox.property("checked")){
+			selection = selection.filter(function(d){return (d.wifi == true); });
+		};
+		if (foosballBox.property("checked")){
+			selection = selection.filter(function(d){return (d.foosball == true); });
+		};
+		if (powerstationBox.property("checked")){
+			selection = selection.filter(function(d){return (d.powerstation == true); });
+		};
+		if (pianoBox.property("checked")){
+			selection = selection.filter(function(d){return (d.piano == true); });
+		};
+		if (storiesBox.property("checked")){
+			selection = selection.filter(function(d){return (d.stories == true); });
+		};
+		return selection;
+	}
 	
 	d3.json("cleaned_datasets/regions.geojson", function(json) {
 		d3.csv("cleaned_datasets/all-joined-datasets.csv", function(data) {
@@ -213,7 +232,78 @@
 			nodes.sort(function(a,b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0); }); 
 			negColorScale.domain(nodes.map(function(d) {if (d.variation<0) {return d.variation; }}));
 			posColorScale.domain(nodes.map(function(d) {if (d.variation>0) {return d.variation; }}));
-				
+			
+			var wifiBox = d3.select("input[name='wifi']"),
+				foosballBox = d3.select("input[name='foosball']"),
+				powerstationBox = d3.select("input[name='powerstation']"),
+				pianoBox = d3.select("input[name='piano']"),
+				storiesBox = d3.select("input[name='stories']");
+			
+			wifiBox.on("change",function(){
+				var selection =  d3.select("#gares").selectAll("circle").filter(function(d){return (d.wifi == false); })
+				if (d3.select(this).property("checked")){
+					selection
+						.transition()
+						.style("opacity",0.2); }
+				else {
+					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox)
+						.transition()
+						.style("opacity",1);
+				}
+			});
+			
+			foosballBox.on("change",function(){
+				var selection =  d3.select("#gares").selectAll("circle").filter(function(d){return (d.foosball == false); })
+				if (d3.select(this).property("checked")){
+					selection
+						.transition()
+						.style("opacity",0.2); }
+				else {
+					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox)
+						.transition()
+						.style("opacity",1);
+				}
+			});
+			
+			powerstationBox.on("change",function(){
+				var selection =  d3.select("#gares").selectAll("circle").filter(function(d){return (d.powerstation == false); })
+				if (d3.select(this).property("checked")){
+					selection
+						.transition()
+						.style("opacity",0.2); }
+				else {
+					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox)
+						.transition()
+						.style("opacity",1);
+				}
+			});
+			
+			pianoBox.on("change",function(){
+				var selection =  d3.select("#gares").selectAll("circle").filter(function(d){return (d.piano == false); })
+				if (d3.select(this).property("checked")){
+					selection
+						.transition()
+						.style("opacity",0.2); }
+				else {
+					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox)
+						.transition()
+						.style("opacity",1);
+				}
+			});
+			
+			storiesBox.on("change",function(){
+				var selection =  d3.select("#gares").selectAll("circle").filter(function(d){return (d.stories == false); })
+				if (d3.select(this).property("checked")){
+					selection
+						.transition()
+						.style("opacity",0.2); }
+				else {
+					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox)
+						.transition()
+						.style("opacity",1);
+				}
+			});
+			
 			var firstChoiceZone = d3.select("#firstColumn")
 				.append("div")
 				.attr("class","choiceZone")
@@ -381,12 +471,12 @@
 			eachRadius
 				.on("mouseenter", function(d){
 					d3.select(this).transition().style("stroke-width" ,5);
-					d3.selectAll("circle").filter(function(e){return (e.radius == d); })
+					gares.selectAll("circle").filter(function(e){return (e.radius == d); })
 						.transition().style("stroke-width", 5);
 					})
 				.on("mouseleave", function(d){
 					d3.select(this).transition().style("stroke-width" ,1);
-					d3.selectAll("circle").filter(function(e){return (e.radius == d); })
+					gares.selectAll("circle").filter(function(e){return (e.radius == d); })
 						.transition().style("stroke-width", 1);
 				});
 				
@@ -425,12 +515,12 @@
 			eachPosColor
 				.on("mouseenter", function(d){
 					d3.select(this).transition().style("stroke-width" ,5);
-					d3.select("#gares").selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
+					gares.selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
 						.transition().style("stroke-width", 5);
 					})
 				.on("mouseleave", function(d){
 					d3.select(this).transition().style("stroke-width" ,1);
-					d3.select("#gares").selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
+					gares.selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
 						.transition().style("stroke-width", 1);
 				});
 		
@@ -463,12 +553,12 @@
 			eachNegColor
 				.on("mouseenter", function(d){
 					d3.select(this).transition().style("stroke-width" ,5);
-					d3.select("#gares").selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
+					gares.selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
 						.transition().style("stroke-width", 5);
 					})
 				.on("mouseleave", function(d){
 					d3.select(this).transition().style("stroke-width" ,1);
-					d3.select("#gares").selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
+					gares.selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
 						.transition().style("stroke-width", 1);
 				});
 				
