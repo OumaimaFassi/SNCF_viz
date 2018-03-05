@@ -16,3 +16,4 @@ Oumaïma - Opacité du bleu sur les icônes
 Oumaïma - Avec les chiffres du radar chart : score global pour la gare ? => classement des gares ?
 Thibault - Simplifier et améliorer le code CreateStat.js
 Corentin - Globaliser la taille des carrés
+Thibault - Légende radius et couleur : opacité réduite pour les non concernés

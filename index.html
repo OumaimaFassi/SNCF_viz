@@ -45,13 +45,18 @@
 		.attr("height", 400);
 	
 	var statG = statSvg.append("g")
+		.attr("id","statG")
 		.attr("transform","translate(0,30)");
 	
-	var x_divertissements1= 170,
-		x_divertissements2= x_divertissements1 + 18,
-		y_divertissements = 125,
-		y_acces = 170,
-		histo_acces = statSvg.append("g").attr("transform","translate(0,30)");;
+	var couleur1 = "#41A9E1",
+		couleur2 = "#FF8C00",
+		couleur3 = "D3D3D3",
+		w_rect = 18,
+		h_rect = 36,
+		x_divertissements1 = 220,
+		x_divertissements2= x_divertissements1 + w_rect,
+		y_divertissements = 95,
+		y_acces = 160;
 	
     var width = 650,
 		height = 490;
@@ -94,8 +99,8 @@
 	var gare2 = null;
 	
 	function colorInteraction() {
-		if (gare1) {return "darkorange"; }
-		else {return "blue"; };
+		if (gare1) {return couleur2; }
+		else {return couleur1; };
 	}
 	
 	function getCode(list, name) {
@@ -215,7 +220,7 @@
 				nodes.push({
 					code: d.Code_UIC,
 					radius: radiusScale(+d.voyageurs_2016),
-					variation: (+d.voyageurs_2016 - +d.voyageurs_2015)/+d.voyageurs_2015,
+					variation: +d.Variations,
 					x: proj[0],
 					y: proj[1],
 					name: d.Nom_de_la_gare,
@@ -308,7 +313,7 @@
 				.append("div")
 				.attr("class","choiceZone")
 				.attr("id","firstChoiceZone")
-				.attr("style","border: 2px solid blue;");
+				.attr("style","border: 2px solid " + couleur1 + ";")
 			
 			firstText = firstChoiceZone.append("p").attr("class","choiceZone")
 			firstText.append("span").text("1")
@@ -351,7 +356,7 @@
 				.append("div")
 				.attr("class","choiceZone")
 				.attr("id","secondChoiceZone")
-				.attr("style","border: 2px solid darkorange");
+				.attr("style","border: 2px solid " + couleur2 + ";")
 			
 			secondText = secondChoiceZone.append("p").attr("class","choiceZone")
 			secondText.append("span").text("2")
