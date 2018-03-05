@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
-  <title>Variation du nombre de voyageurs dans les gares SNCF</title>
+  <title>Stations comparison</title>
   <script src="node_modules/d3/build/d3.min.js"></script>
   <script src="CreateStat.js" charset="utf-8"></script>
   <script src="CreateGlyph.js" charset="utf-8"></script>
@@ -22,20 +22,20 @@
 	<div id="firstColumn" style="display: inline-block; float: left; height: 100%; width: 665px; padding-left: 15px;">
 		<div id="mapZone"></div>
 		<div class="choiceZone" style="font-size: 0.8em">
-			<p><strong>Afficher les gares équipées de :</strong></p>
+			<p><strong>Show only the stations that have :</strong></p>
 			<p>
 				<label>Wifi<input type="checkbox" name="wifi" value="true"></label>
-				<label style="margin-left: 20px">Babyfoot(s)<input type="checkbox" name="foosball"></label>
-				<label style="margin-left: 20px">Prises électriques<input type="checkbox" name="powerstation"></label>
+				<label style="margin-left: 20px">Football table(s)<input type="checkbox" name="foosball"></label>
+				<label style="margin-left: 20px">Power station(s)<input type="checkbox" name="powerstation"></label>
 				<label style="margin-left: 20px">Piano(s)<input type="checkbox" name="piano"></label>
-				<label style="margin-left: 20px">Distributeur(s) d'histoires courtes<input type="checkbox" name="stories"></label>
+				<label style="margin-left: 20px">Distributor(s) of short stories<input type="checkbox" name="stories"></label>
 			</p>
 			<br/>
 		</div>
 	</div>
 	<div id="separation" style="display: inline-block; float: left; height: 100%; width: 4px; background-color: grey;"></div>
 	<div id="secondColumn" style="display: inline-block; float: left; height: 100%; width: 660px; padding-left: 15px;">
-		<div id = "start" style="height: 100%; width: 100%"><p class="titre" style="margin-top: 40%; text-align: center;">Veuillez sélectionner 1 ou 2 gare(s)</p></div>
+		<div id = "start" style="height: 100%; width: 100%"><p class="titre" style="margin-top: 40%; text-align: center;">Please select 1 or 2 station(s)</p></div>
 		<div id ="stat" style="display: none;"></div>
 		<div id ="radarChart" style="display: none;"></div>
 	</div>
@@ -69,7 +69,7 @@
 	svg.append("text")
 		.attr("class","titre")
 		.attr("y",30)
-		.text("Sélection de gare(s)");
+		.text("Station(s) selection");
 	
 	var tooltip = d3.select("#firstColumn").append("div")
         .attr("class", "hidden tooltip");
@@ -205,7 +205,7 @@
 				color: null,
 				cx: null,
 				cy: null,
-				name: "- Aucune gare sélectionnée -",
+				name: "- No station selected -",
 				county: null,
 				region: null,
 				wifi: null,
@@ -317,8 +317,8 @@
 			
 			firstText = firstChoiceZone.append("p").attr("class","choiceZone")
 			firstText.append("span").text("1")
-			firstText.append("sup").text("e")
-			firstText.append("span").text(" gare sélectionnée : ");
+			firstText.append("sup").text("st")
+			firstText.append("span").text(" selected station : ");
 			
 			var firstDropdown = firstChoiceZone.append("select")
 				.attr("class","choiceZone")
@@ -360,8 +360,8 @@
 			
 			secondText = secondChoiceZone.append("p").attr("class","choiceZone")
 			secondText.append("span").text("2")
-			secondText.append("sup").text("e")
-			secondText.append("span").text(" gare sélectionnée : ");
+			secondText.append("sup").text("nd")
+			secondText.append("span").text(" selected station : ");
 			
 			var secondDropdown = secondChoiceZone.append("select")
 				.attr("class","choiceZone")
@@ -412,7 +412,7 @@
 					var mouse = d3.mouse(svg.node()).map(function(d) {return parseInt(d); });
 					tooltip.classed("hidden", false)
 						.attr("style", "left:" + (mouse[0] + 30) + "px; top:" + (mouse[1] - 35) + "px; border: 2px solid "+colorInteraction())
-						.html("<p><strong>"+d.name+"</strong></p><p> Département : "+d.county+"</p><p> Région : "+d.region+"</p>");
+						.html("<p><strong>"+d.name+"</strong></p><p>Department: "+d.county+"</p><p>Region: "+d.region+"</p>");
 				})
 				.on("mouseenter", function(){
 					d3.select(this).transition().attr("fill", colorInteraction());
@@ -446,7 +446,7 @@
 			
 			var legendRadius = legend.append("g").attr("id","radius");
 			
-			legendRadius.append("text").attr("style","font-size: 0.8em; font-weight: bold;").text("Voyageurs en 2016 :");
+			legendRadius.append("text").attr("style","font-size: 0.8em; font-weight: bold;").text("Travallers in 2016 :");
 			
 			var eachRadius = legendRadius.selectAll("g")
 				.data(radiusScale.range().reverse())
@@ -471,7 +471,7 @@
 			eachRadius.append("text")
 				.attr("transform", function(d,i) {return "translate(" + 15 + ",3)"; })
 				.attr("style","font-size: 0.7em;")
-				.text(function(d,i) {return "De "+d3.format(".2s")(quantilesRadius[i+1])+" à "+d3.format(".2s")(quantilesRadius[i]); } );
+				.text(function(d,i) {return "From "+d3.format(".2s")(quantilesRadius[i+1])+" to "+d3.format(".2s")(quantilesRadius[i]); } );
 			
 			eachRadius
 				.on("mouseenter", function(d){
@@ -488,8 +488,8 @@
 			var legendColor = legend.append("g").attr("id","colorQuantile").attr("transform","translate(0,"+20*(numberOfIntervalsRadius+2)+")");
 			
 			var colorText = legendColor.append("text").attr("style","font-size: 0.8em; font-weight: bold;");
-			colorText.append("tspan").attr("x",0).attr("dy","1em").text("Voyageurs en 2016");
-			colorText.append("tspan").attr("x",0).attr("dy","1.5em").text("par rapport à 2015 :");
+			colorText.append("tspan").attr("x",0).attr("dy","1em").text("Travellers in 2016");
+			colorText.append("tspan").attr("x",0).attr("dy","1.5em").text("compared to 2015 :");
 			
 			var eachPosColor = legendColor.selectAll(".positive")
 				.data(posColorScale.range().reverse())
@@ -515,7 +515,7 @@
 			eachPosColor.append("text")
 				.attr("transform", function(d,i) {return "translate(" + 25 + ",3)"; })
 				.attr("style","font-size: 0.7em;")
-				.text(function(d,i) {return "De +"+d3.format(".0%")(quantilesPosColor[i+1])+" à +"+d3.format(".0%")(quantilesPosColor[i]); } );
+				.text(function(d,i) {return "From +"+d3.format(".0%")(quantilesPosColor[i+1])+" to +"+d3.format(".0%")(quantilesPosColor[i]); } );
 				
 			eachPosColor
 				.on("mouseenter", function(d){
@@ -553,7 +553,7 @@
 			eachNegColor.append("text")
 				.attr("transform", function(d,i) {return "translate(" + 25 + ",3)"; })
 				.attr("style","font-size: 0.7em;")
-				.text(function(d,i) {return "De "+d3.format(".0%")(quantilesNegColor[i+1])+" à "+d3.format(".0%")(quantilesNegColor[i]); } );
+				.text(function(d,i) {return "From "+d3.format(".0%")(quantilesNegColor[i+1])+" to "+d3.format(".0%")(quantilesNegColor[i]); } );
 				
 			eachNegColor
 				.on("mouseenter", function(d){
