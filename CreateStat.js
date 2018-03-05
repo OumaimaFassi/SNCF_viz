@@ -518,7 +518,8 @@ function refreshVelo(acc1,acc2,i){
 	
 	svg_velo.attr("transform","translate("+ d3.select("#valeur_velo").attr("x") +","+d3.select("#valeur_velo").attr("y")+")")
 }
-    
+
+/*
 function refreshMotif(mot1,mot2){
 	var max_y = 150
   
@@ -623,6 +624,7 @@ function refreshMotif(mot1,mot2){
   					 .attr("width",20)
   					 .style("fill",couleur2)
 }
+*/
 
 function refreshDiv(div1,div2,gare1,gare2){
 	
@@ -709,30 +711,21 @@ function refreshAcces(acc1,acc2){
     };
 	
 	if(sum1==0 || sum2==0){
-		var g_infos = statG.append("g")
-		
+		var g_infos = statG.append("g"),
+			chiffre = "";
+			
+		if (sum1==0){
+			chiffre = "1"
+		}
+		else {
+			chiffre = "2"
+		}
 		g_infos.append("text")
-			.text("Des informations sont manquantes")
+			.text("Des informations sont manquantes sur la "+ chiffre +"e gare.")
 			.attr("class","debutphrase")
 			.attr("x",0)
 			.attr("y",y_acces+60)
-			.style("text-anchor","end")
-			
-		if(sum1==0){
-			g_infos.append("text")
-				.text(" sur la 1e gare")
-				.attr("x",+d3.select(".debutphrase").attr("x"))
-				.attr("y",y_acces+60)
-				.style("text-anchor","start")
-		}
-		
-		if(sum2==0){
-			g_infos.append("text")
-				.text("sur la 2e gare")
-				.attr("x",+d3.select(".debutphrase").attr("x")+5)
-				.attr("y",y_acces+60)
-				.style("text-anchor","start");
-		}
+			.style("text-anchor","start")
     };
    
 ;}
@@ -743,4 +736,7 @@ function creationRects(x,y,id,couleur){
 		.attr("y",y)
 		.attr("id",id)
 		.style("fill",couleur);
-};                     
+};                 
+
+function UnOuDeux(sum1,sum2){
+	if (sum1==0){return "1"}else {return "2"}}    
