@@ -14,6 +14,6 @@ Non - Trouver une alternative aux icônes à fond coloré dans le cas où on com
 (done)Thibault - Possibilité de filtrer la carte avec uniquement les gares qui ont un babyfoot par exemple
 Oumaïma - Opacité du bleu sur les icônes
 Oumaïma - Avec les chiffres du radar chart : score global pour la gare ? => classement des gares ?
-Thibault - Simplifier et améliorer le code CreateStat.js
 Corentin - Globaliser la taille des carrés
-Thibault - Légende radius et couleur : opacité réduite pour les non concernés
+(done)Thibault - Légende radius et couleur : opacité réduite pour les non concernés
+(done)Thibault - Bouton reset pour les filtres de divertissements sur la carte

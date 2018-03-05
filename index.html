@@ -21,8 +21,8 @@
 <body>
 	<div id="firstColumn" style="display: inline-block; float: left; height: 100%; width: 665px; padding-left: 15px;">
 		<div id="mapZone"></div>
-		<div class="choiceZone" style="font-size: 0.8em">
-			<p><strong>Show only the stations that have :</strong></p>
+		<div class="choiceZone" style="font-size: 0.8em; width: 100%">
+			<p><strong style="text-align: left">Show only the stations that have:</strong></p>
 			<p>
 				<label>Wifi<input type="checkbox" name="wifi" value="true"></label>
 				<label style="margin-left: 20px">Football table(s)<input type="checkbox" name="foosball"></label>
@@ -30,6 +30,7 @@
 				<label style="margin-left: 20px">Piano(s)<input type="checkbox" name="piano"></label>
 				<label style="margin-left: 20px">Distributor(s) of short stories<input type="checkbox" name="stories"></label>
 			</p>
+			<p><button type="button" name="clearFilters" style="margin-top: 4px; display: none;">Clear all filters</button>&nbsp;</p>
 			<br/>
 		</div>
 	</div>
@@ -59,7 +60,7 @@
 		y_acces = 160;
 	
     var width = 650,
-		height = 490;
+		height = 470;
 		
 	var svg = d3.select("#mapZone")
 		.append("svg")
@@ -69,13 +70,13 @@
 	svg.append("text")
 		.attr("class","titre")
 		.attr("y",30)
-		.text("Station(s) selection");
+		.text("Selection of station(s)");
 	
 	var tooltip = d3.select("#firstColumn").append("div")
         .attr("class", "hidden tooltip");
     
     var projection = d3.geoConicConformal().center([2.454071, 46.279229]).scale(2800)
-		.translate([width/2.5, height/1.7]);
+		.translate([width/2.3, height/1.8]);
 
     var path = d3.geoPath()
     	.projection(projection);
@@ -182,8 +183,14 @@
 		if (storiesBox.property("checked")){
 			selection = selection.filter(function(d){return (d.stories == true); });
 		};
-		return selection;
-	}
+		selection.transition().style("opacity", 1);
+	};
+	
+	function removeFiltersButton(filtersButton, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox){
+		if ((wifiBox.property("checked") == false) && (foosballBox.property("checked") == false) && (powerstationBox.property("checked") == false) && (pianoBox.property("checked") == false) && (storiesBox.property("checked") == false)){
+			filtersButton.style("display","none");
+		};
+	};
 	
 	d3.json("cleaned_datasets/regions.geojson", function(json) {
 		d3.csv("cleaned_datasets/all-joined-datasets.csv", function(data) {
@@ -242,71 +249,82 @@
 				foosballBox = d3.select("input[name='foosball']"),
 				powerstationBox = d3.select("input[name='powerstation']"),
 				pianoBox = d3.select("input[name='piano']"),
-				storiesBox = d3.select("input[name='stories']");
+				storiesBox = d3.select("input[name='stories']")
+				filtersButton = d3.select("button[name='clearFilters']");
 			
 			wifiBox.on("change",function(){
 				var selection =  d3.select("#gares").selectAll("circle").filter(function(d){return (d.wifi == false); })
 				if (d3.select(this).property("checked")){
+					filtersButton.style("display","inline-block");
 					selection
 						.transition()
-						.style("opacity",0.2); }
+						.style("opacity",0.08); }
 				else {
 					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox)
-						.transition()
-						.style("opacity",1);
+					removeFiltersButton(filtersButton, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox);
 				}
 			});
 			
 			foosballBox.on("change",function(){
 				var selection =  d3.select("#gares").selectAll("circle").filter(function(d){return (d.foosball == false); })
 				if (d3.select(this).property("checked")){
+					filtersButton.style("display","inline-block");
 					selection
 						.transition()
-						.style("opacity",0.2); }
+						.style("opacity",0.08); }
 				else {
 					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox)
-						.transition()
-						.style("opacity",1);
+					removeFiltersButton(filtersButton, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox);
 				}
 			});
 			
 			powerstationBox.on("change",function(){
 				var selection =  d3.select("#gares").selectAll("circle").filter(function(d){return (d.powerstation == false); })
 				if (d3.select(this).property("checked")){
+					filtersButton.style("display","inline-block");
 					selection
 						.transition()
-						.style("opacity",0.2); }
+						.style("opacity",0.08); }
 				else {
 					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox)
-						.transition()
-						.style("opacity",1);
+					removeFiltersButton(filtersButton, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox);
 				}
 			});
 			
 			pianoBox.on("change",function(){
 				var selection =  d3.select("#gares").selectAll("circle").filter(function(d){return (d.piano == false); })
 				if (d3.select(this).property("checked")){
+					filtersButton.style("display","inline-block");
 					selection
 						.transition()
-						.style("opacity",0.2); }
+						.style("opacity",0.08); }
 				else {
 					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox)
-						.transition()
-						.style("opacity",1);
+					removeFiltersButton(filtersButton, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox);
 				}
 			});
 			
 			storiesBox.on("change",function(){
 				var selection =  d3.select("#gares").selectAll("circle").filter(function(d){return (d.stories == false); })
 				if (d3.select(this).property("checked")){
+					filtersButton.style("display","inline-block");
 					selection
 						.transition()
-						.style("opacity",0.2); }
+						.style("opacity",0.08); }
 				else {
 					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox)
-						.transition()
-						.style("opacity",1);
+					removeFiltersButton(filtersButton, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox);
 				}
+			});
+			
+			d3.select("button[name='clearFilters']").on("click",function(){
+				d3.select(this).style("display","none");
+				wifiBox.property("checked", false);
+				foosballBox.property("checked", false);
+				powerstationBox.property("checked", false);
+				pianoBox.property("checked", false);
+				storiesBox.property("checked", false);
+				gares.selectAll("circle").transition().style("opacity",1);
 			});
 			
 			var firstChoiceZone = d3.select("#firstColumn")
@@ -318,7 +336,7 @@
 			firstText = firstChoiceZone.append("p").attr("class","choiceZone")
 			firstText.append("span").text("1")
 			firstText.append("sup").text("st")
-			firstText.append("span").text(" selected station : ");
+			firstText.append("span").text(" selected station: ");
 			
 			var firstDropdown = firstChoiceZone.append("select")
 				.attr("class","choiceZone")
@@ -361,7 +379,7 @@
 			secondText = secondChoiceZone.append("p").attr("class","choiceZone")
 			secondText.append("span").text("2")
 			secondText.append("sup").text("nd")
-			secondText.append("span").text(" selected station : ");
+			secondText.append("span").text(" selected station: ");
 			
 			var secondDropdown = secondChoiceZone.append("select")
 				.attr("class","choiceZone")
@@ -446,7 +464,7 @@
 			
 			var legendRadius = legend.append("g").attr("id","radius");
 			
-			legendRadius.append("text").attr("style","font-size: 0.8em; font-weight: bold;").text("Travallers in 2016 :");
+			legendRadius.append("text").attr("style","font-size: 0.8em; font-weight: bold;").text("Travallers in 2016:");
 			
 			var eachRadius = legendRadius.selectAll("g")
 				.data(radiusScale.range().reverse())
@@ -475,21 +493,21 @@
 			
 			eachRadius
 				.on("mouseenter", function(d){
-					d3.select(this).transition().style("stroke-width" ,5);
-					gares.selectAll("circle").filter(function(e){return (e.radius == d); })
-						.transition().style("stroke-width", 5);
+					legendRadius.selectAll("g").filter(function(e){return (e !== d); }).transition().style("opacity", 0.08);
+					gares.selectAll("circle").filter(function(e){return (e.radius !== d); })
+						.transition().style("opacity", 0.08);
 					})
 				.on("mouseleave", function(d){
-					d3.select(this).transition().style("stroke-width" ,1);
-					gares.selectAll("circle").filter(function(e){return (e.radius == d); })
-						.transition().style("stroke-width", 1);
+					legendRadius.selectAll("g").transition().style("opacity", 1);
+					var selection = gares.selectAll("circle").filter(function(e){return (e.radius !== d); })
+					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox);
 				});
 				
 			var legendColor = legend.append("g").attr("id","colorQuantile").attr("transform","translate(0,"+20*(numberOfIntervalsRadius+2)+")");
 			
 			var colorText = legendColor.append("text").attr("style","font-size: 0.8em; font-weight: bold;");
 			colorText.append("tspan").attr("x",0).attr("dy","1em").text("Travellers in 2016");
-			colorText.append("tspan").attr("x",0).attr("dy","1.5em").text("compared to 2015 :");
+			colorText.append("tspan").attr("x",0).attr("dy","1.5em").text("compared to 2015:");
 			
 			var eachPosColor = legendColor.selectAll(".positive")
 				.data(posColorScale.range().reverse())
@@ -519,14 +537,14 @@
 				
 			eachPosColor
 				.on("mouseenter", function(d){
-					d3.select(this).transition().style("stroke-width" ,5);
-					gares.selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
-						.transition().style("stroke-width", 5);
-					})
+					legendColor.selectAll("g").filter(function(e){return (e !== d); }).transition().style("opacity", 0.08);
+					gares.selectAll("circle").filter(function(e){return (colorQuantile(e.variation) !== d); })
+						.transition().style("opacity", 0.08);
+				})
 				.on("mouseleave", function(d){
-					d3.select(this).transition().style("stroke-width" ,1);
-					gares.selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
-						.transition().style("stroke-width", 1);
+					legendColor.selectAll("g").transition().style("opacity", 1);
+					var selection = gares.selectAll("circle").filter(function(e){return (colorQuantile(e.variation) !== d); })
+					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox);
 				});
 		
 			var eachNegColor = legendColor.selectAll(".negative")
@@ -557,17 +575,15 @@
 				
 			eachNegColor
 				.on("mouseenter", function(d){
-					d3.select(this).transition().style("stroke-width" ,5);
-					gares.selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
-						.transition().style("stroke-width", 5);
-					})
+					legendColor.selectAll("g").filter(function(e){return (e !== d); }).transition().style("opacity", 0.08);
+					gares.selectAll("circle").filter(function(e){return (colorQuantile(e.variation) !== d); })
+						.transition().style("opacity", 0.08);
+				})
 				.on("mouseleave", function(d){
-					d3.select(this).transition().style("stroke-width" ,1);
-					gares.selectAll("circle").filter(function(e){return (colorQuantile(e.variation) == d); })
-						.transition().style("stroke-width", 1);
+					legendColor.selectAll("g").transition().style("opacity", 1);
+					var selection = gares.selectAll("circle").filter(function(e){return (colorQuantile(e.variation) !== d); })
+					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox);
 				});
-				
-			var filter=null;
 		});
 	});
 	</script>
