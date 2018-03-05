@@ -4,6 +4,7 @@ function CreateGlyph(data, gare1 ,gare2) {
 			return [{
 						uic : gare1,
 						name : d.Nom_de_la_gare,
+						score : (+d.Proprete + +d.Securite + +d.Communication_perturbations + +d.Confort_d_attente + +d.Commerces_restauration + 10 - +d.MoyenneDistance * 10 / 16.8 + +d.score_pmr13*10/13 ) / 7,
 						axes : [
 							{indice : 'Proprete', value : +d.Proprete },
 							{indice : 'Securite', value : +d.Securite },
@@ -26,7 +27,7 @@ function CreateGlyph(data, gare1 ,gare2) {
 				roundStrokes: false,
 				color: d3.scaleOrdinal().range(colors),
 				format: '.1f',
-				legend: {title: 'Gare', translateX: -125, translateY: 15},
+				legend: {title: 'Score de la gare :', translateX: -125, translateY: 15},
 			};
 		};
 		
