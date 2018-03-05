@@ -260,8 +260,16 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
                 .attr('x', this.cx.baseVal.value - 13)
                 .attr('y', this.cy.baseVal.value - 13)
                 .transition()
-                .style('display', 'block')
-                .text(Format(d.value) + cfg.unit);
+                .style('display', 'block');
+            if(d.value == 0){
+            tooltip.text("Missing value")
+          }
+            if (d.value !== 0){
+           tooltip.text(Format(d.value) + cfg.unit);
+        }})
+        .on("mouseout", function(){
+            tooltip.transition()
+                .style('display', 'none').text('');
         })
         .on("mouseout", function(){
             tooltip.transition()
