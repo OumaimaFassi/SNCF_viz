@@ -38,7 +38,7 @@ function CreateStat(data, gare1, gare2) {
 		d3.selectAll("rect")
 			.attr("width",w_rect)
 			.attr("height",h_rect)
-		//refreshMotif(motif1,motif2);
+		refreshMotif(motif1,motif2);
 		if(gare1==null){d3.selectAll("rect").style("fill",couleur2);}
 		else if(gare2==null){d3.selectAll("rect").style("fill",couleur1);}  ;       
 	};
@@ -110,14 +110,14 @@ function refreshText(data,gare1,gare2){
 	statG.append("text")
 		.attr("id","Divertissements")
 		.text("Divertissements")
-		.attr("y", +d3.select("#Variation").attr("y")+40)
+		.attr("y", y_divertissements+18)
 		.attr("x", 0)
 		.attr("text-anchor","start")
 		
 	// emplacement du text "Moyens d'acces"
 	statG.append("text")
 		.text("Moyens d'accès")
-		.attr("y", +d3.select("#Divertissements").attr("y")+45)
+		.attr("y", y_acces+18)
 		.attr("x", 0)
 		.attr("text-anchor","start")
 	
@@ -154,14 +154,14 @@ function refreshText(data,gare1,gare2){
 		statG.append("text")
 			.attr("id","valeur_rang")
 			.attr("y", +d3.select("#Nombredevoyageurs").attr("y"))
-			.attr("x", function(){return d3.select("#valeur_voyageurs").attr("x")})
+			.attr("x", function(){return +d3.select("#valeur_voyageurs").attr("x")+5})
 			.style("text-anchor","start")
 		
 		// emplacement du rang de variation pour la gare 1
 		statG.append("text")
 			.attr("id","valeur_rangvar")
 			.attr("y", +d3.select("#Variation").attr("y"))
-			.attr("x", function(){return d3.select("#valeur_variation").attr("x")})
+			.attr("x", function(){return +d3.select("#valeur_variation").attr("x")+5})
 			.style("text-anchor","start")
 	};
 	
@@ -170,34 +170,34 @@ function refreshText(data,gare1,gare2){
 		statG.append("text")
 			.attr("id","nom2")
 			.attr("y", +d3.select("#nom").attr("y"))
-			.attr("x", +d3.select("#nom").attr("x")+300)
+			.attr("x", +d3.select("#nom").attr("x")+350)
 			.attr("text-anchor","start")
 			
 		statG.append("text")
 			.attr("id","valeur_voyageurs2")
 			.attr("y", +d3.select("#Nombredevoyageurs").attr("y"))
-			.attr("x", +d3.select("#Nombredevoyageurs").attr("x")+300)
+			.attr("x", +d3.select("#Nombredevoyageurs").attr("x")+350)
 			.attr("text-anchor","start")
 		
 		statG.append("text")
 			.attr("id","valeur_variation2")
 			.attr("y", +d3.select("#Variation").attr("y"))
-			.attr("x", +d3.select("#Variation").attr("x")+300)
+			.attr("x", +d3.select("#Variation").attr("x")+350)
 			.style("text-anchor","start")
 			
 		// emplacement du rang pour la gare 2
 		statG.append("text")
 			.attr("id","valeur_rang2")
 			.attr("y", +d3.select("#Nombredevoyageurs").attr("y"))
-			.attr("x",function(){return +d3.select("#valeur_voyageurs2").attr("x")})
-			.style("text-anchor","end")
+			.attr("x",function(){return +d3.select("#valeur_voyageurs2").attr("x")+42})
+			.style("text-anchor","start")
 			
 		// emplacement du rang de variation pour la gare 2
 		statG.append("text")
 			.attr("id","valeur_rangvar2")
 			.attr("y", +d3.select("#Variation").attr("y"))
-			.attr("x",function(){return +d3.select("#valeur_variation2").attr("x")})
-			.style("text-anchor","end")
+			.attr("x",function(){return +d3.select("#valeur_variation2").attr("x")+42})
+			.style("text-anchor","start")
 	};
 	
 	data.forEach(function(d){
@@ -531,23 +531,46 @@ function refreshVelo(acc1,acc2,i){
 }
     
 function refreshMotif(mot1,mot2){
-	var max_y = 150
+	motifSvg.selectAll("text").remove();
+	motifG.selectAll("*").remove();
+	
+	var titre = motifSvg.append("text")
+		.attr("x",+d3.select("#motifSvg").attr("x")/2+56)
+		.attr("y",15)
+		.style("text-anchor","center")
+		.text("Répartition des motifs de déplacement")
+		
+	var sum1=(mot1[1].commute+mot1[1].divers+mot1[1].etudes+mot1[1].occasionnel+mot1[1].loisirs),
+		sum2=(mot2[1].commute+mot2[1].divers+mot2[1].etudes+mot2[1].occasionnel+mot2[1].loisirs);	
+	
+	if(sum1==0 || sum2==0){
+		var gare_nulle = ""
+		if(sum1==0){gare_nulle ="1"}else{gare_nulle ="2"}
+		var info_manquantes = motifSvg.append("text")
+			.attr("x",+d3.select("#motifSvg").attr("x")/2+56)
+			.attr("y",25)
+			.style("text-anchor","center")
+			.text("des informations sont manquantes sur la "+gare_nulle+"e gare")
+			.style("font-size","10")
+			.style("font-style","italic")
+		
+		;}
+	
+	var max_y = +d3.select("#motifSvg").attr("height")/2
   
 	var y_motif = d3.scaleLinear()
 		.range([max_y,0])
   
 	var x_motif = d3.scaleBand()
 		.domain(['Divers','Travail quoti.','Etudes','Travail Occasionnel','Loisirs'])
-		.range([0, +d3.select("svg").attr("width")/2.5])
+		.range([0, +d3.select("#motifSvg").attr("width")/1.3])
     
   var xAxis_motif = d3.axisBottom()
 		.scale(x_motif)
   
-  var histo_motif = svg.append("g")
-  .attr("transform","translate("+25+","+220+")")
   
-  var axe_histo_motif = svg.append("g")
-  	.attr("transform","translate("+25+","+(220+max_y)+")")
+  var axe_histo_motif = motifG.append("g")
+  	.attr("transform","translate("+14+","+(max_y)+")")
   	.attr('class','x axis')
   	.call(xAxis_motif)
 
@@ -557,40 +580,40 @@ function refreshMotif(mot1,mot2){
   var yAxis_motif = d3.axisLeft()
 		.scale(y_motif);
   
-  var axey_histo_motif = svg.append("g")
-  	.attr("transform","translate("+25+","+220+")")
+  var axey_histo_motif = motifG.append("g")
+  	.attr("transform","translate("+14+","+0+")")
   	.attr('class','y axis')
   	.call(yAxis_motif)
   
-  histo_motif.append("rect")
+  motifG.append("rect")
   					 .attr("x",function(){return 20+x_motif('Divers')})
   					 .attr("y",function(){return y_motif(mot1[1].divers)})
   					 .attr("height",function(){return max_y-y_motif(mot1[1].divers)})
   					 .attr("width",20)
   					 .style("fill",couleur1)
   
-  histo_motif.append("rect")
+  motifG.append("rect")
   					 .attr("x",function(){return 20+x_motif('Travail quoti.')})
   					 .attr("y",function(){return y_motif(mot1[1].commute)})
   					 .attr("height",function(){return max_y-y_motif(mot1[1].commute)})
   					 .attr("width",20)
   					 .style("fill",couleur1)
   
-  histo_motif.append("rect")
+  motifG.append("rect")
   					 .attr("x",function(){return 20+x_motif('Etudes')})
   					 .attr("y",function(){return y_motif(mot1[1].etudes)})
   					 .attr("height",function(){return max_y-y_motif(mot1[1].etudes)})
   					 .attr("width",20)
   					 .style("fill",couleur1)
   
-  histo_motif.append("rect")
+  motifG.append("rect")
   					 .attr("x",function(){return 20+x_motif('Travail Occasionnel')})
   					 .attr("y",function(){return y_motif(mot1[1].occasionnel)})
   					 .attr("height",function(){return max_y-y_motif(mot1[1].occasionnel)})
   					 .attr("width",20)
   					 .style("fill",couleur1)
   
-  histo_motif.append("rect")
+  motifG.append("rect")
   					 .attr("x",function(){return 20+x_motif('Loisirs')})
   					 .attr("y",function(){return y_motif(mot1[1].loisirs)})
   					 .attr("height",function(){return max_y-y_motif(mot1[1].loisirs)})
@@ -599,35 +622,35 @@ function refreshMotif(mot1,mot2){
   
   
   
-  histo_motif.append("rect")
+  motifG.append("rect")
   					 .attr("x",function(){return 40+x_motif('Divers')})
   					 .attr("y",function(){return y_motif(mot2[1].divers)})
   					 .attr("height",function(){return max_y-y_motif(mot2[1].divers)})
   					 .attr("width",20)
   					 .style("fill",couleur2)
   
-  histo_motif.append("rect")
+  motifG.append("rect")
   					 .attr("x",function(){return 40+x_motif('Travail quoti.')})
   					 .attr("y",function(){return y_motif(mot2[1].commute)})
   					 .attr("height",function(){return max_y-y_motif(mot2[1].commute)})
   					 .attr("width",20)
   					 .style("fill",couleur2)
   
-  histo_motif.append("rect")
+  motifG.append("rect")
   					 .attr("x",function(){return 40+x_motif('Etudes')})
   					 .attr("y",function(){return y_motif(mot2[1].etudes)})
   					 .attr("height",function(){return max_y-y_motif(mot2[1].etudes)})
   					 .attr("width",20)
   					 .style("fill",couleur2)
   
-  histo_motif.append("rect")
+  motifG.append("rect")
   					 .attr("x",function(){return 40+x_motif('Travail Occasionnel')})
   					 .attr("y",function(){return y_motif(mot2[1].occasionnel)})
   					 .attr("height",function(){return max_y-y_motif(mot2[1].occasionnel)})
   					 .attr("width",20)
   					 .style("fill",couleur2)
   
-  histo_motif.append("rect")
+  motifG.append("rect")
   					 .attr("x",function(){return 40+x_motif('Loisirs')})
   					 .attr("y",function(){return y_motif(mot2[1].loisirs)})
   					 .attr("height",function(){return max_y-y_motif(mot2[1].loisirs)})
