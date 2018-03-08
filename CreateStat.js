@@ -213,7 +213,7 @@ function refreshText(data,gare1,gare2){
   
 		d3.select("#valeur_variation")
 			
-			.text(mon_text1+d3.format(".0%")(d.Variations))
+			.text(mon_text1+d3.format(".1%")(d.Variations))
 			.attr("fill",couleur1);
 	  
 		d3.select("#nom1")
@@ -240,7 +240,7 @@ function refreshText(data,gare1,gare2){
   
 		d3.select("#valeur_variation2")
 			
-			.text(mon_text2+d3.format(".0%")(d.Variations))
+			.text(mon_text2+d3.format(".1%")(d.Variations))
 			.attr("fill",couleur2)
 	  
 		d3.select("#nom2")
