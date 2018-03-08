@@ -556,7 +556,7 @@ function refreshMotif(mot1,mot2,gare1,gare2){
 			.text("Missing data for station #"+ chiffre)
 			.attr("x",0)
 			.attr("y",30)
-			.style("font-size",10)
+			.attr("font-size",10)
 			.style("font-style","italic")
 			.style("text-anchor","start")
     };
@@ -711,7 +711,7 @@ function refreshDiv(div1,div2,gare1,gare2){
 			.text("Missing data for station #"+ chiffre)
 			.attr("x",x_divertissements1)
 			.attr("y",y_divertissements+45)
-			.style("font-size",10)
+			.attr("font-size",10)
 			.style("font-style","italic")
 			.style("text-anchor","start")
     };
@@ -775,7 +775,7 @@ function refreshAcces(acc1,acc2,gare1,gare2){
 			.attr("class","debutphrase")
 			.attr("x",x_divertissements1)
 			.attr("y",y_acces+45)
-			.style("font-size",10)
+			.attr("font-size",10)
 			.style("font-style","italic")
 			.style("text-anchor","start")
     };
