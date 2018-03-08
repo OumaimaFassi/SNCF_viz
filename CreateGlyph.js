@@ -20,15 +20,15 @@ function CreateGlyph(data, gare1 ,gare2) {
 		
 		function radarChartOptions(colors){
 			return {
-				w: 200,
-				h: 260,
+				w: 180,
+				h: 240,
 				margin: margin,
 				maxValue: 10,
 				levels: 10,
 				roundStrokes: false,
 				color: d3.scaleOrdinal().range(colors),
 				format: '.1f',
-				legend: {title: "Station's total score:", translateX: -125, translateY: 15},
+				legend: {title: "Station's total score:", translateX: -100, translateY: 35},
 			};
 		};
 		
