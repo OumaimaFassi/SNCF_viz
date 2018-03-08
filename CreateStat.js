@@ -33,12 +33,12 @@ function CreateStat(data, gare1, gare2) {
 		};
 		
 		refreshText(data,gare1,gare2)
-		refreshDiv(divertissements1,divertissements2)
-		refreshAcces(acces1,acces2)
+		refreshDiv(divertissements1,divertissements2,gare1,gare2)
+		refreshAcces(acces1,acces2,gare1,gare2)
 		d3.selectAll("rect")
 			.attr("width",w_rect)
 			.attr("height",h_rect)
-		refreshMotif(motif1,motif2);
+		refreshMotif(motif1,motif2,gare1,gare2);
 		if(gare1==null){d3.selectAll("rect").style("fill",couleur2);}
 		else if(gare2==null){d3.selectAll("rect").style("fill",couleur1);}  ;       
 	};
@@ -532,7 +532,7 @@ function refreshVelo(acc1,acc2,i){
 	svg_velo.attr("y",d3.select("#valeur_velo").attr("y"))
 }
     
-function refreshMotif(mot1,mot2){
+function refreshMotif(mot1,mot2,gare1,gare2){
 	motifSvg.selectAll("text").remove();
 	motifG.selectAll("*").remove();
 	
@@ -546,17 +546,20 @@ function refreshMotif(mot1,mot2){
 		sum2=(mot2[1].commute+mot2[1].divers+mot2[1].etudes+mot2[1].occasionnel+mot2[1].loisirs);	
 	
 	if(sum1==0 || sum2==0){
-		var gare_nulle = ""
-		if(sum1==0){gare_nulle ="1"}else{gare_nulle ="2"}
-		var info_manquantes = motifSvg.append("text")
-			.attr("x",+d3.select("#motifSvg").attr("x")/2+56)
+		
+		var chiffre = ""
+		if(sum1==0 && gare1!=null){chiffre= "1"}
+		if(sum2==0 && gare2!=null){chiffre= "2"}
+		if(sum1==0 && gare1!=null && sum2==0 && gare2!=null){chiffre="1 & station #2"}
+		
+		motifSvg.append("text")
+			.text("Missing data for station #"+ chiffre)
+			.attr("x",0)
 			.attr("y",30)
-			.style("text-anchor","center")
-			.text("Missing data for station #"+gare_nulle)
 			.style("font-size",10)
 			.style("font-style","italic")
-		
-		;}
+			.style("text-anchor","start")
+    };
 	
 	var max_y = +d3.select("#motifSvg").attr("height")/2
   
@@ -685,9 +688,36 @@ function refreshDiv(div1,div2,gare1,gare2){
     	if(new_div1[indice][0]=='histoires'){refreshBook(new_div1,new_div2,indice)}
 		
 	}// fin for
+	
+	var sum1 = 0,
+		sum2 = 0;
+	
+	for(var n=1;n<new_div1.length;n++){
+		sum1=+new_div1[n][1]+sum1
+		sum2=+new_div2[n][1]+sum2
+    };
+	
+	console.log(sum1)
+	console.log(sum2)
+	
+	if(sum1==0 || sum2==0){
+		var g_infosdiv = statG.append("g")
+		var chiffre = ""
+		if(sum1==0 && gare1!=null){chiffre= "1"}
+		if(sum2==0 && gare2!=null){chiffre= "2"}
+		if(sum1==0 && gare1!=null && sum2==0 && gare2!=null){chiffre="1 & station #2"}
+		
+		g_infosdiv.append("text")
+			.text("Missing data for station #"+ chiffre)
+			.attr("x",x_divertissements1)
+			.attr("y",y_divertissements+45)
+			.style("font-size",10)
+			.style("font-style","italic")
+			.style("text-anchor","start")
+    };
 };  // fin refreshDiv
     
-function refreshAcces(acc1,acc2){
+function refreshAcces(acc1,acc2,gare1,gare2){
 
 	var new_acc = []
 		new_acc.push(["voiture",acc1[1].voiture,acc2[1].voiture])
@@ -736,13 +766,15 @@ function refreshAcces(acc1,acc2){
 	if(sum1==0 || sum2==0){
 		var g_infos = statG.append("g")
 		var chiffre = ""
-		if(sum1==0){chiffre= "1"}else{chiffre= "2"}
+		if(sum1==0 && gare1!=null){chiffre= "1"}
+		if(sum2==0 && gare2!=null){chiffre= "2"}
+		if(sum1==0 && gare1!=null && sum2==0 && gare2!=null){chiffre="1 & station #2"}
 		
 		g_infos.append("text")
 			.text("Missing data for station #"+ chiffre)
 			.attr("class","debutphrase")
 			.attr("x",x_divertissements1)
-			.attr("y",y_acces+60)
+			.attr("y",y_acces+45)
 			.style("font-size",10)
 			.style("font-style","italic")
 			.style("text-anchor","start")
