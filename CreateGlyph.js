@@ -33,7 +33,7 @@ function CreateGlyph(data, gare1 ,gare2) {
 		};
 		
 		var margin = { top: 50, right: 80, bottom: 50, left: 80 },
-			width = 700,
+			width = 340,
 			height = width,
 			dataset = [{}],
 			data1 = [{}],
@@ -46,6 +46,11 @@ function CreateGlyph(data, gare1 ,gare2) {
 				dataset = data1.concat(data2);
 			});
 			let svg_radar1 = RadarChart("#radarChart", dataset, radarChartOptions([couleur1,couleur2]));
+			svg_radar1.append("text")
+		        .attr("x",+d3.select("#radarChart").attr("x")/2)
+		        .attr("y",15)
+		        .style("text-anchor","center")
+		        .text("Performance") 
 		};
 		
 		if (gare2 == null && gare1 !== null) { //if only the first station is selected
@@ -53,6 +58,11 @@ function CreateGlyph(data, gare1 ,gare2) {
 				if (d.Code_UIC == gare1){dataset=dataPoint(d,gare1); };
 			});
 			let svg_radar1 = RadarChart("#radarChart", dataset, radarChartOptions([couleur1]));
+			svg_radar1.append("text")
+		        .attr("x",+d3.select("#radarChart").attr("x")/2)
+		        .attr("y",15)
+		        .style("text-anchor","center")
+		        .text("Performance") 
 		};
 		
 		if (gare1 == null && gare2 !== null) { //if only the second station is selected
@@ -60,6 +70,11 @@ function CreateGlyph(data, gare1 ,gare2) {
 				if (d.Code_UIC == gare2){dataset = dataPoint(d,gare2); };
 			});
 			let svg_radar1 = RadarChart("#radarChart", dataset, radarChartOptions([couleur2]));
+			svg_radar1.append("text")
+		        .attr("x",+d3.select("#radarChart").attr("x")/2)
+		        .attr("y",15)
+		        .style("text-anchor","center")
+		        .text("Performance") 
 		};
 	}
 };
