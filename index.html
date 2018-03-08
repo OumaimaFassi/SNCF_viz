@@ -8,7 +8,7 @@
   <script src="radarchart.js" charset="utf-8"></script>
 
   <style>
-    body {margin: 0; position: fixed; top: 0; right: 0; bottom: 0; left: 0; font-family: Arial}
+    body {margin: 0; position: fixed; top: 0; right: 0; bottom: 0; left: 0; font-family: Arial;}
 	p {margin: 0; padding: 0}
 	.choiceZone {display: inline-block; margin: 2px;}
 	.hidden {display: none;}
@@ -511,18 +511,19 @@
 					showAgain(selection, wifiBox, foosballBox, powerstationBox, pianoBox, storiesBox);
 				});
 				
-			var legendColor = legend.append("g").attr("id","colorQuantile").attr("transform","translate(0,"+20*(numberOfIntervalsRadius+2)+")");
+			var legendColor = legend.append("g").attr("id","colorQuantile").attr("transform","translate(0,"+20*(numberOfIntervalsRadius+3)+")");
 			
-			var colorText = legendColor.append("text").attr("style","font-size: 0.8em; font-weight: bold;");
-			colorText.append("tspan").attr("x",0).attr("dy","1em").text("Travellers in 2016");
-			colorText.append("tspan").attr("x",0).attr("dy","1.5em").text("compared to 2015:");
+			var colorText = legendColor.append("text")
+				.attr("style","font-size: 0.8em; font-weight: bold;")
+				.attr("x",0)
+				.text("Fluctuation 2016 / 2015:");
 			
 			var eachPosColor = legendColor.selectAll(".positive")
 				.data(posColorScale.range().reverse())
 				.enter()
 				.append("g")
 				.attr("class","positive")
-				.attr("transform", function(d,i) {return "translate(" + 15 + "," + (50+i*19) +")"; });
+				.attr("transform", function(d,i) {return "translate(" + 15 + "," + (20+i*19) +")"; });
 			
 			eachPosColor.append("circle")
 				.style("stroke", "black")
@@ -560,7 +561,7 @@
 				.enter()
 				.append("g")
 				.attr("class","negative")
-				.attr("transform", function(d,i) {return "translate(" + 15 + "," + (50+19*numberOfIntervalsPosColor+i*19) +")"; });
+				.attr("transform", function(d,i) {return "translate(" + 15 + "," + (20+19*numberOfIntervalsPosColor+i*19) +")"; });
 			
 			eachNegColor.append("circle")
 				.style("stroke", "black")
