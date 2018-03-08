@@ -569,12 +569,8 @@ function refreshMotif(mot1,mot2){
 	
 	var x_motif1 = d3.scaleBand()
 		.padding(0.1)
-		.domain(["mot1","mot2"])
+		.domain([0,1])
 		.range([0,x_motif.bandwidth()])
-		
-	console.log(x_motif1("mot1"))	
-	console.log(x_motif1("mot2"))
-	console.log(x_motif.bandwidth())
     
 	var xAxis_motif = d3.axisBottom()
 		.scale(x_motif)
@@ -598,28 +594,28 @@ function refreshMotif(mot1,mot2){
   
   
 	motifG.append("rect")
-  					 .attr("x",function(){return x_motif('Commuters')+x_motif1("mot1")})
+  					 .attr("x",function(){return x_motif('Commuters')+x_motif1(1)-20})
   					 .attr("y",function(){return y_motif(mot1[1].commute)})
   					 .attr("height",function(){return max_y-y_motif(mot1[1].commute)})
   					 .attr("width",20)
   					 .style("fill",couleur1)
   
   motifG.append("rect")
-  					 .attr("x",function(){return x_motif('Studies')+x_motif1("mot1")})
+  					 .attr("x",function(){return x_motif('Studies')+x_motif1(1)-20})
   					 .attr("y",function(){return y_motif(mot1[1].etudes)})
   					 .attr("height",function(){return max_y-y_motif(mot1[1].etudes)})
   					 .attr("width",20)
   					 .style("fill",couleur1)
   
   motifG.append("rect")
-  					 .attr("x",function(){return x_motif('Business')+x_motif1("mot1")})
+  					 .attr("x",function(){return x_motif('Business')+x_motif1(1)-20})
   					 .attr("y",function(){return y_motif(mot1[1].occasionnel)})
   					 .attr("height",function(){return max_y-y_motif(mot1[1].occasionnel)})
   					 .attr("width",20)
   					 .style("fill",couleur1)
   
   motifG.append("rect")
-  					 .attr("x",function(){return x_motif('Leisure')+x_motif1("mot1")})
+  					 .attr("x",function(){return x_motif('Leisure')+x_motif1(1)-20})
   					 .attr("y",function(){return y_motif(mot1[1].loisirs)})
   					 .attr("height",function(){return max_y-y_motif(mot1[1].loisirs)})
   					 .attr("width",20)
@@ -627,28 +623,28 @@ function refreshMotif(mot1,mot2){
   
   
   motifG.append("rect")
-  					 .attr("x",function(){return x_motif('Commuters')+x_motif1("mot2")})
+  					 .attr("x",function(){return x_motif('Commuters')+x_motif1(1)})
   					 .attr("y",function(){return y_motif(mot2[1].commute)})
   					 .attr("height",function(){return max_y-y_motif(mot2[1].commute)})
   					 .attr("width",20)
   					 .style("fill",couleur2)
   
   motifG.append("rect")
-  					 .attr("x",function(){return x_motif('Studies')+x_motif1("mot2")})
+  					 .attr("x",function(){return x_motif('Studies')+x_motif1(1)})
   					 .attr("y",function(){return y_motif(mot2[1].etudes)})
   					 .attr("height",function(){return max_y-y_motif(mot2[1].etudes)})
   					 .attr("width",20)
   					 .style("fill",couleur2)
   
   motifG.append("rect")
-  					 .attr("x",function(){return x_motif('Business')+x_motif1("mot2")})
+  					 .attr("x",function(){return x_motif('Business')+x_motif1(1)})
   					 .attr("y",function(){return y_motif(mot2[1].occasionnel)})
   					 .attr("height",function(){return max_y-y_motif(mot2[1].occasionnel)})
   					 .attr("width",20)
   					 .style("fill",couleur2)
   
   motifG.append("rect")
-  					 .attr("x",function(){return x_motif('Leisure')+x_motif1("mot2")})
+  					 .attr("x",function(){return x_motif('Leisure')+x_motif1(1)})
   					 .attr("y",function(){return y_motif(mot2[1].loisirs)})
   					 .attr("height",function(){return max_y-y_motif(mot2[1].loisirs)})
   					 .attr("width",20)
