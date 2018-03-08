@@ -50,7 +50,7 @@ function CreateGlyph(data, gare1 ,gare2) {
 		        .attr("x",+d3.select("#radarChart").attr("x")/2)
 		        .attr("y",15)
 		        .style("text-anchor","center")
-		        .text("Performance") 
+		        .text("Performance:") 
 		};
 		
 		if (gare2 == null && gare1 !== null) { //if only the first station is selected
@@ -62,7 +62,7 @@ function CreateGlyph(data, gare1 ,gare2) {
 		        .attr("x",+d3.select("#radarChart").attr("x")/2)
 		        .attr("y",15)
 		        .style("text-anchor","center")
-		        .text("Performance") 
+		        .text("Performance:") 
 		};
 		
 		if (gare1 == null && gare2 !== null) { //if only the second station is selected
@@ -74,7 +74,7 @@ function CreateGlyph(data, gare1 ,gare2) {
 		        .attr("x",+d3.select("#radarChart").attr("x")/2)
 		        .attr("y",15)
 		        .style("text-anchor","center")
-		        .text("Performance") 
+		        .text("Performance:") 
 		};
 	}
 };
