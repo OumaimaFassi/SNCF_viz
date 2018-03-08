@@ -43,7 +43,7 @@
 	</div>
 	<script>
 	var statSvg = d3.select("#stat").append("svg")
-		.attr("id","#statSvg")
+		.attr("id","statSvg")
 		.attr("width", 700)
 		.attr("height", 400);
 	
@@ -58,7 +58,7 @@
 		
 	var motifG = motifSvg.append("g")
 		.attr("id","histo_motif")
-		.attr("transform","translate(8,50)");
+		.attr("transform","translate(30,50)");
 	
 	var couleur1 = "#41A9E1",
 		couleur2 = "#FF8C00",
@@ -346,9 +346,7 @@
 				.attr("style","border: 2px solid " + couleur1 + ";")
 			
 			firstText = firstChoiceZone.append("p").attr("class","choiceZone")
-			firstText.append("span").text("1")
-			firstText.append("sup").text("st")
-			firstText.append("span").text(" selected station: ");
+			firstText.append("p").text("Station selected #1: ")
 			
 			var firstDropdown = firstChoiceZone.append("select")
 				.attr("class","choiceZone")
@@ -389,9 +387,7 @@
 				.attr("style","border: 2px solid " + couleur2 + ";")
 			
 			secondText = secondChoiceZone.append("p").attr("class","choiceZone")
-			secondText.append("span").text("2")
-			secondText.append("sup").text("nd")
-			secondText.append("span").text(" selected station: ");
+			secondText.append("p").text("Station selected #2: ")
 			
 			var secondDropdown = secondChoiceZone.append("select")
 				.attr("class","choiceZone")
