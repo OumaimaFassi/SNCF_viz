@@ -72,7 +72,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
     maxValue = max(cfg.maxValue, maxValue);
 
     //const allAxis = data[0].axes.map((i, j) => i.axis),   //Names of each axis
-  const allAxis = ["Propreté","Sécurité","Communication sur les perturbations","Confort d'attente","Commerces","Distance d'accès", "Assistance handicapés"] ;
+  const allAxis = ["Cleanliness","Security","Communication about perturbations","Waiting comfort","Commerces","Accessibility", "Handicap assistance"] ;
         total = allAxis.length,                 //The number of different axes
         radius = Math.min(cfg.w/2, cfg.h/2),    //Radius of the outermost circle
         Format = d3.format(cfg.format),             //Formatting
