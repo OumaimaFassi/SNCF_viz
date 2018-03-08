@@ -28,7 +28,7 @@ function CreateGlyph(data, gare1 ,gare2) {
 				roundStrokes: false,
 				color: d3.scaleOrdinal().range(colors),
 				format: '.1f',
-				legend: {title: 'Score de la gare :', translateX: -125, translateY: 15},
+				legend: {title: "Station's total score:", translateX: -125, translateY: 15},
 			};
 		};
 		

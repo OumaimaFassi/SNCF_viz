@@ -72,7 +72,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
     maxValue = max(cfg.maxValue, maxValue);
 
     //const allAxis = data[0].axes.map((i, j) => i.axis),   //Names of each axis
-  const allAxis = ["Cleanliness","Security","Communication about perturbations","Waiting comfort","Commerces","Accessibility", "Handicap assistance"] ;
+  const allAxis = ["Cleanliness","Security","Communication on disruptions","Waiting comfort","Shops","Distance of access", "Assistance to disabled"] ;
         total = allAxis.length,                 //The number of different axes
         radius = Math.min(cfg.w/2, cfg.h/2),    //Radius of the outermost circle
         Format = d3.format(cfg.format),             //Formatting
@@ -296,7 +296,8 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
                 .attr("x", cfg.w - 70)
                 .attr("y", 10)
                 .attr("font-size", "12px")
-                .attr("fill", "#404040")
+                .attr("fill", "black")
+				.style("font-weight","bold")
                 .text(cfg.legend.title);
         }
         let legend = legendZone.append("g")
@@ -322,7 +323,7 @@ const RadarChart = function RadarChart(parent_selector, data, options) {
           .attr("x", cfg.w - 52)
           .attr("y", (d,i) => i * 20 + 9)
           .attr("font-size", "11px")
-          .attr("fill", "#737373")
+          .attr("fill", "black")
           .text(d => d);
     }
     return svg;
