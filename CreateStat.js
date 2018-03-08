@@ -561,7 +561,7 @@ function refreshMotif(mot1,mot2,gare1,gare2){
 			.style("text-anchor","start")
     };
 	
-	var max_y = +d3.select("#motifSvg").attr("height")/2
+	var max_y = +d3.select("#motifSvg").attr("height")/1.5
   
 	var y_motif = d3.scaleLinear()
 		.range([max_y,0])
