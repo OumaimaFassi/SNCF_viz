@@ -80,12 +80,12 @@ function refreshText(data,gare1,gare2){
 		.attr("id","caracteristiques")
 		.attr("y", 0)
 		.attr("x", 0)
-		.text("Caractéristiques");
+		.text("Features");
 	
 	// emplacement du texte 'nom des gares'
 	statG.append("text")
 		.attr("id","nom")
-		.text("Nom")
+		.text("Name:")
 		.attr("y", +d3.select("#caracteristiques").attr("y")+30)
 		.attr("x", 0)
 		.attr("text-anchor","start");
@@ -93,7 +93,7 @@ function refreshText(data,gare1,gare2){
 	// emplacement du text 'nombre de voyageurs'
 	statG.append("text")
 		.attr("id","Nombredevoyageurs")
-		.text("Voyageurs en 2016")
+		.text("Travellers in 2016:")
 		.attr("y", +d3.select("#nom").attr("y")+30)
 		.attr("x", 0)
 		.attr("text-anchor","start")
@@ -101,7 +101,7 @@ function refreshText(data,gare1,gare2){
 	// emplacement du text 'variation par rapport à 2015'
 	statG.append("text")
 		.attr("id","Variation")
-		.text("Variation par rapport à 2015")
+		.text("Fluctuation 2016/2015:")
 		.attr("y", +d3.select("#Nombredevoyageurs").attr("y")+30)
 		.attr("x", 0)
 		.attr("text-anchor","start")
@@ -109,60 +109,53 @@ function refreshText(data,gare1,gare2){
 	// emplacement du text 'Divertissement'
 	statG.append("text")
 		.attr("id","Divertissements")
-		.text("Divertissements")
+		.text("Entertainment:")
 		.attr("y", y_divertissements+18)
 		.attr("x", 0)
 		.attr("text-anchor","start")
 		
 	// emplacement du text "Moyens d'acces"
 	statG.append("text")
-		.text("Moyens d'accès")
+		.text("How to get there?")
 		.attr("y", y_acces+18)
 		.attr("x", 0)
-		.attr("text-anchor","start")
+		.attr("text-anchor","start");
 	
-	/*
-		// emplacement du text "Motif du déplacement"
-		statG.append("text")
-			.text("Motif du déplacement")
-			.attr("y", 190)
-			.attr("x", 150)
-			.attr("text-anchor","start")
-	*/
 
 	if (gare1 != null) {
-		// emplacement du nom de la gare 1
-		statG.append("text")
-			.attr("id","nom1")
-			.attr("y", +d3.select("#nom").attr("y"))
-			.attr("x", +d3.select("#nom").attr("x")+275)
-			.attr("text-anchor","end")
-			
 		statG.append("text")
 			.attr("id","valeur_voyageurs")
 			.attr("y", +d3.select("#Nombredevoyageurs").attr("y"))
-			.attr("x", +d3.select("#Nombredevoyageurs").attr("x")+275)
-			.attr("text-anchor","end")
+			.attr("x", +d3.select("#Nombredevoyageurs").attr("x")+170)
+			.attr("text-anchor","start")
 		
 		statG.append("text")
 			.attr("id","valeur_variation")
 			.attr("y", +d3.select("#Variation").attr("y"))
-			.attr("x", +d3.select("#Variation").attr("x")+275)
-			.style("text-anchor","end")
+			.attr("x", +d3.select("#Variation").attr("x")+170)
+			.style("text-anchor","start")
 			
 		// emplacement du rang pour la gare 1
 		statG.append("text")
 			.attr("id","valeur_rang")
 			.attr("y", +d3.select("#Nombredevoyageurs").attr("y"))
-			.attr("x", function(){return +d3.select("#valeur_voyageurs").attr("x")+5})
+			.attr("x", function(){return +d3.select("#valeur_voyageurs").attr("x")+50})
 			.style("text-anchor","start")
 		
 		// emplacement du rang de variation pour la gare 1
 		statG.append("text")
 			.attr("id","valeur_rangvar")
 			.attr("y", +d3.select("#Variation").attr("y"))
-			.attr("x", function(){return +d3.select("#valeur_variation").attr("x")+5})
+			.attr("x", function(){return +d3.select("#valeur_variation").attr("x")+50})
 			.style("text-anchor","start")
+			
+		// emplacement du nom de la gare 1
+		statG.append("text")
+			.attr("id","nom1")
+			.attr("y", +d3.select("#nom").attr("y"))
+			.attr("x", +d3.select("#nom").attr("x")+170)
+			.attr("text-anchor","start")
+			.style("font-weight","bold")
 	};
 	
 	if (gare2 != null) {
@@ -170,44 +163,48 @@ function refreshText(data,gare1,gare2){
 		statG.append("text")
 			.attr("id","nom2")
 			.attr("y", +d3.select("#nom").attr("y"))
-			.attr("x", +d3.select("#nom").attr("x")+350)
+			.attr("x", +d3.select("#nom").attr("x")+460)
 			.attr("text-anchor","start")
+			.style("font-weight","bold")
 			
 		statG.append("text")
 			.attr("id","valeur_voyageurs2")
 			.attr("y", +d3.select("#Nombredevoyageurs").attr("y"))
-			.attr("x", +d3.select("#Nombredevoyageurs").attr("x")+350)
+			.attr("x", +d3.select("#Nombredevoyageurs").attr("x")+460)
 			.attr("text-anchor","start")
 		
 		statG.append("text")
 			.attr("id","valeur_variation2")
 			.attr("y", +d3.select("#Variation").attr("y"))
-			.attr("x", +d3.select("#Variation").attr("x")+350)
+			.attr("x", +d3.select("#Variation").attr("x")+460)
 			.style("text-anchor","start")
 			
 		// emplacement du rang pour la gare 2
 		statG.append("text")
 			.attr("id","valeur_rang2")
 			.attr("y", +d3.select("#Nombredevoyageurs").attr("y"))
-			.attr("x",function(){return +d3.select("#valeur_voyageurs2").attr("x")+42})
+			.attr("x",function(){return +d3.select("#valeur_voyageurs2").attr("x")+50})
 			.style("text-anchor","start")
 			
 		// emplacement du rang de variation pour la gare 2
 		statG.append("text")
 			.attr("id","valeur_rangvar2")
 			.attr("y", +d3.select("#Variation").attr("y"))
-			.attr("x",function(){return +d3.select("#valeur_variation2").attr("x")+42})
+			.attr("x",function(){return +d3.select("#valeur_variation2").attr("x")+50})
 			.style("text-anchor","start")
 	};
 	
 	data.forEach(function(d){
 	if(d.Code_UIC == gare1){
+		var mon_text1 = ""
+		if(d.Variations>0){mon_text1 = "+"}
+		
 		d3.select("#valeur_rang")
-			.text("("+ d.RangNbVoy +"e)")
+			.text("(#"+ d.RangNbVoy +")")
 			.attr("fill",couleur1);
       
 		d3.select("#valeur_rangvar")
-			.text("("+ d.RangVariations +"e)")
+			.text("(#"+ d.RangVariations +")")
 			.attr("fill",couleur1);
 		
 		d3.select("#valeur_voyageurs")
@@ -215,7 +212,8 @@ function refreshText(data,gare1,gare2){
 			.attr("fill",couleur1);
   
 		d3.select("#valeur_variation")
-			.text(d3.format(".0%")(d.Variations))
+			
+			.text(mon_text1+d3.format(".0%")(d.Variations))
 			.attr("fill",couleur1);
 	  
 		d3.select("#nom1")
@@ -225,12 +223,15 @@ function refreshText(data,gare1,gare2){
 	}; // fin if
 	
 	if(d.Code_UIC == gare2){
+		var mon_text2 = ""
+		if(d.Variations>0){mon_text2 = "+"}
+		
 		d3.select("#valeur_rang2")
-			.text("("+(d.RangNbVoy)+"e)")
+			.text("(#"+(d.RangNbVoy)+")")
 			.attr("fill",couleur2)
       
       d3.select("#valeur_rangvar2")
-			.text("("+(d.RangVariations)+"e)")
+			.text("(#"+(d.RangVariations)+")")
 			.attr("fill",couleur2)
 		
 		d3.select("#valeur_voyageurs2")
@@ -238,7 +239,8 @@ function refreshText(data,gare1,gare2){
 			.attr("fill",couleur2)
   
 		d3.select("#valeur_variation2")
-			.text(d3.format(".0%")(d.Variations))
+			
+			.text(mon_text2+d3.format(".0%")(d.Variations))
 			.attr("fill",couleur2)
 	  
 		d3.select("#nom2")
@@ -535,10 +537,10 @@ function refreshMotif(mot1,mot2){
 	motifG.selectAll("*").remove();
 	
 	var titre = motifSvg.append("text")
-		.attr("x",+d3.select("#motifSvg").attr("x")/2+56)
+		.attr("x",+d3.select("#motifSvg").attr("x")/2)
 		.attr("y",15)
 		.style("text-anchor","center")
-		.text("Répartition des motifs de déplacement")
+		.text("Why do people travel?")
 		
 	var sum1=(mot1[1].commute+mot1[1].divers+mot1[1].etudes+mot1[1].occasionnel+mot1[1].loisirs),
 		sum2=(mot2[1].commute+mot2[1].divers+mot2[1].etudes+mot2[1].occasionnel+mot2[1].loisirs);	
@@ -550,8 +552,8 @@ function refreshMotif(mot1,mot2){
 			.attr("x",+d3.select("#motifSvg").attr("x")/2+56)
 			.attr("y",25)
 			.style("text-anchor","center")
-			.text("des informations sont manquantes sur la "+gare_nulle+"e gare")
-			.style("font-size","10")
+			.text("Missing data for station #"+gare_nulle)
+			.style("font-size",10)
 			.style("font-style","italic")
 		
 		;}
@@ -564,51 +566,60 @@ function refreshMotif(mot1,mot2){
 	var x_motif = d3.scaleBand()
 		.domain(['Commuters','Studies','Business','Leisure'])
 		.range([0, +d3.select("#motifSvg").attr("width")/1.3])
+	
+	var x_motif1 = d3.scaleBand()
+		.padding(0.1)
+		.domain(["mot1","mot2"])
+		.range([0,x_motif.bandwidth()])
+		
+	console.log(x_motif1("mot1"))	
+	console.log(x_motif1("mot2"))
+	console.log(x_motif.bandwidth())
     
-  var xAxis_motif = d3.axisBottom()
+	var xAxis_motif = d3.axisBottom()
 		.scale(x_motif)
   
   
-  var axe_histo_motif = motifG.append("g")
-  	.attr("transform","translate("+14+","+(max_y)+")")
-  	.attr('class','x axis')
-  	.call(xAxis_motif)
+	var axe_histo_motif = motifG.append("g")
+		.attr("transform","translate("+0+","+(max_y+0)+")")
+		.attr('class','x axis')
+		.call(xAxis_motif)
 
 	var max_motif = d3.max([mot1[1].divers,mot1[1].commute,mot1[1].etudes,mot1[1].loisirs,mot1[1].occasionnel,mot2[1].divers,mot2[1].commute,mot2[1].etudes,mot2[1].loisirs,mot2[1].occasionnel])
   y_motif.domain([0,max_motif])
   
-  var yAxis_motif = d3.axisLeft()
+	var yAxis_motif = d3.axisLeft()
 		.scale(y_motif);
   
-  var axey_histo_motif = motifG.append("g")
-  	.attr("transform","translate("+14+","+0+")")
-  	.attr('class','y axis')
-  	.call(yAxis_motif)
+	var axey_histo_motif = motifG.append("g")
+		.attr("transform","translate("+0+","+0+")")
+		.attr('class','y axis')
+		.call(yAxis_motif)
   
   
-  motifG.append("rect")
-  					 .attr("x",function(){return 20+x_motif('Commuters')})
+	motifG.append("rect")
+  					 .attr("x",function(){return x_motif('Commuters')+x_motif1("mot1")})
   					 .attr("y",function(){return y_motif(mot1[1].commute)})
   					 .attr("height",function(){return max_y-y_motif(mot1[1].commute)})
   					 .attr("width",20)
   					 .style("fill",couleur1)
   
   motifG.append("rect")
-  					 .attr("x",function(){return 20+x_motif('Studies')})
+  					 .attr("x",function(){return x_motif('Studies')+x_motif1("mot1")})
   					 .attr("y",function(){return y_motif(mot1[1].etudes)})
   					 .attr("height",function(){return max_y-y_motif(mot1[1].etudes)})
   					 .attr("width",20)
   					 .style("fill",couleur1)
   
   motifG.append("rect")
-  					 .attr("x",function(){return 20+x_motif('Business')})
+  					 .attr("x",function(){return x_motif('Business')+x_motif1("mot1")})
   					 .attr("y",function(){return y_motif(mot1[1].occasionnel)})
   					 .attr("height",function(){return max_y-y_motif(mot1[1].occasionnel)})
   					 .attr("width",20)
   					 .style("fill",couleur1)
   
   motifG.append("rect")
-  					 .attr("x",function(){return 20+x_motif('Leisure')})
+  					 .attr("x",function(){return x_motif('Leisure')+x_motif1("mot1")})
   					 .attr("y",function(){return y_motif(mot1[1].loisirs)})
   					 .attr("height",function(){return max_y-y_motif(mot1[1].loisirs)})
   					 .attr("width",20)
@@ -616,28 +627,28 @@ function refreshMotif(mot1,mot2){
   
   
   motifG.append("rect")
-  					 .attr("x",function(){return 40+x_motif('Commuters')})
+  					 .attr("x",function(){return x_motif('Commuters')+x_motif1("mot2")})
   					 .attr("y",function(){return y_motif(mot2[1].commute)})
   					 .attr("height",function(){return max_y-y_motif(mot2[1].commute)})
   					 .attr("width",20)
   					 .style("fill",couleur2)
   
   motifG.append("rect")
-  					 .attr("x",function(){return 40+x_motif('Studies')})
+  					 .attr("x",function(){return x_motif('Studies')+x_motif1("mot2")})
   					 .attr("y",function(){return y_motif(mot2[1].etudes)})
   					 .attr("height",function(){return max_y-y_motif(mot2[1].etudes)})
   					 .attr("width",20)
   					 .style("fill",couleur2)
   
   motifG.append("rect")
-  					 .attr("x",function(){return 40+x_motif('Business')})
+  					 .attr("x",function(){return x_motif('Business')+x_motif1("mot2")})
   					 .attr("y",function(){return y_motif(mot2[1].occasionnel)})
   					 .attr("height",function(){return max_y-y_motif(mot2[1].occasionnel)})
   					 .attr("width",20)
   					 .style("fill",couleur2)
   
   motifG.append("rect")
-  					 .attr("x",function(){return 40+x_motif('Leisure')})
+  					 .attr("x",function(){return x_motif('Leisure')+x_motif1("mot2")})
   					 .attr("y",function(){return y_motif(mot2[1].loisirs)})
   					 .attr("height",function(){return max_y-y_motif(mot2[1].loisirs)})
   					 .attr("width",20)
@@ -734,10 +745,12 @@ function refreshAcces(acc1,acc2){
 		if(sum1==0){chiffre= "1"}else{chiffre= "2"}
 		
 		g_infos.append("text")
-			.text("Des informations sont manquantes sur la "+ chiffre +"e gare")
+			.text("Missing data for station #"+ chiffre)
 			.attr("class","debutphrase")
-			.attr("x",0)
+			.attr("x",x_divertissements1)
 			.attr("y",y_acces+60)
+			.style("font-size",10)
+			.style("font-style","italic")
 			.style("text-anchor","start")
 			
 		

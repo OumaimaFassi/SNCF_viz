@@ -43,6 +43,7 @@
 	</div>
 	<script>
 	var statSvg = d3.select("#stat").append("svg")
+		.attr("id","#statSvg")
 		.attr("width", 700)
 		.attr("height", 400);
 	
@@ -57,7 +58,7 @@
 		
 	var motifG = motifSvg.append("g")
 		.attr("id","histo_motif")
-		.attr("transform","translate(8,30)");
+		.attr("transform","translate(8,50)");
 	
 	var couleur1 = "#41A9E1",
 		couleur2 = "#FF8C00",
