@@ -23,7 +23,7 @@ Each station is represented by a circle on the map. Each circle’s radius depen
 ## Legend
 The legend, at the right of the map, describes which circle radius corresponds to which interval of numbers of travellers, and which color corresponds to which interval of variations. Both the radius’s and the color’s intervals are made out of quantiles, i.e. each interval stands for the same number of stations corresponding.
 ![légende][legend1]
-![légende][legende2]
+![légende][legend2]
 
  ## Filters
 The checkboxes that you can click under the map are used as filters. For instance, if you check the “Piano(s)” checkbox, then all the stations that do not have at least one piano will disappear.
