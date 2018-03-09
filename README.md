@@ -1,8 +1,5 @@
 # French train stations comparison dataviz with SNCF Open Data
 
-<a href="https://vimeo.com/259271410" target="blank" style="text-align: center;"><img src="img/videocaption.png" alt="Our video presentation"/></a>
-<caption style="text-align: center; font-size: 0.8em;">Feel free to check out our video presentation of the project</caption>
-
 # Intro
 
 Welcome to our project’s page. Our visualization project is a navigation tool of France’s 127 most frequented train stations. It is destined to the passengers looking for the train station meeting their needs, especially in case they were spending a long time there. 
@@ -11,7 +8,10 @@ Using our interactive visualization will not only allow you to see the most impo
 
 We have joined together 9 <a href = "cleaned_datasets/" target="blank">datasets</a> provided by the French railways company SNCF on their <a href = "https://data.sncf.com/" target="blank">Open Data website</a> in order to make it easier for you to evaluate and compare the quality of service of different train stations in France. Even though some of the necessary Data to build our visualization was missing, we have managed to make sure that it won’t affect the information we give you and therefore we’ll notify you in case of missing data.
 
-We invite you to read the following parts to discover the utility of our tool !
+We invite you to read the following parts to discover the utility of our tool!
+
+Also, feel free to check out our video presentation of the project
+<a href="https://vimeo.com/259271410" target="blank" style="text-align: center;"><img src="img/videocaption.png" alt="Our video presentation"/></a>
 
 # General layout of the page
 The page is divided in two parts. The left one, named “Station(s) selection”, contains a map of France, along with interactive legends, filters, and two ways to select stations to compare. The right part of the page, named “Features”, contains detailed information on the selected map(s). When no station is selected, the second part just filled with message giving an incentive to select one or two stations.
