@@ -42,15 +42,15 @@ To select a station, you can either click on its circle representation on the ma
 
 # Station’s features
 
-After selecting the first train station, its information appears to the right-hand side of the window. There are reminded its name, the number of travelers who used the station in 2016 and its variation compared to the preceding year.
+After selecting the first train station, its information appears to the right-hand side of the window. There are reminded its name, the number of travelers who used the station in 2016 and its fluctuation compared to the preceding year.
 
-Below this text- and if available- you can find a list of entertainments existing in the station. Knowing if Wi-Fi is available or if you’ll get the chance to play table-soccer could come in handy if a long delay awaits you. Other than these two features, you can check if power stations, pianos or even short story books are at your disposal  in the selected station. 
+Below this text- and if available- you can find a list of entertainments existing in the station. Knowing if Wi-Fi is available or if you’ll get the chance to play table-football could come in handy if a long delay awaits you. Other than these two features, you can check if power stations, pianos or even distributors of short stories are at your disposal  in the selected station. 
 
-On top of that, one might want to know how to get there ? *Can I go on foot or should i book a taxis ?* That’s why we have added another set of data regarding the means used by travelers to get to the station you’ve selected. Whether they go by car, taxis, bus, subway (a.k.a underground), tramway, bike or on foot ; it is now displayed on your screen.
+On top of that, one might want to know how to get there ? *Can I go on foot or should I book a taxis ?* That’s why we have added another set of data regarding the means used by travelers to get to the station you’ve selected. Whether they go by car, taxis, bus, subway (a.k.a underground), tramway, bike or on foot ; it is now displayed on your screen.
 Now mind you, a blank space doesn’t mean there are no way to get there, but rather that the dataset used to create this webpage was incomplete.
 
-For both lists, either there is a blue square as background to an icon -in which case the station features such entertainment / people came here using a specific mean- or there are no square nor icon- which either means that data are missing or the property doesn’t check.
-Additionally, if any data are missing for either stations, a message will appear to warn you.
+For both lists, either there is a blue square as background to an icon -in which case the station features such entertainment or people came here using a specific mean- or there are no square - which either means that data is missing or the property doesn’t check.
+Additionally, if any data are missing for either station, a message will appear to warn you.
 
 ![InfoManquantes][info_manquantes]
 
@@ -59,8 +59,8 @@ Other useful information are displayed at the bottom of the webpage regarding pe
 
 # Station’s radarchart
 
-Another representation of the station’s quality of service  is visualized in a Radar Chart in the bottom of the page. This representation shows the score of the selected station on these levels : the cleanliness of the station, the security provided in the station, the communication about unexpected situations, the accessibility, the quality of commerce and catering, handicap assistance, and finally an evaluation of the comfort of waiting in this station. 
-These characteristics are evaluated as a score of 1 to 10, the lower the score is the less qualified the concerned station is on this level. you can mouse-over the characteristics circle to see the value of the score. If a score is missing, it will be represented as equal to zero but you can see on the tooltip whether it’s an actual zero or a missing value.
+Another representation of the station’s quality of service  is visualized in a Radar Chart in the bottom of the page. This representation shows the score of the selected station on these levels : : the cleanliness of the station, the security provided in the station, the communication on disruptions, the waiting comfort in this station, the quality of the shops, the distance of access, and finally the assistance for the disabled people.  
+These features are graded as a score of 1 to 10, the lower the score, the less qualified the concerned station is on this level. You can hover the features circle to see the value of the score. If a score is missing, it will be represented as equal to zero but you can see on the tooltip whether it’s an actual zero or a missing value.
 Adding to this, a global score of the station is shown beside the radar chart.  This score is the average of the radar chart’s scores.
 
 ![radarChart][radar_info_manquantes]
