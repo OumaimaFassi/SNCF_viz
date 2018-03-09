@@ -1,19 +1,14 @@
-Possibles points d'amélioration :
-Corentin - Ajouter un bar chart pour les motifs de déplacement
-Corentin - Ajouter un tooltip sur chaque icône (ex: Wifi)
-(done)Thibault - Retravailler l'agencement des différentes parties & rendre le tout responsive
-Corentin - Ajouter des explications (notamment: aucun mode d'accès n'est affiché <==> donnée indisponible)
-Corentin - Trouver une solution aux échelles des icônes et à leur placement
-Oumaïma - Sur le glyphe : hover sur un score ==> colorie le glyphe de la couleur correspondante
-(done)Oumaïma - Echelle légendée sur le glyphe : arrondir les valeurs ?
-Thibault - L'echelle ne permet pas de faire apparaitre les valeurs extremes, dommage!
-Thibault - Afficher le réseau ferré de France
-(done)Thibault - Button reset au lieu de réinitialiser les deux dropdowns
-Corentin - Pour chaque gare, afficher le classement sur les critères du nb de voyageurs et de la variation
-Non - Trouver une alternative aux icônes à fond coloré dans le cas où on compare plus de 2 gares
-(done)Thibault - Possibilité de filtrer la carte avec uniquement les gares qui ont un babyfoot par exemple
-Oumaïma - Opacité du bleu sur les icônes
-Oumaïma - Avec les chiffres du radar chart : score global pour la gare ? => classement des gares ?
-Corentin - Globaliser la taille des carrés
-(done)Thibault - Légende radius et couleur : opacité réduite pour les non concernés
-(done)Thibault - Bouton reset pour les filtres de divertissements sur la carte
+# Improvemenets of our project between March 2nd and March 9th, 2018
+
+* **Bar chart added** at the bottom right of the page, describing why do people use a station
+* Notify the user when **data is missing** for the icons or the barchart
+* Better placement of the icons, less hardcoding (before, the icons could go over their square)
+* Round up the scale values on the radar chart (7.0 => 7)
+* Add a **reset button to easily deselect the stations**
+* For each station's feature (e.g. its number of travellers), show its **ranking among all the stations**
+* Add **filters on the map**: to show only the stations that are equipped with wifi for instance
+* When one or more filters are on, add a **reset button to turn off all the filters**
+* Show a **total score** for the station's performance (shown on the radar chart)
+* When the circles' radius & color legends are hovered, instead of the concerned circles on the map being highlighted, now, the not-concered circles disappear
+* Change of the blue color (it was thought too dark)
+* Translation into English
