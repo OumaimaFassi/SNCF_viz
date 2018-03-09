@@ -1,6 +1,7 @@
 # French train stations comparison dataviz with SNCF Open Data
 
 <a href="https://vimeo.com/259271410" target="blank"><img src="img/videocaption.png" alt="Our video presentation" width="240"/></a>
+<caption text-align="center">Feel free to check out our video presentation of the project</caption>
 
 # Intro
 
@@ -8,7 +9,7 @@ Welcome to our project’s page. Our visualization project is a navigation tool 
 
 Using our interactive visualization will not only allow you to see the most important characteristics of each train station, but also to compare their performance on different levels, such as the quality of divertisment, the accessibility, the number and the variation of the travelers who pass by the station…
 
-We have joined 9 <a href = "cleaned_datasets/">datasets</a> provided by the French railways company SNCF on their <a href = “https://data.sncf.com/”>Open Data website</a> in order to make it easier for you to evaluate and compare the quality of service of different train stations in France. Even though some of the necessary Data to build our visualization was missing, we have managed to make sure that it won’t affect the information we give you and therefore we’ll notify you in case of missing data.
+We have joined together 9 <a href = "cleaned_datasets/" target="blank">datasets</a> provided by the French railways company SNCF on their <a href = "https://data.sncf.com/" target="blank">Open Data website</a> in order to make it easier for you to evaluate and compare the quality of service of different train stations in France. Even though some of the necessary Data to build our visualization was missing, we have managed to make sure that it won’t affect the information we give you and therefore we’ll notify you in case of missing data.
 
 We invite you to read the following parts to discover the utility of our tool !
 
