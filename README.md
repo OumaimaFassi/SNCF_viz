@@ -95,6 +95,7 @@ Reset buttons can also be used to set any of the two fields to *none*. If you el
 [legend1]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/legend1.png
 [legend2]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/legend2.png
 [tooltip]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/tooltip1.png
+[filter]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/filter1.png
 [1selection]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/1selection.png
 [info_manquantes]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/info_manquantes1.png
 [radar_info_manquantes]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/radar_info_manquantes.png
