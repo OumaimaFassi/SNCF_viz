@@ -13,22 +13,32 @@ We have joined 9 <a href = “lien du site”>datasets</a> provided by the Frenc
 We invite you to read the following parts to discover the utility of our tool !
 
 # General layout of the page
-The page is divided in two parts. The left one, named “Station(s) selection”, contains a map of France, along with interactive legends, filters, and two ways to select stations to compare. The right part of the page, named “Features”, contains detailed information on the selected map(s). When no station is selected, the second part just filled with message giving an incentive to select one or two maps.
+The page is divided in two parts. The left one, named “Station(s) selection”, contains a map of France, along with interactive legends, filters, and two ways to select stations to compare. The right part of the page, named “Features”, contains detailed information on the selected map(s). When no station is selected, the second part just filled with message giving an incentive to select one or two stations.
+
+![accueil][index]
 
 ## Map part
 Each station is represented by a circle on the map. Each circle’s radius depends on the number of travellers that used the station in 2016 (a big circle means a big number), while its color depends on the variation of this number between 2016 and 2015 (a green circle stands for a positive variation). Because two stations can be geographically close to each other, we have made sure that their circles do not collide, thus they can be a bit far away from their exact location.
 
 ## Legend
 The legend, at the right of the map, describes which circle radius corresponds to which interval of numbers of travellers, and which color corresponds to which interval of variations. Both the radius’s and the color’s intervals are made out of quantiles, i.e. each interval stands for the same number of stations corresponding.
+![légende][legend1]
+![légende][legende2]
 
  ## Filters
 The checkboxes that you can click under the map are used as filters. For instance, if you check the “Piano(s)” checkbox, then all the stations that do not have at least one piano will disappear.
 
+![checkbox filter][filter]
+
 ## Tooltip
 When you hover a circle, a tooltip appears aside, showing the name of the station, and the department and region where it is located.
 
+![mouseover tooltip][tooltip]
+
 ## Station selection
 To select a station, you can either click on its circle representation on the map, or find it by scrolling through one of the two dropdowns, at the bottom-left of the page. When a station is selected, the corresponding circle on the map is momentarily highlighted. Also, a red cross appears next to the dropdown, allowing you to easily deselect the station.
+
+![1ere selection][1selection]
 
 # Station’s features
 
@@ -74,3 +84,10 @@ Now that you’re all set with two train stations selected and that you know wha
 You can choose to compare the first station you selected with any other station consecutively just by clicking any other circle on the map ; this will change the *second station selected* field to the one you just clicked. Another way to change this selection is to use the dropdown menu and look for a specific train station.
 
 Reset buttons can also be used to set any of the two fields to *none*. If you elect to reset the first field then your next click on any circle of the map will add your selection to the **first station selected**
+
+[index]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/Index.png
+[legend1]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/legend1.png
+[legend2]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/legend2.png
+[filter]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/filter1.png
+[tooltip]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/tooltip1.png
+[1selection]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/1selection.png
