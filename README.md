@@ -10,7 +10,7 @@ We have joined together 9 <a href = "cleaned_datasets/" target="blank">datasets<
 
 We invite you to read the following parts to discover the utility of our tool!
 
-Also, feel free to check out our video presentation of the project
+Also, feel free to check out our video presentation of the project by clicking on the picture below.
 <a href="https://vimeo.com/259271410" target="blank" style="text-align: center;"><img src="img/videocaption.png" alt="Our video presentation"/></a>
 
 # General layout of the page
@@ -90,7 +90,7 @@ Now that you’re all set with two train stations selected and that you know wha
 
 You can choose to compare the first station you selected with any other station consecutively just by clicking any other circle on the map ; this will change the *second station selected* field to the one you just clicked. Another way to change this selection is to use the dropdown menu and look for a specific train station.
 
-Reset buttons can also be used to set any of the two fields to *none*. If you elect to reset the first field then your next click on any circle of the map will add your selection to the **first station selected**
+Reset buttons can also be used to set any of the two fields to *none*. If you elect to reset the first field then your next click on any circle of the map will add your selection to the **first station selected**.
 
 [index]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/Index.png
 [legend1]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/legend1.png
