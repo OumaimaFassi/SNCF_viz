@@ -52,6 +52,8 @@ Now mind you, a blank space doesn’t mean there are no way to get there, but ra
 For both lists, either there is a blue square as background to an icon -in which case the station features such entertainment / people came here using a specific mean- or there are no square nor icon- which either means that data are missing or the property doesn’t check.
 Additionally, if any data are missing for either stations, a message will appear to warn you.
 
+![InfoManquantes][info_manquantes]
+
 Other useful information are displayed at the bottom of the webpage regarding people’s motives for using this station. A bar chart provides you with percentages of people who came here as daily commuters, for business travel, for studies, for recreational purpose or other reasons. 
 
 
@@ -60,6 +62,8 @@ Other useful information are displayed at the bottom of the webpage regarding pe
 Another representation of the station’s quality of service  is visualized in a Radar Chart in the bottom of the page. This representation shows the score of the selected station on these levels : the cleanliness of the station, the security provided in the station, the communication about unexpected situations, the accessibility, the quality of commerce and catering, handicap assistance, and finally an evaluation of the comfort of waiting in this station. 
 These characteristics are evaluated as a score of 1 to 10, the lower the score is the less qualified the concerned station is on this level. you can mouse-over the characteristics circle to see the value of the score. If a score is missing, it will be represented as equal to zero but you can see on the tooltip whether it’s an actual zero or a missing value.
 Adding to this, a global score of the station is shown beside the radar chart.  This score is the average of the radar chart’s scores.
+
+![radarChart][radar_info_manquantes]
 
 # Second selection 
 
@@ -77,6 +81,8 @@ The bar chart will also update itself to add all the info available about the se
 
 The radar chart will also display another representation of the second station’s scores on the existing representation. We can easily distinguish the two representation for their colors are different and their opacity is low. The station you put your mouse on will have a stronger opacity. This tool will allow you to compare the performance of the stations on the different characteristics concerned, indeed, the radar chart makes it easier for you to see which station has a higher score on a certain level. To make it even easier for you, you can check the global score of the stations beside the radar chart to see a global comparison of the two stations. 
 
+![2eme selection][2selection]
+
 ## Changing selection  
 
 Now that you’re all set with two train stations selected and that you know what kind of information you can expect to find, all that is left is to toy around with the tools we provided. 
@@ -91,3 +97,6 @@ Reset buttons can also be used to set any of the two fields to *none*. If you el
 [filter]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/filter1.png
 [tooltip]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/tooltip1.png
 [1selection]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/1selection.png
+[info_manquantes]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/info_manquantes1.png
+[radar_info_manquantes]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/radar_info_manquantes.png
+[2selection]:https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/2selections.png
