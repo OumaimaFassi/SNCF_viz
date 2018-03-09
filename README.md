@@ -2,6 +2,8 @@
 
 Notre projet consiste à créer un outil permettant aux voyageurs de consulter les propriétés des grandes gares TGV de France et de les comparer entre elles, notamment la propreté de la gare, la satisfaction des voyageurs, les divertissements en gare, l'accompagnement des personnes à mobilité réduite, les moyens d'accès à la gare, etc...
 
+[![video link](https://github.com/OumaimaFassi/SNCF_viz/blob/master/img/videocaption.png)](https://vimeo.com/259271410)
+
 # Intro
 
 Welcome to our project’s page. Our visualization project is a navigation tool of France’s 127 most frequented train stations. It is destined to the passengers looking for the train station meeting their needs, especially in case they were spending a long time there. 
