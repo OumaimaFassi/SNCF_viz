@@ -1,7 +1,7 @@
 # French train stations comparison dataviz with SNCF Open Data
 
-<a href="https://vimeo.com/259271410" target="blank"><img src="img/videocaption.png" alt="Our video presentation" width="240"/></a>
-<caption text-align="center">Feel free to check out our video presentation of the project</caption>
+<a href="https://vimeo.com/259271410" target="blank" style="text-align: center;"><img src="img/videocaption.png" alt="Our video presentation" width="400"/></a>
+<caption style="text-align: center; font-size: 0.8em;">Feel free to check out our video presentation of the project</caption>
 
 # Intro
 
